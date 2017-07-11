@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-03T05:58:42.000Z</updated>
+  <updated>2017-07-08T06:58:53.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,54 +16,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>My New Post</title>
-    <link href="http://yoursite.com/2017/07/01/My-New-Post/"/>
-    <id>http://yoursite.com/2017/07/01/My-New-Post/</id>
-    <published>2017-07-01T15:55:17.000Z</published>
-    <updated>2017-07-03T05:58:42.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-      <category term="testing" scheme="http://yoursite.com/tags/testing/"/>
-    
-      <category term="another tag" scheme="http://yoursite.com/tags/another-tag/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2017/07/01/hello-world/"/>
-    <id>http://yoursite.com/2017/07/01/hello-world/</id>
-    <published>2017-07-01T11:12:49.000Z</published>
-    <updated>2017-07-01T11:12:49.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>rally-first</title>
-    <link href="http://yoursite.com/2017/01/01/rally/"/>
-    <id>http://yoursite.com/2017/01/01/rally/</id>
-    <published>2017-01-01T04:30:00.000Z</published>
-    <updated>2017-07-03T09:28:29.000Z</updated>
+    <link href="http://yoursite.com/2017/07/06/openstack/rally/"/>
+    <id>http://yoursite.com/2017/07/06/openstack/rally/</id>
+    <published>2017-07-06T04:30:00.000Z</published>
+    <updated>2017-07-08T06:58:53.000Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Rally-介绍&quot;&gt;&lt;a href=&quot;#Rally-介绍&quot; class=&quot;headerlink&quot; title=&quot;Rally 介绍&quot;&gt;&lt;/a&gt;Rally 介绍&lt;/h2&gt;&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; titl
+      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
     
     </summary>
     
       <category term="Openstack" scheme="http://yoursite.com/categories/Openstack/"/>
     
+    
+      <category term="rally" scheme="http://yoursite.com/tags/rally/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/tags/openstack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>How to use tempest in kolla</title>
+    <link href="http://yoursite.com/2017/07/06/openstack/tempest/"/>
+    <id>http://yoursite.com/2017/07/06/openstack/tempest/</id>
+    <published>2017-07-06T04:30:00.000Z</published>
+    <updated>2017-07-11T08:14:03.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Tempest-介绍&quot;&gt;&lt;a href=&quot;#Tempest-介绍&quot; class=&quot;headerlink&quot; title=&quot;Tempest 介绍&quot;&gt;&lt;/a&gt;Tempest 介绍&lt;/h3&gt;&lt;p&gt;在接触tempest之前我们应该有如下疑问。&lt;/p&gt;
+&lt;p&gt;&lt;img src
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://yoursite.com/categories/Openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/tags/openstack/"/>
+    
+      <category term="tempest" scheme="http://yoursite.com/tags/tempest/"/>
     
   </entry>
   
