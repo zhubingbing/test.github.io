@@ -317,6 +317,171 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/openstack/kolla介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/openstack/kolla介绍/" itemprop="url">介绍 kolla</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="kolla总结"><a href="#kolla总结" class="headerlink" title="kolla总结"></a>kolla总结</h3><p>在kolla项目下也快1年啦，也该总结下</p>
+<h4 id="kolla的定位"><a href="#kolla的定位" class="headerlink" title="kolla的定位"></a>kolla的定位</h4><p>实现生产级别容器化openstack平台，做到开箱即用</p>
+<h4 id="kolla的实现"><a href="#kolla的实现" class="headerlink" title="kolla的实现"></a>kolla的实现</h4><p>kolla实现主要以docker和ansible实现的。<br>ansible实现编排和远程推送<br>docker实现openstack服务容器化</p>
+<h4 id="kolla的实现带来什么变化"><a href="#kolla的实现带来什么变化" class="headerlink" title="kolla的实现带来什么变化"></a>kolla的实现带来什么变化</h4><p>1.让安装变得更加简单</p>
+<p>2.环境一致性</p>
+<p>3.让openstack升级不是困难</p>
+<p>4.灵活性大大加强</p>
+<p>5.openstack服务微服务化</p>
+<h4 id="kolla代码目录"><a href="#kolla代码目录" class="headerlink" title="kolla代码目录"></a>kolla代码目录</h4><p><img src="/images/kolla-ansible.png" alt=""></p>
+<p>从顶层文件目录结构来看，各个目录所包含的内容为：</p>
+<p>ansible</p>
+<p>ansible 配置目录里面包含了openstack service ansible role的实现， Kolla - Kolla with ansible!，是kolla-ansible最为重要的一部分。</p>
+<p>contrib</p>
+<p>示例目录。里面包含了 heat 的编排配置和magnum的一些例子 ；</p>
+<p>docs</p>
+<p>文档目录。也是非常重要的目录，里面包括开发环境设置、镜像编译、Kolla 环境变量等说明，建议把文档都认真读一遍 ；</p>
+<p>LICENSE</p>
+<p>LICENSE文件。Apache License Version 2 的 License 文件，没什么好说的。</p>
+<p>README.md</p>
+<p>说明文件。</p>
+<p>specs</p>
+<p>spec目录。目前只有一个 spec，说明使用容器安装 OpenStack 的理念和优势。</p>
+<p>test-requirements.txt</p>
+<p>python 的 requirements 文件。用于说明测试时所需要的 python 包，目前只有一个 PyYAML。</p>
+<p>tests</p>
+<p>测试目录。这个目录应该包含 Kolla 的测试套件，但目前只有一个 setup_docker.sh 用于安装 docker。</p>
+<p>tools</p>
+<p>工具脚本目录。目录包含编译 docker 镜像、清理 docker 环境、生成 Kolla 环境变量、Kolla 启动脚本、json/yaml文件检验等脚本。建议把这个目录的脚本都看一遍，需要点 Shell、python的知识。</p>
+<p>tox.ini</p>
+<p>tox配置文件。tox是一个标准自动化测试工具，python里的。目前这个文件很简单，只包含了 virtualenv 设置和一些简单的检查。</p>
+<p>现在 Kolla 还小，不像 nova / neutron 这些庞然大物，因此很值得把 Kolla 的代码认真看看，整理 Kolla 的设计思路，对以后把握 Kolla 的发展很有帮助，也希望大家能参与到 Kolla 的社区中，无论是贡献代码、写写 Blog、找茬，都能帮助到 Kolla </p>
+<p>关于kolla方面的文章沙克写的很好，大家可以看看。<br>这个他的博客链接：<a href="http://www.chenshake.com/cloud-computing/" target="_blank" rel="external">http://www.chenshake.com/cloud-computing/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/openstack/rally/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -677,7 +842,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -699,7 +864,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
