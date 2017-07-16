@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-14T09:19:58.000Z</updated>
+  <updated>2017-07-16T22:55:45.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>openshift部署之前环境准备</title>
+    <link href="http://yoursite.com/2017/07/17/openstack/openshift%20%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%89%8D%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/"/>
+    <id>http://yoursite.com/2017/07/17/openstack/openshift 部署之前环境准备/</id>
+    <published>2017-07-16T22:30:00.000Z</published>
+    <updated>2017-07-16T22:55:45.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openshift部署之前环境准备&quot;&gt;&lt;a href=&quot;#openshift部署之前环境准备&quot; class=&quot;headerlink&quot; title=&quot;openshift部署之前环境准备&quot;&gt;&lt;/a&gt;openshift部署之前环境准备&lt;/h3&gt;&lt;h4 id=&quot;准备工作-
+    
+    </summary>
+    
+      <category term="Openshift" scheme="http://yoursite.com/categories/Openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/tags/pass/"/>
+    
+  </entry>
   
   <entry>
     <title>介绍 kolla</title>
