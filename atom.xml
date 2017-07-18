@@ -38,6 +38,32 @@
   </entry>
   
   <entry>
+    <title>kolla之reconfigure</title>
+    <link href="http://yoursite.com/2017/07/14/openstack/kolla-reconfigure/"/>
+    <id>http://yoursite.com/2017/07/14/openstack/kolla-reconfigure/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-07-18T03:56:06.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;今天好好理理kolla reconfigure如何玩的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;kolla的配置管理主要是管理openstack service config文件；&lt;br&gt;主要实现是 &lt;/p&gt;
+&lt;figure class=&quot;hig
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://yoursite.com/categories/Openstack/"/>
+    
+    
+      <category term="kolla" scheme="http://yoursite.com/tags/kolla/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/tags/openstack/"/>
+    
+  </entry>
+  
+  <entry>
     <title>介绍 kolla</title>
     <link href="http://yoursite.com/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
     <id>http://yoursite.com/2017/07/14/openstack/kolla介绍/</id>
