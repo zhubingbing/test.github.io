@@ -4,15 +4,22 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/07/27/openstack/%E5%88%B6%E4%BD%9Copenshift%20iso/</loc>
-    <lastmod>2017-07-30T08:25:32.000Z</lastmod>
+    <loc>http://yoursite.com/2017/07/14/openstack/%E5%88%B6%E4%BD%9Copenshift%20iso/</loc>
+    <lastmod>2017-07-30T08:27:27.000Z</lastmod>
     <data>
         <display>
-        <title></title>
-        <pubTime>2017-07-27T08:26:42.000Z</pubTime>
+        <title>openshift iso 制作</title>
+        <pubTime>2017-07-14T04:30:00.000Z</pubTime>
         
+        <tag>pass</tag>
+         
+        <tag>openshift</tag>
+         
          
            
+             
+              <breadCrumb title="OpenShift" url="http://yoursite.com/categories/OpenShift/"/>
+          
         </display>
     </data>
     </url>
@@ -26,9 +33,9 @@
         <title>Openshift-01</title>
         <pubTime>2017-07-14T04:30:00.000Z</pubTime>
         
-        <tag>pass</tag>
-         
         <tag>Openshift</tag>
+         
+        <tag>pass</tag>
          
          
            
@@ -70,9 +77,9 @@
         <title>openshift部署之前环境准备</title>
         <pubTime>2017-07-16T22:30:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
