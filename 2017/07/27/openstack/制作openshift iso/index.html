@@ -1,0 +1,1248 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Rotobo Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhubingbing" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="制作iso过程文档制作openshift isoFedora发行版制作的工具主要有revisor和pungi两种；revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；下面是使用 pungi来制作的iso 安装pungi以下都是环境都是基于cen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zhubingbing">
+<meta property="og:url" content="http://yoursite.com/2017/07/27/openstack/制作openshift iso/index.html">
+<meta property="og:site_name" content="Zhubingbing">
+<meta property="og:description" content="制作iso过程文档制作openshift isoFedora发行版制作的工具主要有revisor和pungi两种；revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；下面是使用 pungi来制作的iso 安装pungi以下都是环境都是基于cen">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install01.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install02.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install03.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install04.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install05.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install06.png">
+<meta property="og:image" content="http://yoursite.com/images/openshift/openshift-install07.png">
+<meta property="og:updated_time" content="2017-07-30T08:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zhubingbing">
+<meta name="twitter:description" content="制作iso过程文档制作openshift isoFedora发行版制作的工具主要有revisor和pungi两种；revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；下面是使用 pungi来制作的iso 安装pungi以下都是环境都是基于cen">
+<meta name="twitter:image" content="http://yoursite.com/images/openshift/openshift-install01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/27/openstack/制作openshift iso/"/>
+
+
+
+
+
+  <title> | Zhubingbing</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhubingbing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/openstack/制作openshift iso/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T16:26:42+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/27/openstack/制作openshift iso/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/27/openstack/制作openshift iso/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="制作iso过程文档"><a href="#制作iso过程文档" class="headerlink" title="制作iso过程文档"></a>制作iso过程文档</h2><h3 id="制作openshift-iso"><a href="#制作openshift-iso" class="headerlink" title="制作openshift iso"></a>制作openshift iso</h3><p>Fedora发行版制作的工具主要有revisor和pungi两种；<br>revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；<br>pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；<br>下面是使用 pungi来制作的iso</p>
+<h3 id="安装pungi"><a href="#安装pungi" class="headerlink" title="安装pungi"></a>安装pungi</h3><p>以下都是环境都是基于centos7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">## 安装epel repo</div><div class="line">yum install -y epel-release</div><div class="line"></div><div class="line">## 安装elrepo</div><div class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</div><div class="line">rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm </div><div class="line"></div><div class="line">## 安装 pungi</div><div class="line">yum install -y pungi hfsplus-tools kmod-hfs kmod-hfsplus docker</div></pre></td></tr></table></figure>
+<h3 id="使用pungi-build-iso"><a href="#使用pungi-build-iso" class="headerlink" title="使用pungi build iso"></a>使用pungi build iso</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[root@localhost kolla-iso]# git clone http://gitlab.sh.99cloud.net/zhubingbing/openshift-iso.git</div><div class="line">[root@localhost kolla-iso]# cd openshif-iso</div><div class="line">[root@localhost kolla-iso]# ls</div><div class="line">build.sh  cobbler  grub.cfg  isolinux.cfg  ks.cfg  openshift  os_ks.cfg  README.md</div><div class="line">## 这些包自己预先准备好，因为过大就没放在github上面，路径是存在 openshif-iso/openshift/目录下面，如果没有这个目录自己建立</div><div class="line">[root@localhost kolla-iso]# ls openshift/</div><div class="line">centos-openshift-origin.tar  docker-registry.tar  openshift-ansible.tar.gz  openshift-package.tar  registry.tar</div><div class="line">[root@localhost openshift]# du -h openshift/</div><div class="line">1.8G	.</div><div class="line">[root@localhost kolla-iso]# ./build.sh cobbler</div><div class="line">Sending build context to Docker daemon 34.43 MB</div><div class="line">Step 1 : FROM centos</div><div class="line"> ---&gt; 36540f359ca3</div><div class="line">Step 2 : RUN yum install -y epel-release</div><div class="line"></div><div class="line">[root@localhost kolla-iso] ./build   //等待10几分钟iso就build好了</div><div class="line">ls /root/kolla-iso/Ocata/x86_64/iso/CentOS-DVD-x86_64-Ocata.iso</div></pre></td></tr></table></figure>
+<h3 id="build-sh代码"><a href="#build-sh代码" class="headerlink" title="build.sh代码"></a>build.sh代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash -e</div><div class="line">case $1 in</div><div class="line">    &apos;&apos;)</div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -G -C -B</div><div class="line">rsync -a isolinux.cfg Ocata/x86_64/os/isolinux/</div><div class="line">rsync -a os_ks.cfg Ocata/x86_64/os/images/ks.cfg</div><div class="line">mount Ocata/x86_64/os/images/efiboot.img /mnt</div><div class="line">rsync -a grub.cfg /mnt/EFI/BOOT/</div><div class="line">rsync -a grub.cfg Ocata/x86_64/os/EFI/BOOT/</div><div class="line">umount /mnt</div><div class="line">rm -f Ocata/x86_64/os/images/macboot.img</div><div class="line">mkdir Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/init.sh Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/cobbler.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/docker-registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-ansible.tar.gz Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-package.tar Ocata/x86_64/os/extras</div><div class="line"></div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -I</div><div class="line">        ;;</div><div class="line">    &quot;cobbler&quot; )</div><div class="line">docker build -t cobbler cobbler/build/; docker save cobbler &gt; cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">    &quot;clean&quot;)</div><div class="line">rm -rf  centos centos-extras docker epel logs ourtree work ocata Ocata cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">esac</div></pre></td></tr></table></figure>
+<h2 id="测试ISO"><a href="#测试ISO" class="headerlink" title="测试ISO"></a>测试ISO</h2><h3 id="使用openshift-iso安装部署节点"><a href="#使用openshift-iso安装部署节点" class="headerlink" title="使用openshift iso安装部署节点"></a>使用openshift iso安装部署节点</h3><h4 id="设置virtualbox虚拟机从光盘启动"><a href="#设置virtualbox虚拟机从光盘启动" class="headerlink" title="设置virtualbox虚拟机从光盘启动"></a>设置virtualbox虚拟机从光盘启动</h4><p>虚拟机配置：2c 4g 40g</p>
+<p><img src="/images/openshift/openshift-install01.png" alt=""></p>
+<p><img src="/images/openshift/openshift-install02.png" alt=""></p>
+<h4 id="使用iso安装openshit部署节点"><a href="#使用iso安装openshit部署节点" class="headerlink" title="使用iso安装openshit部署节点"></a>使用iso安装openshit部署节点</h4><p>使用上下键选择安装openshift， 按下table键设置ip地址，确认（enter）开始安装</p>
+<p><img src="/images/openshift/openshift-install03.png" alt=""></p>
+<p>安装完成确认3件事</p>
+<ol>
+<li><p>registry 是否正常启动</p>
+</li>
+<li><p>cobbler 是否正常</p>
+</li>
+<li><p>openshift yum源是否正常</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">### cobbler 容器和registry容器正常启动</div><div class="line">[root@control01 ~]# docker ps</div><div class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</div><div class="line">e01bced0a610        registry:2          &quot;/entrypoint.sh /etc/&quot;   28 seconds ago      Up 26 seconds       0.0.0.0:4000-&gt;5000/tcp   registry</div><div class="line">b651bdf9c0c2        cobbler             &quot;/usr/bin/supervisord&quot;   2 minutes ago       Up 2 minutes                                 cobbler</div><div class="line">### 检查registry里面镜像是否正常</div><div class="line">[root@control01 openshift]# pwd</div><div class="line">/registry/docker/registry/v2/repositories/openshift</div><div class="line">[root@control01 openshift]# ls</div><div class="line">cockpit  origin-deployer  origin-docker-registry  origin-haproxy-router  origin-metrics-cassandra  origin-metrics-hawkular-metrics  origin-metrics-heapster  origin-pod</div><div class="line"></div><div class="line">### 检查openshift yum源是否可以用</div><div class="line">[root@control01 openshift]# curl http://192.168.56.100:81/openshift-package/</div><div class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;</div><div class="line">&lt;html&gt;</div><div class="line"> &lt;head&gt;</div><div class="line">  &lt;title&gt;Index of /openshift-package&lt;/title&gt;</div><div class="line"> &lt;/head&gt;</div><div class="line"> &lt;body&gt;</div><div class="line">&lt;h1&gt;Index of /openshift-package&lt;/h1&gt;</div><div class="line">  &lt;table&gt;</div><div class="line">   &lt;tr&gt;&lt;th valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/blank.gif&quot; alt=&quot;[ICO]&quot;&gt;&lt;/th&gt;&lt;th&gt;&lt;a href=&quot;?C=N;O=D&quot;&gt;Name&lt;/a&gt;&lt;/th&gt;&lt;th&gt;&lt;a href=&quot;?C=M;O=A&quot;&gt;Last modified&lt;/a&gt;&lt;/th&gt;&lt;th&gt;&lt;a href=&quot;?C=S;O=A&quot;&gt;Size&lt;/a&gt;&lt;/th&gt;&lt;th&gt;&lt;a href=&quot;?C=D;O=A&quot;&gt;Description&lt;/a&gt;&lt;/th&gt;&lt;/tr&gt;</div><div class="line">   &lt;tr&gt;&lt;th colspan=&quot;5&quot;&gt;&lt;hr&gt;&lt;/th&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/back.gif&quot; alt=&quot;[PARENTDIR]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;/&quot;&gt;Parent Directory&lt;/a&gt;       &lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;  - &lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;ansible-2.3.1.0-1.el7.noarch.rpm&quot;&gt;ansible-2.3.1.0-1.el..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;5.7M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;at-3.1.13-22.el7.x86_64.rpm&quot;&gt;at-3.1.13-22.el7.x86..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 51K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;attr-2.4.46-12.el7.x86_64.rpm&quot;&gt;attr-2.4.46-12.el7.x..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 66K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;avahi-libs-0.6.31-17.el7.x86_64.rpm&quot;&gt;avahi-libs-0.6.31-17..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 61K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;bash-completion-2.1-6.el7.noarch.rpm&quot;&gt;bash-completion-2.1-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 85K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;bc-1.06.95-13.el7.x86_64.rpm&quot;&gt;bc-1.06.95-13.el7.x8..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;115K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;bridge-utils-1.5-9.el7.x86_64.rpm&quot;&gt;bridge-utils-1.5-9.e..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 32K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;ceph-common-0.94.5-1.el7.x86_64.rpm&quot;&gt;ceph-common-0.94.5-1..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;6.2M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;conntrack-tools-1.4.4-3.el7_3.x86_64.rpm&quot;&gt;conntrack-tools-1.4...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;186K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;cryptsetup-1.7.2-1.el7.x86_64.rpm&quot;&gt;cryptsetup-1.7.2-1.e..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;124K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;cups-client-1.6.3-26.el7.x86_64.rpm&quot;&gt;cups-client-1.6.3-26..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;149K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;cups-libs-1.6.3-26.el7.x86_64.rpm&quot;&gt;cups-libs-1.6.3-26.e..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;356K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;ed-1.9-4.el7.x86_64.rpm&quot;&gt;ed-1.9-4.el7.x86_64.rpm&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 72K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;epel-release-7-9.noarch.rpm&quot;&gt;epel-release-7-9.noa..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 14K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;etcd-3.1.9-1.el7.x86_64.rpm&quot;&gt;etcd-3.1.9-1.el7.x86..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;7.3M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;gdisk-0.8.6-5.el7.x86_64.rpm&quot;&gt;gdisk-0.8.6-5.el7.x8..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;187K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;glusterfs-fuse-3.7.9-12.el7.centos.x86_64.rpm&quot;&gt;glusterfs-fuse-3.7.9..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;109K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;gssproxy-0.4.1-13.el7.x86_64.rpm&quot;&gt;gssproxy-0.4.1-13.el..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 87K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;iptables-services-1.4.21-17.el7.x86_64.rpm&quot;&gt;iptables-services-1...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 50K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;iscsi-initiator-utils-6.2.0.873-35.el7.x86_64.rpm&quot;&gt;iscsi-initiator-util..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;417K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;iscsi-initiator-utils-iscsiuio-6.2.0.873-35.el7.x86_64.rpm&quot;&gt;iscsi-initiator-util..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 85K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;keyutils-1.5.8-3.el7.x86_64.rpm&quot;&gt;keyutils-1.5.8-3.el7..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 54K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libbasicobjects-0.1.1-27.el7.x86_64.rpm&quot;&gt;libbasicobjects-0.1...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 25K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libcollection-0.6.2-27.el7.x86_64.rpm&quot;&gt;libcollection-0.6.2-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 41K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libicu-50.1.2-15.el7.x86_64.rpm&quot;&gt;libicu-50.1.2-15.el7..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;6.9M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libini_config-1.3.0-27.el7.x86_64.rpm&quot;&gt;libini_config-1.3.0-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 63K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libnetfilter_cthelper-1.0.0-9.el7.x86_64.rpm&quot;&gt;libnetfilter_cthelpe..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 18K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libnetfilter_cttimeout-1.0.0-6.el7.x86_64.rpm&quot;&gt;libnetfilter_cttimeo..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 18K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libnetfilter_queue-1.0.2-2.el7.x86_64.rpm&quot;&gt;libnetfilter_queue-1..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 23K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libnfsidmap-0.25-15.el7.x86_64.rpm&quot;&gt;libnfsidmap-0.25-15...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 47K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libpath_utils-0.2.1-27.el7.x86_64.rpm&quot;&gt;libpath_utils-0.2.1-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 27K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libref_array-0.1.5-27.el7.x86_64.rpm&quot;&gt;libref_array-0.1.5-2..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 26K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libtalloc-2.1.6-1.el7.x86_64.rpm&quot;&gt;libtalloc-2.1.6-1.el..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 34K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libtevent-0.9.28-1.el7.x86_64.rpm&quot;&gt;libtevent-0.9.28-1.e..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 34K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libtirpc-0.2.4-0.8.el7_3.x86_64.rpm&quot;&gt;libtirpc-0.2.4-0.8.e..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 88K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;libverto-tevent-0.2.5-4.el7.x86_64.rpm&quot;&gt;libverto-tevent-0.2...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;9.0K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;m4-1.4.16-10.el7.x86_64.rpm&quot;&gt;m4-1.4.16-10.el7.x86..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;256K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;mailx-12.5-12.el7_0.x86_64.rpm&quot;&gt;mailx-12.5-12.el7_0...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;244K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;nfs-utils-1.3.0-0.33.el7_3.x86_64.rpm&quot;&gt;nfs-utils-1.3.0-0.33..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;377K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;openvswitch-2.6.1-3.git20161206.el7.x86_64.rpm&quot;&gt;openvswitch-2.6.1-3...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;4.9M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-1.5.1-1.el7.x86_64.rpm&quot;&gt;origin-1.5.1-1.el7.x..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 35M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-clients-1.5.1-1.el7.x86_64.rpm&quot;&gt;origin-clients-1.5.1..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 16M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-docker-excluder-1.5.1-1.el7.noarch.rpm&quot;&gt;origin-docker-exclud..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;6.1K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-excluder-1.5.1-1.el7.noarch.rpm&quot;&gt;origin-excluder-1.5...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;6.1K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-master-1.5.1-1.el7.x86_64.rpm&quot;&gt;origin-master-1.5.1-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;9.2K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-node-1.5.1-1.el7.x86_64.rpm&quot;&gt;origin-node-1.5.1-1...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;7.0K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;origin-sdn-ovs-1.5.1-1.el7.x86_64.rpm&quot;&gt;origin-sdn-ovs-1.5.1..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;3.1M&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;patch-2.7.1-8.el7.x86_64.rpm&quot;&gt;patch-2.7.1-8.el7.x8..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;110K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;psmisc-22.20-11.el7.x86_64.rpm&quot;&gt;psmisc-22.20-11.el7...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;141K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python-keyczar-0.71c-2.el7.noarch.rpm&quot;&gt;python-keyczar-0.71c..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;218K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python-rados-0.94.5-1.el7.x86_64.rpm&quot;&gt;python-rados-0.94.5-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 38K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python-rbd-0.94.5-1.el7.x86_64.rpm&quot;&gt;python-rbd-0.94.5-1...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 28K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python2-ecdsa-0.13-4.el7.noarch.rpm&quot;&gt;python2-ecdsa-0.13-4..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 83K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python2-paramiko-1.16.1-2.el7.noarch.rpm&quot;&gt;python2-paramiko-1.1..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;258K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;python2-pyasn1-0.1.9-7.el7.noarch.rpm&quot;&gt;python2-pyasn1-0.1.9..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:19  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;100K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;quota-4.01-14.el7.x86_64.rpm&quot;&gt;quota-4.01-14.el7.x8..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;179K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;quota-nls-4.01-14.el7.noarch.rpm&quot;&gt;quota-nls-4.01-14.el..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 90K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;redhat-lsb-core-4.1-27.el7.centos.1.x86_64.rpm&quot;&gt;redhat-lsb-core-4.1-..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 38K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64.rpm&quot;&gt;redhat-lsb-submod-se..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 15K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/folder.gif&quot; alt=&quot;[DIR]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;repodata/&quot;&gt;repodata/&lt;/a&gt;              &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 14:24  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;  - &lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;rpcbind-0.2.0-38.el7_3.1.x86_64.rpm&quot;&gt;rpcbind-0.2.0-38.el7..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 59K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;socat-1.7.2.2-5.el7.x86_64.rpm&quot;&gt;socat-1.7.2.2-5.el7...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;255K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;spax-1.5.2-13.el7.x86_64.rpm&quot;&gt;spax-1.5.2-13.el7.x8..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt;260K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;tcp_wrappers-7.6-77.el7.x86_64.rpm&quot;&gt;tcp_wrappers-7.6-77...&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 78K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;time-1.7-45.el7.x86_64.rpm&quot;&gt;time-1.7-45.el7.x86_..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 30K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;&lt;img src=&quot;/icons/unknown.gif&quot; alt=&quot;[   ]&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;a href=&quot;tuned-profiles-origin-node-1.5.1-1.el7.x86_64.rpm&quot;&gt;tuned-profiles-origi..&amp;gt;&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;2017-07-23 10:05  &lt;/td&gt;&lt;td align=&quot;right&quot;&gt; 11K&lt;/td&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</div><div class="line">   &lt;tr&gt;&lt;th colspan=&quot;5&quot;&gt;&lt;hr&gt;&lt;/th&gt;&lt;/tr&gt;</div><div class="line">&lt;/table&gt;</div></pre></td></tr></table></figure>
+<p>到现在部署节点已经安装完毕；yum 源监听的是<strong>81端口</strong>，registry 监听的是<strong>4000端口</strong></p>
+<h3 id="使用cobbler-安装node节点"><a href="#使用cobbler-安装node节点" class="headerlink" title="使用cobbler 安装node节点"></a>使用cobbler 安装node节点</h3><h4 id="设置虚拟机从pxe启动"><a href="#设置虚拟机从pxe启动" class="headerlink" title="设置虚拟机从pxe启动"></a>设置虚拟机从pxe启动</h4><p>在virtulbox要注意的一点是，要<strong>关闭virtulbox自带的dhcp</strong>；<strong>网络模式使用host-only</strong></p>
+<p><img src="/images/openshift/openshift-install04.png" alt=""></p>
+<p><img src="/images/openshift/openshift-install05.png" alt=""></p>
+<p><img src="/images/openshift/openshift-install06.png" alt=""></p>
+<h4 id="开始安装node节点"><a href="#开始安装node节点" class="headerlink" title="开始安装node节点"></a>开始安装node节点</h4><p>使用上下键选择安装centos7， 按下table键设置ip地址，确认（enter）开始安装</p>
+<p><img src="/images/openshift/openshift-install07.png" alt=""></p>
+<h2 id="安装openshift"><a href="#安装openshift" class="headerlink" title="安装openshift"></a>安装openshift</h2><h3 id="修改host文件"><a href="#修改host文件" class="headerlink" title="修改host文件"></a>修改host文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@control01 byo]# vim /etc/hosts</div><div class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</div><div class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</div><div class="line">192.168.56.100 control01</div><div class="line">192.168.56.101 control02</div></pre></td></tr></table></figure>
+<h3 id="设置inventory"><a href="#设置inventory" class="headerlink" title="设置inventory"></a>设置inventory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">[root@control01 byo]# vim /root/openshift-ansible/inventory/byo/hosts.simple</div><div class="line">[OSEv3:children]</div><div class="line">masters</div><div class="line">nodes</div><div class="line">etcd</div><div class="line"></div><div class="line">[OSEv3:vars]</div><div class="line">ansible_ssh_user=root</div><div class="line">openshift_deployment_type=origin</div><div class="line">openshift_master_cluster_hostname=control02</div><div class="line">openshif_release=v1.5</div><div class="line">#### 注意这个all-in-one本来不该设置的，但是oepeshift内部使用域名访问</div><div class="line">openshift_master_cluster_method=native</div><div class="line">openshift_master_cluster_public_hostname=192.168.56.101</div><div class="line">openshift_docker_options=&quot;-l warn --ipv6=false&quot;</div><div class="line">openshift_master_identity_providers=[&#123;&apos;name&apos;: &apos;htpasswd_auth&apos;, &apos;login&apos;: &apos;true&apos;, &apos;challenge&apos;: &apos;true&apos;, &apos;kind&apos;: &apos;HTPasswdPasswordIdentityProvider&apos;, &apos;filename&apos;: &apos;/etc/origin/master/htpasswd&apos;&#125;]</div><div class="line">openshift_additional_repos=[&#123;&apos;id&apos;: &apos;openshift-origin-local&apos;, &apos;name&apos;: &apos;OpenShift Origin&apos;, &apos;baseurl&apos;: &apos;http://192.168.56.100:81/openshift-package&apos;, &apos;enabled&apos;: 1, &apos;gpgcheck&apos;: 0&#125;]</div><div class="line">openshift_docker_additional_registries=192.168.56.100:4000</div><div class="line">openshift_docker_insecure_registries=0.0.0.0/0</div><div class="line">openshift_examples_modify_imagestreams=true</div><div class="line">openshift_cockpit_deployer_prefix=192.168.56.100:4000/openshift/</div><div class="line">openshift_cockpit=192.168.56.100:4000/openshift/cockpit/kubernetes</div><div class="line">openshift_disable_check=memory_availability,disk_availability,package_version,package_availability,package_update,docker_image_availability,docker_storage_driver,docker_storage</div><div class="line"></div><div class="line">[masters]</div><div class="line">control02</div><div class="line"></div><div class="line">[etcd]</div><div class="line">control02</div><div class="line"></div><div class="line">[nodes]</div><div class="line">control02 openshift_schedulable=true  openshift_node_labels=&quot;&#123;&apos;region&apos;: &apos;infra&apos;, &apos;zone&apos;: &apos;default&apos;&#125;&quot;</div><div class="line"></div><div class="line">### 测试ansible是否ok</div><div class="line">[root@control01 byo]# ansible -i hosts.simple all -m ping</div><div class="line">control02 | SUCCESS =&gt; &#123;</div><div class="line">    &quot;changed&quot;: false,</div><div class="line">    &quot;ping&quot;: &quot;pong&quot;</div><div class="line">&#125;</div><div class="line"></div><div class="line">### 安装</div><div class="line">[root@control01 ~]# ansible-playbook ~/openshift-ansible/playbooks/byo/config.yml -i  /root/openshift-ansible/inventory/byo/hosts.simple</div><div class="line"></div><div class="line">PLAY [Create initial host groups for localhost] ***************************************************************************************************************************************************************</div><div class="line"></div><div class="line">TASK [include_vars] *******************************************************************************************************************************************************************************************</div><div class="line">ok: [localhost]</div><div class="line"></div><div class="line">PLAY [Populate config host groups] ****************************************************************************************************************************************************************************</div><div class="line"></div><div class="line">TASK [Evaluate groups - g_etcd_hosts required] ****************************************************************************************************************************************************************</div><div class="line">skipping: [localhost]</div><div class="line"></div><div class="line">TASK [Evaluate groups - g_master_hosts or g_new_master_hosts required] ****************************************************************************************************************************************</div><div class="line">skipping: [localhost]</div><div class="line"></div><div class="line"></div><div class="line">TASK [openshift_excluder : Enable openshift excluder] *********************************************************************************************************************************************************</div><div class="line">changed: [control02]</div><div class="line"></div><div class="line">PLAY RECAP ****************************************************************************************************************************************************************************************************</div><div class="line">control02                  : ok=598  changed=160  unreachable=0    failed=0</div><div class="line">localhost                  : ok=12   changed=0    unreachable=0    failed=0</div><div class="line"></div><div class="line">[root@control01 ~]#</div><div class="line">[root@control01 ~]#</div><div class="line">[root@control01 ~]#</div><div class="line">[root@control01 ~]# ssh control02</div><div class="line">Warning: Permanently added &apos;control02,192.168.56.101&apos; (ECDSA) to the list of known hosts.</div><div class="line">Last login: Sun Jul 30 08:12:54 2017 from 192.168.56.100</div><div class="line">[root@control02 ~]# kubectl get nodes</div><div class="line">NAME        STATUS    AGE</div><div class="line">control02   Ready     8m</div><div class="line">[root@control02 ~]# kubectl get pods</div><div class="line">NAME                       READY     STATUS    RESTARTS   AGE</div><div class="line">docker-registry-1-2p331    1/1       Running   0          2m</div><div class="line">registry-console-1-1rvtj   1/1       Running   0          1m</div><div class="line">router-1-fhf1x             1/1       Running   0          3m</div></pre></td></tr></table></figure>
+<p>安装结束，默认会安装registry、console、router</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-pay.jpg" alt="zhubingbing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/17/openstack/openshift 部署之前环境准备/" rel="next" title="openshift部署之前环境准备">
+                <i class="fa fa-chevron-left"></i> openshift部署之前环境准备
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhubingbing" />
+          <p class="site-author-name" itemprop="name">zhubingbing</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhubingbing" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/zhubingbing" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhubingbing" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/zhubingbing" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/zhubingbing" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#制作iso过程文档"><span class="nav-number">1.</span> <span class="nav-text">制作iso过程文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#制作openshift-iso"><span class="nav-number">1.1.</span> <span class="nav-text">制作openshift iso</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装pungi"><span class="nav-number">1.2.</span> <span class="nav-text">安装pungi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用pungi-build-iso"><span class="nav-number">1.3.</span> <span class="nav-text">使用pungi build iso</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-sh代码"><span class="nav-number">1.4.</span> <span class="nav-text">build.sh代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试ISO"><span class="nav-number">2.</span> <span class="nav-text">测试ISO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用openshift-iso安装部署节点"><span class="nav-number">2.1.</span> <span class="nav-text">使用openshift iso安装部署节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置virtualbox虚拟机从光盘启动"><span class="nav-number">2.1.1.</span> <span class="nav-text">设置virtualbox虚拟机从光盘启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用iso安装openshit部署节点"><span class="nav-number">2.1.2.</span> <span class="nav-text">使用iso安装openshit部署节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用cobbler-安装node节点"><span class="nav-number">2.2.</span> <span class="nav-text">使用cobbler 安装node节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置虚拟机从pxe启动"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置虚拟机从pxe启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始安装node节点"><span class="nav-number">2.2.2.</span> <span class="nav-text">开始安装node节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装openshift"><span class="nav-number">3.</span> <span class="nav-text">安装openshift</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改host文件"><span class="nav-number">3.1.</span> <span class="nav-text">修改host文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置inventory"><span class="nav-number">3.2.</span> <span class="nav-text">设置inventory</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhubingbing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyt7hBR7h';
+      var conf = '40c40d7bca2d9c15d2be2c020e79536b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
