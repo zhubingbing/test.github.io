@@ -317,6 +317,158 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/openstack/Openshift 多节点测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/01/openstack/Openshift 多节点测试/" itemprop="url">Openshift-02</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T12:30:00+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openshift/" itemprop="url" rel="index">
+                    <span itemprop="name">Openshift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/01/openstack/Openshift 多节点测试/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2017/08/01/openstack/Openshift 多节点测试/" class="cy_cmt_count" data-xid="2017/08/01/openstack/Openshift 多节点测试/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Openshift-多节点测试"><a href="#Openshift-多节点测试" class="headerlink" title="Openshift 多节点测试"></a>Openshift 多节点测试</h3><h4 id="部署设置inventory"><a href="#部署设置inventory" class="headerlink" title="部署设置inventory"></a>部署设置inventory</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">vim mul-inventory</div><div class="line"></div><div class="line">[OSEv3:children]</div><div class="line">masters</div><div class="line">nodes</div><div class="line">etcd</div><div class="line"></div><div class="line">[OSEv3:vars]</div><div class="line">ansible_ssh_user=root</div><div class="line">openshift_deployment_type=origin</div><div class="line">openshif_release=v1.5</div><div class="line">openshift_master_identity_providers=[&#123;&apos;name&apos;: &apos;keystone_provider&apos;, &apos;login&apos;: &apos;true&apos;, &apos;challenge&apos;: &apos;true&apos;, &apos;kind&apos;: &apos;KeystonePasswordIdentityProvider&apos;, &apos;domainName&apos;: &apos;default&apos;, &apos;url&apos;: &apos;http://172.16.130.214:5000&apos; &#125;]</div><div class="line">openshift_docker_options=&quot;-l warn --ipv6=false&quot;</div><div class="line">openshift_master_cluster_method=native</div><div class="line">openshift_master_cluster_hostname=node1.99cloud.com</div><div class="line">openshift_master_cluster_public_hostname=172.16.50.43</div><div class="line">openshift_additional_repos=[&#123;&apos;id&apos;: &apos;openshift-origin-local&apos;, &apos;name&apos;: &apos;OpenShift Origin&apos;, &apos;baseurl&apos;: &apos;http://172.16.50.43:8040/centos-openshift-origin&apos;, &apos;enabled&apos;: 1, &apos;gpgcheck&apos;: 0&#125;,&#123;&apos;id&apos;: &apos;openshift-bse-local&apos;, &apos;name&apos;: &apos;OpenShift Base&apos;, &apos;baseurl&apos;: &apos;http://172.16.50.43:8040/base&apos;, &apos;enabled&apos;: 1, &apos;gpgcheck&apos;: 0&#125;]</div><div class="line">openshift_docker_additional_registries=172.16.50.43:5000</div><div class="line">openshift_docker_insecure_registries=0.0.0.0/0</div><div class="line">openshift_examples_modify_imagestreams=true</div><div class="line">openshift_cockpit_deployer_prefix=172.16.50.43:5000/openshift/</div><div class="line">openshift_cockpit=172.16.50.43:5000/openshift/cockpit/kubernetes</div><div class="line">openshift_disable_check=memory_availability,disk_availability,package_availability,package_update,docker_image_availability,docker_storage_driver,docker_storage</div><div class="line"></div><div class="line">[masters]</div><div class="line">openshif-2</div><div class="line"></div><div class="line"></div><div class="line">[etcd]</div><div class="line">openshif-2</div><div class="line">openshif-3</div><div class="line">openshif-4</div><div class="line"></div><div class="line"></div><div class="line">[nodes]</div><div class="line">openshif-3 openshift_schedulable=true openshift_node_labels=&quot;&#123;&apos;region&apos;: &apos;infra&apos;, &apos;zone&apos;: &apos;default&apos;&#125;&quot;</div><div class="line">openshif-2 openshift_schedulable=true</div><div class="line">openshif-4 openshift_schedulable=true</div></pre></td></tr></table></figure>
+<p>执行部署命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@openshif-2 ~]# ansible-playbook ~/zhu/openshift-ansible/playbooks/byo/config.yml -i mul-inventory</div><div class="line">[root@openshif-2 ~]# kubectl get node</div><div class="line">NAME           STATUS    AGE</div><div class="line">172.16.50.33   Ready     16h</div><div class="line">172.16.50.37   Ready     16h</div><div class="line">172.16.50.54   Ready     16h</div></pre></td></tr></table></figure>
+<h3 id="部署Openshift-ha多节点测试"><a href="#部署Openshift-ha多节点测试" class="headerlink" title="部署Openshift ha多节点测试"></a>部署Openshift ha多节点测试</h3><p>默认master节点负载均衡是haproxy，编写inventory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">vim ha-inventory</div><div class="line"></div><div class="line">[OSEv3:children]</div><div class="line">masters</div><div class="line">nodes</div><div class="line">etcd</div><div class="line">lb</div><div class="line"></div><div class="line">[OSEv3:vars]</div><div class="line">ansible_ssh_user=root</div><div class="line">openshift_deployment_type=origin</div><div class="line">openshif_release=v1.5</div><div class="line">openshift_master_identity_providers=[&#123;&apos;name&apos;: &apos;keystone_provider&apos;, &apos;login&apos;: &apos;true&apos;, &apos;challenge&apos;: &apos;true&apos;, &apos;kind&apos;: &apos;KeystonePasswordIdentityProvider&apos;, &apos;domainName&apos;: &apos;default&apos;, &apos;url&apos;: &apos;http://172.16.130.214:5000&apos; &#125;]</div><div class="line">openshift_docker_options=&quot;-l warn --ipv6=false&quot;</div><div class="line">### ha要打开native这个选项</div><div class="line">openshift_master_cluster_method=native</div><div class="line">openshift_master_cluster_hostname=node1.99cloud.com</div><div class="line">openshift_master_cluster_public_hostname=172.16.50.43</div><div class="line">openshift_additional_repos=[&#123;&apos;id&apos;: &apos;openshift-origin-local&apos;, &apos;name&apos;: &apos;OpenShift Origin&apos;, &apos;baseurl&apos;: &apos;http://172.16.50.43:8040/centos-openshift-origin&apos;, &apos;enabled&apos;: 1, &apos;gpgcheck&apos;: 0&#125;,&#123;&apos;id&apos;: &apos;openshift-bse-local&apos;, &apos;name&apos;: &apos;OpenShift Base&apos;, &apos;baseurl&apos;: &apos;http://172.16.50.43:8040/base&apos;, &apos;enabled&apos;: 1, &apos;gpgcheck&apos;: 0&#125;]</div><div class="line">openshift_docker_additional_registries=172.16.50.43:5000</div><div class="line">openshift_docker_insecure_registries=0.0.0.0/0</div><div class="line">openshift_examples_modify_imagestreams=true</div><div class="line">openshift_cockpit_deployer_prefix=172.16.50.43:5000/openshift/</div><div class="line">openshift_cockpit=172.16.50.43:5000/openshift/cockpit/kubernetes</div><div class="line">openshift_disable_check=memory_availability,disk_availability,package_availability,package_update,docker_image_availability,docker_storage_driver,docker_storage</div><div class="line"></div><div class="line">[etcd]</div><div class="line">openshif-2</div><div class="line">openshif-3</div><div class="line">openshif-4</div><div class="line"></div><div class="line">[lb]</div><div class="line">openshif-1</div><div class="line"></div><div class="line">[nodes]</div><div class="line">openshif-3 openshift_schedulable=true openshift_node_labels=&quot;&#123;&apos;region&apos;: &apos;infra&apos;, &apos;zone&apos;: &apos;default&apos;&#125;&quot;</div><div class="line">openshif-2 openshift_schedulable=true</div><div class="line">openshif-4 openshift_schedulable=true</div></pre></td></tr></table></figure>
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@openshif-2 ~]# ansible-playbook ~/zhu/openshift-ansible/playbooks/byo/config.yml -i mul-inventory</div><div class="line">[root@openshif-2 ~]# kubectl get node</div><div class="line">NAME           STATUS    AGE</div><div class="line">172.16.50.33   Ready     16h</div><div class="line">172.16.50.37   Ready     16h</div><div class="line">172.16.50.54   Ready     16h</div></pre></td></tr></table></figure>
+<p><strong>参考文档</strong>：<a href="https://docs.openshift.org/latest/install_config/install/advanced_install.html" target="_blank" rel="external">https://docs.openshift.org/latest/install_config/install/advanced_install.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/openstack/openshift 部署之前环境准备/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -553,6 +705,162 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/openstack/openshift介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/openstack/openshift介绍/" itemprop="url">Openshift-01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/14/openstack/openshift介绍/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2017/07/14/openstack/openshift介绍/" class="cy_cmt_count" data-xid="2017/07/14/openstack/openshift介绍/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="openshift-架构"><a href="#openshift-架构" class="headerlink" title="openshift 架构"></a>openshift 架构</h3><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>OpenShift是一个私有的PaaS（Platform-as-a-Service）解决方案，主要用来在容器中搭建、部署以及运行应用程序。它是基于Apache 2.0许可的开源软件， 并且发行了两个版本， 一个是社区版， 一个是企业版，由红帽主导。</p>
+<h3 id="OpenShift-Origin"><a href="#OpenShift-Origin" class="headerlink" title="OpenShift Origin"></a>OpenShift Origin</h3><p>从2014年7月开始，OpenShift就己经着力于研究一个非常出色的项目，该项目是将技术架构和与Docker、Kubernetes整合到一起（现在这是一件很常见的事）。</p>
+<p>一年前启动这个项目对于OpenShift来说是一个大胆而且充满风险的的决策。确实如此，当时云平台的竞争处于白热化的巅峰时期，而此时OpenShift就决定冒着风险启动这样一个非常重要的重建项目，这个风险主要来自于他们需要停止新特性的开发并妥协旧版本之间的兼容性问题。但是现在，我们相信他们作了一个正确的决定。</p>
+<p>到目前为止，社区版本联合了86名GitHub上（GitHub是红帽上10个最活跃项目之一）的开发志愿者。在12个月中己经进行了16次的迭代，并且刚刚发行了第一版。</p>
+<p>尽管这个方案主要是由红帽在推动，但它非常依赖Kubernetes（来源于Google）。由此引发了到底由谁来支配和主导的问题，该问题依赖于两个公司之间的协作和版本基准，Google开发出新特性后会发生什么？他们会关注Kubernetes还是OpenShift？很显然，这个问题还没有答案。</p>
+<p>但是，Google的技术支持部门己经确认，由两家公司同时主导只会给OpenShift带来更多益处。它将成为比Docker企业版更具竟争力的产品（机器、组建和群）。</p>
+<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
+<h4 id="基础架构层"><a href="#基础架构层" class="headerlink" title="基础架构层"></a>基础架构层</h4><p>基础架构层为OpenShift平台的运行提供了基础的运行环境。OpenShift支持运行在物理机、虚拟机、基础架构云（如OpenStack、Amazon Web Service、Microsoft Azure等）或混合云上。在操作系统层面，OpenShift支持多种不同的Linux操作系统，如企业级的Red Hat Enterprise Linux、社区的CentOS。</p>
+<h4 id="容器引擎层"><a href="#容器引擎层" class="headerlink" title="容器引擎层"></a>容器引擎层</h4><p>OpenShift目前以Docker作为平台的容器引擎。Docker是当前主流的容器引擎，已经在社区及许多企业的环境中进行了检验。事实证明Docker有能力为应用提供安全、稳定及高性能的运行环境。OpenShift运行的所有容器应用最终落到最底层的实现，其实就是一个个Docker容器实例。OpenShift对Docker整合是开放式的。OpenShift并没有修改Docker的任何代码，完全基于原生的Docker。熟悉Docker的用户对OpenShift能快速上手。同时，Docker现有的庞大的镜像资源都可以无缝地接入OpenShift平台。</p>
+<h4 id="容器编排层"><a href="#容器编排层" class="headerlink" title="容器编排层"></a>容器编排层</h4><p>目前大家对容器编排的讨论已经成为容器相关话题中的一个热点。Kubernetes是Google在内部多年容器使用经验基础上的一次总结。Kubernetes设计的目的是满足在大规模集群环境下对容器的调度和部署的需求。Kubernetes是OpenShift的重要组件，OpenShift平台上的许多对象和概念都是衍生自Kubernetes，如Pod、Namespace、Replication Controller等。与对Docker的集成一样，OpenShift并没有尝试从代码上定制Kubernetes，OpenShift对Kubernetes<br>的整合是叠加式的，在OpenShift集群上仍然可以通过Kubernetes的原生命令来操作Kubernetes的原生对象</p>
+<h4 id="Pass服务层"><a href="#Pass服务层" class="headerlink" title="Pass服务层"></a>Pass服务层</h4><p>Docker和Kubernetes为OpenShift提供了一个良好的基础，但是只有容器引擎和容器编排工具并不能大幅度提高生产效率，形成真正的生产力。正如Kubernetes在其主页上自我介绍所描述的那样，Kubernetes关注的核心是容器应用的编排和部署，它并不是一个完整的PaaS解决方案。容器平台最终的目的是向上层应用服务提供支持，加速应用开发、部署和运维的速度和效率。OpenShift在PaaS服务层默认提供了丰富的开发语言、开发框架、数据库及中间件的支持。用户可以在OpenShift这个平台上快速部署和获取一个数据库、分布式缓存或者业务规则引擎的服务。除了Docker Hub上的社区镜像外，OpenShift还有一个重要的服务提供方：Red Hat。Red Hat旗下的JBoss中间件系列几乎全线的产品都已经容器化。JBoss中间件包含了开发框架、开发工具、应用服务器、消息中间件、SOA套件、业务流程平台（BPM）、单点登录、应用监控、应用性能管理（APM）、分布式缓存及数据虚拟化等产品。这些中间件可以直接通过OpenShift容器云对用户提供服务。通过OpenShift，可以快速搭建一个Database as a Service，即DBaaS，一个BPMaaS，或者Redis-aaS等。</p>
+<h4 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h4><p>云平台一个很重要的特点是强调用户的自助服务，从而降低运维成本，提高服务效率。界面和工具是容器云平台上的最后一公里接入，好的界面和工具集合能帮助用户更高效地完成相关的任务。OpenShift提供了自动化流程Source to Image，即S2I，帮助用户容器化用各种编程语言开发的应用源代码。用户可以直接使用S2I或者把现有的流程与S2I整合，从而实现开发流程的持续集成和持续交付。提升开发、测试和部署的自动化程度，最终提高开发、测试及部署的效率，缩短上市时间。OpenShift提供了多种用户的接入渠道：Web控制台、命令行、IDE集成及RESTful编程接口。这些都是一个完善的企业级平台必不可少的组件。<br>针对容器应用的运维及集群的运维，OpenShift提供了性能度量采集、日志聚合模块及运维管理套件，帮助运维用户完成日常的应用及集群运维任务</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/openstack/kolla介绍/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -686,162 +994,6 @@
 <p>tox配置文件。tox是一个标准自动化测试工具，python里的。目前这个文件很简单，只包含了 virtualenv 设置和一些简单的检查。</p>
 <p>现在 Kolla 还小，不像 nova / neutron 这些庞然大物，因此很值得把 Kolla 的代码认真看看，整理 Kolla 的设计思路，对以后把握 Kolla 的发展很有帮助，也希望大家能参与到 Kolla 的社区中，无论是贡献代码、写写 Blog、找茬，都能帮助到 Kolla </p>
 <p>关于kolla方面的文章沙克写的很好，大家可以看看。<br>这个他的博客链接：<a href="http://www.chenshake.com/cloud-computing/" target="_blank" rel="external">http://www.chenshake.com/cloud-computing/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/openstack/openshift介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhubingbing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhubingbing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/14/openstack/openshift介绍/" itemprop="url">Openshift-01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">Openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/07/14/openstack/openshift介绍/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2017/07/14/openstack/openshift介绍/" class="cy_cmt_count" data-xid="2017/07/14/openstack/openshift介绍/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="openshift-架构"><a href="#openshift-架构" class="headerlink" title="openshift 架构"></a>openshift 架构</h3><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>OpenShift是一个私有的PaaS（Platform-as-a-Service）解决方案，主要用来在容器中搭建、部署以及运行应用程序。它是基于Apache 2.0许可的开源软件， 并且发行了两个版本， 一个是社区版， 一个是企业版，由红帽主导。</p>
-<h3 id="OpenShift-Origin"><a href="#OpenShift-Origin" class="headerlink" title="OpenShift Origin"></a>OpenShift Origin</h3><p>从2014年7月开始，OpenShift就己经着力于研究一个非常出色的项目，该项目是将技术架构和与Docker、Kubernetes整合到一起（现在这是一件很常见的事）。</p>
-<p>一年前启动这个项目对于OpenShift来说是一个大胆而且充满风险的的决策。确实如此，当时云平台的竞争处于白热化的巅峰时期，而此时OpenShift就决定冒着风险启动这样一个非常重要的重建项目，这个风险主要来自于他们需要停止新特性的开发并妥协旧版本之间的兼容性问题。但是现在，我们相信他们作了一个正确的决定。</p>
-<p>到目前为止，社区版本联合了86名GitHub上（GitHub是红帽上10个最活跃项目之一）的开发志愿者。在12个月中己经进行了16次的迭代，并且刚刚发行了第一版。</p>
-<p>尽管这个方案主要是由红帽在推动，但它非常依赖Kubernetes（来源于Google）。由此引发了到底由谁来支配和主导的问题，该问题依赖于两个公司之间的协作和版本基准，Google开发出新特性后会发生什么？他们会关注Kubernetes还是OpenShift？很显然，这个问题还没有答案。</p>
-<p>但是，Google的技术支持部门己经确认，由两家公司同时主导只会给OpenShift带来更多益处。它将成为比Docker企业版更具竟争力的产品（机器、组建和群）。</p>
-<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
-<h4 id="基础架构层"><a href="#基础架构层" class="headerlink" title="基础架构层"></a>基础架构层</h4><p>基础架构层为OpenShift平台的运行提供了基础的运行环境。OpenShift支持运行在物理机、虚拟机、基础架构云（如OpenStack、Amazon Web Service、Microsoft Azure等）或混合云上。在操作系统层面，OpenShift支持多种不同的Linux操作系统，如企业级的Red Hat Enterprise Linux、社区的CentOS。</p>
-<h4 id="容器引擎层"><a href="#容器引擎层" class="headerlink" title="容器引擎层"></a>容器引擎层</h4><p>OpenShift目前以Docker作为平台的容器引擎。Docker是当前主流的容器引擎，已经在社区及许多企业的环境中进行了检验。事实证明Docker有能力为应用提供安全、稳定及高性能的运行环境。OpenShift运行的所有容器应用最终落到最底层的实现，其实就是一个个Docker容器实例。OpenShift对Docker整合是开放式的。OpenShift并没有修改Docker的任何代码，完全基于原生的Docker。熟悉Docker的用户对OpenShift能快速上手。同时，Docker现有的庞大的镜像资源都可以无缝地接入OpenShift平台。</p>
-<h4 id="容器编排层"><a href="#容器编排层" class="headerlink" title="容器编排层"></a>容器编排层</h4><p>目前大家对容器编排的讨论已经成为容器相关话题中的一个热点。Kubernetes是Google在内部多年容器使用经验基础上的一次总结。Kubernetes设计的目的是满足在大规模集群环境下对容器的调度和部署的需求。Kubernetes是OpenShift的重要组件，OpenShift平台上的许多对象和概念都是衍生自Kubernetes，如Pod、Namespace、Replication Controller等。与对Docker的集成一样，OpenShift并没有尝试从代码上定制Kubernetes，OpenShift对Kubernetes<br>的整合是叠加式的，在OpenShift集群上仍然可以通过Kubernetes的原生命令来操作Kubernetes的原生对象</p>
-<h4 id="Pass服务层"><a href="#Pass服务层" class="headerlink" title="Pass服务层"></a>Pass服务层</h4><p>Docker和Kubernetes为OpenShift提供了一个良好的基础，但是只有容器引擎和容器编排工具并不能大幅度提高生产效率，形成真正的生产力。正如Kubernetes在其主页上自我介绍所描述的那样，Kubernetes关注的核心是容器应用的编排和部署，它并不是一个完整的PaaS解决方案。容器平台最终的目的是向上层应用服务提供支持，加速应用开发、部署和运维的速度和效率。OpenShift在PaaS服务层默认提供了丰富的开发语言、开发框架、数据库及中间件的支持。用户可以在OpenShift这个平台上快速部署和获取一个数据库、分布式缓存或者业务规则引擎的服务。除了Docker Hub上的社区镜像外，OpenShift还有一个重要的服务提供方：Red Hat。Red Hat旗下的JBoss中间件系列几乎全线的产品都已经容器化。JBoss中间件包含了开发框架、开发工具、应用服务器、消息中间件、SOA套件、业务流程平台（BPM）、单点登录、应用监控、应用性能管理（APM）、分布式缓存及数据虚拟化等产品。这些中间件可以直接通过OpenShift容器云对用户提供服务。通过OpenShift，可以快速搭建一个Database as a Service，即DBaaS，一个BPMaaS，或者Redis-aaS等。</p>
-<h4 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h4><p>云平台一个很重要的特点是强调用户的自助服务，从而降低运维成本，提高服务效率。界面和工具是容器云平台上的最后一公里接入，好的界面和工具集合能帮助用户更高效地完成相关的任务。OpenShift提供了自动化流程Source to Image，即S2I，帮助用户容器化用各种编程语言开发的应用源代码。用户可以直接使用S2I或者把现有的流程与S2I整合，从而实现开发流程的持续集成和持续交付。提升开发、测试和部署的自动化程度，最终提高开发、测试及部署的效率，缩短上市时间。OpenShift提供了多种用户的接入渠道：Web控制台、命令行、IDE集成及RESTful编程接口。这些都是一个完善的企业级平台必不可少的组件。<br>针对容器应用的运维及集群的运维，OpenShift提供了性能度量采集、日志聚合模块及运维管理套件，帮助运维用户完成日常的应用及集群运维任务</p>
 
           
         
@@ -1628,7 +1780,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

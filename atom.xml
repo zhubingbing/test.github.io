@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-16T22:55:45.000Z</updated>
+  <updated>2017-08-01T02:23:03.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Openshift-02</title>
+    <link href="http://yoursite.com/2017/08/01/openstack/Openshift%20%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%8B%E8%AF%95/"/>
+    <id>http://yoursite.com/2017/08/01/openstack/Openshift 多节点测试/</id>
+    <published>2017-08-01T04:30:00.000Z</published>
+    <updated>2017-08-01T02:23:03.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Openshift-多节点测试&quot;&gt;&lt;a href=&quot;#Openshift-多节点测试&quot; class=&quot;headerlink&quot; title=&quot;Openshift 多节点测试&quot;&gt;&lt;/a&gt;Openshift 多节点测试&lt;/h3&gt;&lt;h4 id=&quot;部署设置inventory
+    
+    </summary>
+    
+      <category term="Openshift" scheme="http://yoursite.com/categories/Openshift/"/>
+    
+    
+      <category term="Openshift" scheme="http://yoursite.com/tags/Openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/tags/pass/"/>
+    
+  </entry>
   
   <entry>
     <title>openshift部署之前环境准备</title>
@@ -38,6 +60,28 @@
   </entry>
   
   <entry>
+    <title>Openshift-01</title>
+    <link href="http://yoursite.com/2017/07/14/openstack/openshift%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/2017/07/14/openstack/openshift介绍/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-07-29T13:37:50.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openshift-架构&quot;&gt;&lt;a href=&quot;#openshift-架构&quot; class=&quot;headerlink&quot; title=&quot;openshift 架构&quot;&gt;&lt;/a&gt;openshift 架构&lt;/h3&gt;&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://yoursite.com/categories/Openstack/"/>
+    
+    
+      <category term="Openshift" scheme="http://yoursite.com/tags/Openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
     <title>介绍 kolla</title>
     <link href="http://yoursite.com/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
     <id>http://yoursite.com/2017/07/14/openstack/kolla介绍/</id>
@@ -57,28 +101,6 @@
       <category term="kolla" scheme="http://yoursite.com/tags/kolla/"/>
     
       <category term="openstack" scheme="http://yoursite.com/tags/openstack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Openshift-01</title>
-    <link href="http://yoursite.com/2017/07/14/openstack/openshift%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://yoursite.com/2017/07/14/openstack/openshift介绍/</id>
-    <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-07-29T13:37:50.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;openshift-架构&quot;&gt;&lt;a href=&quot;#openshift-架构&quot; class=&quot;headerlink&quot; title=&quot;openshift 架构&quot;&gt;&lt;/a&gt;openshift 架构&lt;/h3&gt;&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;
-    
-    </summary>
-    
-      <category term="Openstack" scheme="http://yoursite.com/categories/Openstack/"/>
-    
-    
-      <category term="Openshift" scheme="http://yoursite.com/tags/Openshift/"/>
-    
-      <category term="pass" scheme="http://yoursite.com/tags/pass/"/>
     
   </entry>
   
