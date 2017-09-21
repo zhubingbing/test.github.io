@@ -60,19 +60,16 @@
   </entry>
   
   <entry>
-    <title>kolla之reconfigure</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/</id>
+    <title>介绍 kolla</title>
+    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://zhubingbing.net/2017/07/14/openstack/kolla介绍/</id>
     <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-07-18T03:56:06.000Z</updated>
+    <updated>2017-07-14T09:19:58.000Z</updated>
     
     <summary type="html">
     
-      &lt;blockquote&gt;
-&lt;p&gt;今天好好理理kolla reconfigure如何玩的&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;kolla的配置管理主要是管理openstack service config文件；&lt;br&gt;主要实现是 &lt;/p&gt;
-&lt;figure class=&quot;hig
+      &lt;h3 id=&quot;kolla总结&quot;&gt;&lt;a href=&quot;#kolla总结&quot; class=&quot;headerlink&quot; title=&quot;kolla总结&quot;&gt;&lt;/a&gt;kolla总结&lt;/h3&gt;&lt;p&gt;在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。&lt;/p&gt;
+&lt;h4 id=&quot;kolla的
     
     </summary>
     
@@ -86,16 +83,19 @@
   </entry>
   
   <entry>
-    <title>介绍 kolla</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/kolla介绍/</id>
+    <title>kolla之reconfigure</title>
+    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/"/>
+    <id>http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/</id>
     <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-07-14T09:19:58.000Z</updated>
+    <updated>2017-07-18T03:56:06.000Z</updated>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;kolla总结&quot;&gt;&lt;a href=&quot;#kolla总结&quot; class=&quot;headerlink&quot; title=&quot;kolla总结&quot;&gt;&lt;/a&gt;kolla总结&lt;/h3&gt;&lt;p&gt;在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。&lt;/p&gt;
-&lt;h4 id=&quot;kolla的
+      &lt;blockquote&gt;
+&lt;p&gt;今天好好理理kolla reconfigure如何玩的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;kolla的配置管理主要是管理openstack service config文件；&lt;br&gt;主要实现是 &lt;/p&gt;
+&lt;figure class=&quot;hig
     
     </summary>
     
@@ -135,7 +135,7 @@
     <link href="http://zhubingbing.net/2017/07/14/openstack/openshift%E4%BB%8B%E7%BB%8D/"/>
     <id>http://zhubingbing.net/2017/07/14/openstack/openshift介绍/</id>
     <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-07-29T13:37:50.000Z</updated>
+    <updated>2017-09-21T09:11:12.000Z</updated>
     
     <summary type="html">
     
@@ -180,7 +180,7 @@
     <link href="http://zhubingbing.net/2017/07/06/openstack/rally/"/>
     <id>http://zhubingbing.net/2017/07/06/openstack/rally/</id>
     <published>2017-07-06T04:30:00.000Z</published>
-    <updated>2017-07-08T06:58:53.000Z</updated>
+    <updated>2017-09-21T08:56:33.000Z</updated>
     
     <summary type="html">
     

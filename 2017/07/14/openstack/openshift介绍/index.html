@@ -120,12 +120,13 @@
 <meta property="og:url" content="http://zhubingbing.net/2017/07/14/openstack/openshift介绍/index.html">
 <meta property="og:site_name" content="Zhubingbing">
 <meta property="og:description" content="openshift 架构介绍OpenShift是一个私有的PaaS（Platform-as-a-Service）解决方案，主要用来在容器中搭建、部署以及运行应用程序。它是基于Apache 2.0许可的开源软件， 并且发行了两个版本， 一个是社区版， 一个是企业版，由红帽主导。 OpenShift Origin从2014年7月开始，OpenShift就己经着力于研究一个非常出色的项目，该项目是将技术">
+<meta property="og:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/test.png">
 <meta property="og:image" content="http://zhubingbing.net/images/openshif技术堆栈.png">
-<meta property="og:updated_time" content="2017-07-29T13:37:50.000Z">
+<meta property="og:updated_time" content="2017-09-21T09:11:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openshift-01">
 <meta name="twitter:description" content="openshift 架构介绍OpenShift是一个私有的PaaS（Platform-as-a-Service）解决方案，主要用来在容器中搭建、部署以及运行应用程序。它是基于Apache 2.0许可的开源软件， 并且发行了两个版本， 一个是社区版， 一个是企业版，由红帽主导。 OpenShift Origin从2014年7月开始，OpenShift就己经着力于研究一个非常出色的项目，该项目是将技术">
-<meta name="twitter:image" content="http://zhubingbing.net/images/openshif技术堆栈.png">
+<meta name="twitter:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/test.png">
 
 
 
@@ -430,7 +431,8 @@
 <p>到目前为止，社区版本联合了86名GitHub上（GitHub是红帽上10个最活跃项目之一）的开发志愿者。在12个月中己经进行了16次的迭代，并且刚刚发行了第一版。</p>
 <p>尽管这个方案主要是由红帽在推动，但它非常依赖Kubernetes（来源于Google）。由此引发了到底由谁来支配和主导的问题，该问题依赖于两个公司之间的协作和版本基准，Google开发出新特性后会发生什么？他们会关注Kubernetes还是OpenShift？很显然，这个问题还没有答案。</p>
 <p>但是，Google的技术支持部门己经确认，由两家公司同时主导只会给OpenShift带来更多益处。它将成为比Docker企业版更具竟争力的产品（机器、组建和群）。</p>
-<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
+<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><img title="标题" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/test.png">
+<p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
 <h4 id="基础架构层"><a href="#基础架构层" class="headerlink" title="基础架构层"></a>基础架构层</h4><p>基础架构层为OpenShift平台的运行提供了基础的运行环境。OpenShift支持运行在物理机、虚拟机、基础架构云（如OpenStack、Amazon Web Service、Microsoft Azure等）或混合云上。在操作系统层面，OpenShift支持多种不同的Linux操作系统，如企业级的Red Hat Enterprise Linux、社区的CentOS。</p>
 <h4 id="容器引擎层"><a href="#容器引擎层" class="headerlink" title="容器引擎层"></a>容器引擎层</h4><p>OpenShift目前以Docker作为平台的容器引擎。Docker是当前主流的容器引擎，已经在社区及许多企业的环境中进行了检验。事实证明Docker有能力为应用提供安全、稳定及高性能的运行环境。OpenShift运行的所有容器应用最终落到最底层的实现，其实就是一个个Docker容器实例。OpenShift对Docker整合是开放式的。OpenShift并没有修改Docker的任何代码，完全基于原生的Docker。熟悉Docker的用户对OpenShift能快速上手。同时，Docker现有的庞大的镜像资源都可以无缝地接入OpenShift平台。</p>
 <h4 id="容器编排层"><a href="#容器编排层" class="headerlink" title="容器编排层"></a>容器编排层</h4><p>目前大家对容器编排的讨论已经成为容器相关话题中的一个热点。Kubernetes是Google在内部多年容器使用经验基础上的一次总结。Kubernetes设计的目的是满足在大规模集群环境下对容器的调度和部署的需求。Kubernetes是OpenShift的重要组件，OpenShift平台上的许多对象和概念都是衍生自Kubernetes，如Pod、Namespace、Replication Controller等。与对Docker的集成一样，OpenShift并没有尝试从代码上定制Kubernetes，OpenShift对Kubernetes<br>的整合是叠加式的，在OpenShift集群上仍然可以通过Kubernetes的原生命令来操作Kubernetes的原生对象</p>

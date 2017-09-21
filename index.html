@@ -705,6 +705,182 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zhubingbing.net/2017/07/14/openstack/kolla介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/openstack/kolla介绍/" itemprop="url">介绍 kolla</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/14/openstack/kolla介绍/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://zhubingbing.net/2017/07/14/openstack/kolla介绍/" class="cy_cmt_count" data-xid="2017/07/14/openstack/kolla介绍/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="kolla总结"><a href="#kolla总结" class="headerlink" title="kolla总结"></a>kolla总结</h3><p>在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。</p>
+<h4 id="kolla的定位"><a href="#kolla的定位" class="headerlink" title="kolla的定位"></a>kolla的定位</h4><p>实现生产级别容器化openstack平台，做到开箱即用</p>
+<h4 id="kolla的实现"><a href="#kolla的实现" class="headerlink" title="kolla的实现"></a>kolla的实现</h4><p>kolla实现主要以docker和ansible实现的。<br>ansible实现编排和远程推送<br>docker实现openstack服务容器化</p>
+<h4 id="kolla的实现带来什么变化"><a href="#kolla的实现带来什么变化" class="headerlink" title="kolla的实现带来什么变化"></a>kolla的实现带来什么变化</h4><p>1.让安装变得更加简单</p>
+<p>2.环境一致性</p>
+<p>3.让openstack升级不是困难</p>
+<p>4.灵活性大大加强</p>
+<p>5.openstack服务微服务化</p>
+<h4 id="kolla代码目录"><a href="#kolla代码目录" class="headerlink" title="kolla代码目录"></a>kolla代码目录</h4><p><img src="/images/kolla-ansible.png" alt=""></p>
+<p>从顶层文件目录结构来看，各个目录所包含的内容为：</p>
+<p>ansible</p>
+<p>ansible 配置目录里面包含了openstack service ansible role的实现， Kolla - Kolla with ansible!，是kolla-ansible最为重要的一部分。</p>
+<p>contrib</p>
+<p>示例目录。里面包含了 heat 的编排配置和magnum的一些例子 ；</p>
+<p>docs</p>
+<p>文档目录。也是非常重要的目录，里面包括开发环境设置、镜像编译、Kolla 环境变量等说明，建议把文档都认真读一遍 ；</p>
+<p>LICENSE</p>
+<p>LICENSE文件。Apache License Version 2 的 License 文件，没什么好说的。</p>
+<p>README.md</p>
+<p>说明文件。</p>
+<p>specs</p>
+<p>spec目录。目前只有一个 spec，说明使用容器安装 OpenStack 的理念和优势。</p>
+<p>test-requirements.txt</p>
+<p>python 的 requirements 文件。用于说明测试时所需要的 python 包，目前只有一个 PyYAML。</p>
+<p>tests</p>
+<p>测试目录。这个目录应该包含 Kolla 的测试套件，但目前只有一个 setup_docker.sh 用于安装 docker。</p>
+<p>tools</p>
+<p>工具脚本目录。目录包含编译 docker 镜像、清理 docker 环境、生成 Kolla 环境变量、Kolla 启动脚本、json/yaml文件检验等脚本。建议把这个目录的脚本都看一遍，需要点 Shell、python的知识。</p>
+<p>tox.ini</p>
+<p>tox配置文件。tox是一个标准自动化测试工具，python里的。目前这个文件很简单，只包含了 virtualenv 设置和一些简单的检查。</p>
+<p>现在 Kolla 还小，不像 nova / neutron 这些庞然大物，因此很值得把 Kolla 的代码认真看看，整理 Kolla 的设计思路，对以后把握 Kolla 的发展很有帮助，也希望大家能参与到 Kolla 的社区中，无论是贡献代码、写写 Blog、找茬，都能帮助到 Kolla </p>
+<p>关于kolla方面的文章沙克写的很好，大家可以看看。<br>这个他的博客链接：<a href="http://www.chenshake.com/cloud-computing/" target="_blank" rel="external">http://www.chenshake.com/cloud-computing/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -849,182 +1025,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">[root@control01 tasks]# cat config.yml</div><div class="line">---</div><div class="line">### 生成 node_config_directory（默认是/etc/kolla， 你可以在all.yml中设置）sevice目录</div><div class="line">- name: Ensuring config directories exist</div><div class="line">  file:</div><div class="line">    path: &quot;&#123;&#123; node_config_directory &#125;&#125;/&#123;&#123; item.key &#125;&#125;&quot;</div><div class="line">    state: &quot;directory&quot;</div><div class="line">    recurse: yes</div><div class="line">  when:</div><div class="line">    - inventory_hostname in groups[item.value.group]</div><div class="line">    - item.value.enabled | bool</div><div class="line">  with_dict: &quot;&#123;&#123; glance_services &#125;&#125;&quot;</div><div class="line"></div><div class="line">### copy config.json file 到node_config_directory/service 目录下</div><div class="line">- name: Copying over config.json files for services</div><div class="line">  template:</div><div class="line">    src: &quot;&#123;&#123; item.key &#125;&#125;.json.j2&quot;</div><div class="line">    dest: &quot;&#123;&#123; node_config_directory &#125;&#125;/&#123;&#123; item.key &#125;&#125;/config.json&quot;</div><div class="line">  register: glance_config_jsons</div><div class="line">  when:</div><div class="line">    - item.value.enabled | bool</div><div class="line">    - inventory_hostname in groups[item.value.group]</div><div class="line">  with_dict: &quot;&#123;&#123; glance_services &#125;&#125;&quot;</div><div class="line">  notify:</div><div class="line">    - Restart glance-api container</div><div class="line">    - Restart glance-registry container</div><div class="line"></div><div class="line">- name: Copying over glance-*.conf</div><div class="line">  merge_configs:</div><div class="line">    vars:</div><div class="line">      service_name: &quot;&#123;&#123; item.key &#125;&#125;&quot;</div><div class="line">    sources:</div><div class="line">      - &quot;&#123;&#123; role_path &#125;&#125;/templates/&#123;&#123; item.key &#125;&#125;.conf.j2&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/global.conf&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/database.conf&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/messaging.conf&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/glance.conf&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/glance/&#123;&#123; item.key &#125;&#125;.conf&quot;</div><div class="line">      - &quot;&#123;&#123; node_custom_config &#125;&#125;/glance/&#123;&#123; inventory_hostname &#125;&#125;/&#123;&#123; item.key &#125;&#125;.conf&quot;</div><div class="line">    dest: &quot;&#123;&#123; node_config_directory &#125;&#125;/&#123;&#123; item.key &#125;&#125;/&#123;&#123; item.key &#125;&#125;.conf&quot;</div><div class="line">  register: glance_confs</div><div class="line">  when:</div><div class="line">    - item.value.enabled | bool</div><div class="line">    - inventory_hostname in groups[item.value.group]</div><div class="line">  with_dict: &quot;&#123;&#123; glance_services &#125;&#125;&quot;</div><div class="line">  notify:</div><div class="line">    - Restart glance-api container</div><div class="line">    - Restart glance-registry container</div><div class="line"></div><div class="line">- name: Check if policies shall be overwritten</div><div class="line">  local_action: stat path=&quot;&#123;&#123; node_custom_config &#125;&#125;/glance/policy.json&quot;</div><div class="line">  register: glance_policy</div><div class="line"></div><div class="line">- name: Copying over existing policy.json</div><div class="line">  template:</div><div class="line">    src: &quot;&#123;&#123; node_custom_config &#125;&#125;/glance/policy.json&quot;</div><div class="line">    dest: &quot;&#123;&#123; node_config_directory &#125;&#125;/&#123;&#123; item.key &#125;&#125;/policy.json&quot;</div><div class="line">  register: glance_policy_jsons</div><div class="line">  when:</div><div class="line">    - glance_policy.stat.exists</div><div class="line">    - inventory_hostname in groups[item.value.group]</div><div class="line">  with_dict: &quot;&#123;&#123; glance_services &#125;&#125;&quot;</div><div class="line">  notify:</div><div class="line">    - Restart glance-api container</div><div class="line">    - Restart glance-registry container</div><div class="line"></div><div class="line">- name: Check glance containers</div><div class="line">  kolla_docker:</div><div class="line">    action: &quot;compare_container&quot;</div><div class="line">    common_options: &quot;&#123;&#123; docker_common_options &#125;&#125;&quot;</div><div class="line">    name: &quot;&#123;&#123; item.value.container_name &#125;&#125;&quot;</div><div class="line">    image: &quot;&#123;&#123; item.value.image &#125;&#125;&quot;</div><div class="line">    volumes: &quot;&#123;&#123; item.value.volumes &#125;&#125;&quot;</div><div class="line">  register: check_glance_containers</div><div class="line">  when:</div><div class="line">    - action != &quot;config&quot;</div><div class="line">    - inventory_hostname in groups[item.value.group]</div><div class="line">    - item.value.enabled | bool</div><div class="line">  with_dict: &quot;&#123;&#123; glance_services &#125;&#125;&quot;</div><div class="line">  notify:</div><div class="line">    - Restart glance-api container</div><div class="line">    - Restart glance-registry container</div></pre></td></tr></table></figure>
 <p>这里最核心的实现就是merge_configs。<br>action plugin中在merge_configs.py作用是导入template模板，并且run。代码在/usr/share/kolla-ansible/ansible/action_plugins/merge_configs.py</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div></pre></td><td class="code"><pre><div class="line">import collections</div><div class="line">import inspect</div><div class="line">import os</div><div class="line"></div><div class="line">from ansible.plugins import action</div><div class="line">from six import StringIO</div><div class="line"></div><div class="line">from oslo_config import iniparser</div><div class="line"></div><div class="line"></div><div class="line">class OverrideConfigParser(iniparser.BaseParser):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        self._cur_sections = collections.OrderedDict()</div><div class="line">        self._sections = collections.OrderedDict()</div><div class="line">        self._cur_section = None</div><div class="line"></div><div class="line">    def assignment(self, key, value):</div><div class="line">        cur_value = self._cur_section.get(key)</div><div class="line">        if len(value) == 1 and value[0] == &apos;&apos;:</div><div class="line">            value = []</div><div class="line">        if not cur_value:</div><div class="line">            self._cur_section[key] = [value]</div><div class="line">        else:</div><div class="line">            self._cur_section[key].append(value)</div><div class="line"></div><div class="line">    def parse(self, lineiter):</div><div class="line">        self._cur_sections = collections.OrderedDict()</div><div class="line">        super(OverrideConfigParser, self).parse(lineiter)</div><div class="line"></div><div class="line">        # merge _cur_sections into _sections</div><div class="line">        for section, values in self._cur_sections.items():</div><div class="line">            if section not in self._sections:</div><div class="line">                self._sections[section] = collections.OrderedDict()</div><div class="line">            for key, value in values.items():</div><div class="line">                self._sections[section][key] = value</div><div class="line"></div><div class="line">    def new_section(self, section):</div><div class="line">        cur_section = self._cur_sections.get(section)</div><div class="line">        if not cur_section:</div><div class="line">            cur_section = collections.OrderedDict()</div><div class="line">            self._cur_sections[section] = cur_section</div><div class="line">        self._cur_section = cur_section</div><div class="line">        return cur_section</div><div class="line"></div><div class="line">    def write(self, fp):</div><div class="line">        def write_key_value(key, values):</div><div class="line">            for v in values:</div><div class="line">                if not v:</div><div class="line">                    fp.write(&apos;&#123;&#125; =\n&apos;.format(key))</div><div class="line">                for index, value in enumerate(v):</div><div class="line">                    if index == 0:</div><div class="line">                        fp.write(&apos;&#123;&#125; = &#123;&#125;\n&apos;.format(key, value))</div><div class="line">                    else:</div><div class="line">                        fp.write(&apos;&#123;&#125;   &#123;&#125;\n&apos;.format(len(key)*&apos; &apos;, value))</div><div class="line"></div><div class="line">        def write_section(section):</div><div class="line">            for key, values in section.items():</div><div class="line">                write_key_value(key, values)</div><div class="line"></div><div class="line">        for section in self._sections:</div><div class="line">            fp.write(&apos;[&#123;&#125;]\n&apos;.format(section))</div><div class="line">            write_section(self._sections[section])</div><div class="line">            fp.write(&apos;\n&apos;)</div><div class="line"></div><div class="line"></div><div class="line">class ActionModule(action.ActionBase):</div><div class="line"></div><div class="line">    TRANSFERS_FILES = True</div><div class="line"></div><div class="line">    def read_config(self, source, config):</div><div class="line">        # Only use config if present</div><div class="line">        if os.access(source, os.R_OK):</div><div class="line">            with open(source, &apos;r&apos;) as f:</div><div class="line">                template_data = f.read()</div><div class="line">            result = self._templar.template(template_data)</div><div class="line">            fakefile = StringIO(result)</div><div class="line">            config.parse(fakefile)</div><div class="line">            fakefile.close()</div><div class="line"></div><div class="line">    def run(self, tmp=None, task_vars=None):</div><div class="line"></div><div class="line">        if task_vars is None:</div><div class="line">            task_vars = dict()</div><div class="line">        result = super(ActionModule, self).run(tmp, task_vars)</div><div class="line"></div><div class="line">        # NOTE(jeffrey4l): Ansible 2.1 add a remote_user param to the</div><div class="line">        # _make_tmp_path function.  inspect the number of the args here. In</div><div class="line">        # this way, ansible 2.0 and ansible 2.1 are both supported</div><div class="line">        make_tmp_path_args = inspect.getargspec(self._make_tmp_path)[0]</div><div class="line">        if not tmp and len(make_tmp_path_args) == 1:</div><div class="line">            tmp = self._make_tmp_path()</div><div class="line">        if not tmp and len(make_tmp_path_args) == 2:</div><div class="line">            remote_user = (task_vars.get(&apos;ansible_user&apos;)</div><div class="line">                           or self._play_context.remote_user)</div><div class="line">            tmp = self._make_tmp_path(remote_user)</div><div class="line"></div><div class="line">        sources = self._task.args.get(&apos;sources&apos;, None)</div><div class="line">        extra_vars = self._task.args.get(&apos;vars&apos;, list())</div><div class="line"></div><div class="line">        if not isinstance(sources, list):</div><div class="line">            sources = [sources]</div><div class="line"></div><div class="line">        temp_vars = task_vars.copy()</div><div class="line">        temp_vars.update(extra_vars)</div><div class="line"></div><div class="line">        config = OverrideConfigParser()</div><div class="line">        old_vars = self._templar._available_variables</div><div class="line">        self._templar.set_available_variables(temp_vars)</div><div class="line"></div><div class="line">        for source in sources:</div><div class="line">            self.read_config(source, config)</div><div class="line"></div><div class="line">        self._templar.set_available_variables(old_vars)</div><div class="line">        # Dump configparser to string via an emulated file</div><div class="line"></div><div class="line">        fakefile = StringIO()</div><div class="line">        config.write(fakefile)</div><div class="line"></div><div class="line">        remote_path = self._connection._shell.join_path(tmp, &apos;src&apos;)</div><div class="line">        xfered = self._transfer_data(remote_path, fakefile.getvalue())</div><div class="line">        fakefile.close()</div><div class="line"></div><div class="line">        new_module_args = self._task.args.copy()</div><div class="line">        new_module_args.pop(&apos;vars&apos;, None)</div><div class="line">        new_module_args.pop(&apos;sources&apos;, None)</div><div class="line"></div><div class="line">        new_module_args.update(</div><div class="line">            dict(</div><div class="line">                src=xfered</div><div class="line">            )</div><div class="line">        )</div><div class="line"></div><div class="line">        result.update(self._execute_module(module_name=&apos;copy&apos;,</div><div class="line">                                           module_args=new_module_args,</div><div class="line">                                           task_vars=task_vars,</div><div class="line">                                           tmp=tmp))</div><div class="line">        return result</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://zhubingbing.net/2017/07/14/openstack/kolla介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhubingbing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhubingbing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/14/openstack/kolla介绍/" itemprop="url">介绍 kolla</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">Openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/07/14/openstack/kolla介绍/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://zhubingbing.net/2017/07/14/openstack/kolla介绍/" class="cy_cmt_count" data-xid="2017/07/14/openstack/kolla介绍/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="kolla总结"><a href="#kolla总结" class="headerlink" title="kolla总结"></a>kolla总结</h3><p>在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。</p>
-<h4 id="kolla的定位"><a href="#kolla的定位" class="headerlink" title="kolla的定位"></a>kolla的定位</h4><p>实现生产级别容器化openstack平台，做到开箱即用</p>
-<h4 id="kolla的实现"><a href="#kolla的实现" class="headerlink" title="kolla的实现"></a>kolla的实现</h4><p>kolla实现主要以docker和ansible实现的。<br>ansible实现编排和远程推送<br>docker实现openstack服务容器化</p>
-<h4 id="kolla的实现带来什么变化"><a href="#kolla的实现带来什么变化" class="headerlink" title="kolla的实现带来什么变化"></a>kolla的实现带来什么变化</h4><p>1.让安装变得更加简单</p>
-<p>2.环境一致性</p>
-<p>3.让openstack升级不是困难</p>
-<p>4.灵活性大大加强</p>
-<p>5.openstack服务微服务化</p>
-<h4 id="kolla代码目录"><a href="#kolla代码目录" class="headerlink" title="kolla代码目录"></a>kolla代码目录</h4><p><img src="/images/kolla-ansible.png" alt=""></p>
-<p>从顶层文件目录结构来看，各个目录所包含的内容为：</p>
-<p>ansible</p>
-<p>ansible 配置目录里面包含了openstack service ansible role的实现， Kolla - Kolla with ansible!，是kolla-ansible最为重要的一部分。</p>
-<p>contrib</p>
-<p>示例目录。里面包含了 heat 的编排配置和magnum的一些例子 ；</p>
-<p>docs</p>
-<p>文档目录。也是非常重要的目录，里面包括开发环境设置、镜像编译、Kolla 环境变量等说明，建议把文档都认真读一遍 ；</p>
-<p>LICENSE</p>
-<p>LICENSE文件。Apache License Version 2 的 License 文件，没什么好说的。</p>
-<p>README.md</p>
-<p>说明文件。</p>
-<p>specs</p>
-<p>spec目录。目前只有一个 spec，说明使用容器安装 OpenStack 的理念和优势。</p>
-<p>test-requirements.txt</p>
-<p>python 的 requirements 文件。用于说明测试时所需要的 python 包，目前只有一个 PyYAML。</p>
-<p>tests</p>
-<p>测试目录。这个目录应该包含 Kolla 的测试套件，但目前只有一个 setup_docker.sh 用于安装 docker。</p>
-<p>tools</p>
-<p>工具脚本目录。目录包含编译 docker 镜像、清理 docker 环境、生成 Kolla 环境变量、Kolla 启动脚本、json/yaml文件检验等脚本。建议把这个目录的脚本都看一遍，需要点 Shell、python的知识。</p>
-<p>tox.ini</p>
-<p>tox配置文件。tox是一个标准自动化测试工具，python里的。目前这个文件很简单，只包含了 virtualenv 设置和一些简单的检查。</p>
-<p>现在 Kolla 还小，不像 nova / neutron 这些庞然大物，因此很值得把 Kolla 的代码认真看看，整理 Kolla 的设计思路，对以后把握 Kolla 的发展很有帮助，也希望大家能参与到 Kolla 的社区中，无论是贡献代码、写写 Blog、找茬，都能帮助到 Kolla </p>
-<p>关于kolla方面的文章沙克写的很好，大家可以看看。<br>这个他的博客链接：<a href="http://www.chenshake.com/cloud-computing/" target="_blank" rel="external">http://www.chenshake.com/cloud-computing/</a></p>
 
           
         
@@ -1349,7 +1349,8 @@
 <p>到目前为止，社区版本联合了86名GitHub上（GitHub是红帽上10个最活跃项目之一）的开发志愿者。在12个月中己经进行了16次的迭代，并且刚刚发行了第一版。</p>
 <p>尽管这个方案主要是由红帽在推动，但它非常依赖Kubernetes（来源于Google）。由此引发了到底由谁来支配和主导的问题，该问题依赖于两个公司之间的协作和版本基准，Google开发出新特性后会发生什么？他们会关注Kubernetes还是OpenShift？很显然，这个问题还没有答案。</p>
 <p>但是，Google的技术支持部门己经确认，由两家公司同时主导只会给OpenShift带来更多益处。它将成为比Docker企业版更具竟争力的产品（机器、组建和群）。</p>
-<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
+<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><img title="标题" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/test.png">
+<p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
 <h4 id="基础架构层"><a href="#基础架构层" class="headerlink" title="基础架构层"></a>基础架构层</h4><p>基础架构层为OpenShift平台的运行提供了基础的运行环境。OpenShift支持运行在物理机、虚拟机、基础架构云（如OpenStack、Amazon Web Service、Microsoft Azure等）或混合云上。在操作系统层面，OpenShift支持多种不同的Linux操作系统，如企业级的Red Hat Enterprise Linux、社区的CentOS。</p>
 <h4 id="容器引擎层"><a href="#容器引擎层" class="headerlink" title="容器引擎层"></a>容器引擎层</h4><p>OpenShift目前以Docker作为平台的容器引擎。Docker是当前主流的容器引擎，已经在社区及许多企业的环境中进行了检验。事实证明Docker有能力为应用提供安全、稳定及高性能的运行环境。OpenShift运行的所有容器应用最终落到最底层的实现，其实就是一个个Docker容器实例。OpenShift对Docker整合是开放式的。OpenShift并没有修改Docker的任何代码，完全基于原生的Docker。熟悉Docker的用户对OpenShift能快速上手。同时，Docker现有的庞大的镜像资源都可以无缝地接入OpenShift平台。</p>
 <h4 id="容器编排层"><a href="#容器编排层" class="headerlink" title="容器编排层"></a>容器编排层</h4><p>目前大家对容器编排的讨论已经成为容器相关话题中的一个热点。Kubernetes是Google在内部多年容器使用经验基础上的一次总结。Kubernetes设计的目的是满足在大规模集群环境下对容器的调度和部署的需求。Kubernetes是OpenShift的重要组件，OpenShift平台上的许多对象和概念都是衍生自Kubernetes，如Pod、Namespace、Replication Controller等。与对Docker的集成一样，OpenShift并没有尝试从代码上定制Kubernetes，OpenShift对Kubernetes<br>的整合是叠加式的，在OpenShift集群上仍然可以通过Kubernetes的原生命令来操作Kubernetes的原生对象</p>
@@ -1700,7 +1701,7 @@
 <p>为了使其成为可能，Rally 自动化并统一了多个节点的 OpenStack 部署、云的验证、标准测试和分析。Rally 使用一个通用的方法，使得我们能够检查 OpenStack 是否正常运作，也即，在高负荷下 1K 服务器的安装是否成功。因此，它可以作为 OpenStack CI/CD 系统的基本工具来使用，可以持续改进其 SLA、运作和稳定性。</p>
 <p>Rally 的操作如下图所示：<br><a href="http://coffeechou.github.io/public/imgs/rally_actions.png" target="_blank" rel="external">http://coffeechou.github.io/public/imgs/rally_actions.png</a></p>
 <h3 id="在kolla中使用rally"><a href="#在kolla中使用rally" class="headerlink" title="在kolla中使用rally"></a>在kolla中使用rally</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#在配置文件打开rally</div><div class="line">vim /etc/kolla/globals.yml</div><div class="line"></div><div class="line">enable_rally: &quot;yes&quot;</div><div class="line"></div><div class="line">#部署环境</div><div class="line">kolla-ansible deploy</div><div class="line"></div><div class="line">#生成openrc环境变量</div><div class="line">kolla-ansible post-deploy</div></pre></td></tr></table></figure>
-<h3 id="初始化rally"><a href="#初始化rally" class="headerlink" title="初始化rally"></a>初始化rally</h3><h4 id="Registering-an-OpenStack-deployment-in-Rally"><a href="#Registering-an-OpenStack-deployment-in-Rally" class="headerlink" title="Registering an OpenStack deployment in Rally"></a>Registering an OpenStack deployment in Rally</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line"># 进入rally 容器</div><div class="line">[root@control01 ~]# docker exec -it -u root rally bash</div><div class="line">(rally)[root@control01 /]#</div><div class="line"></div><div class="line">(rally)[root@control01 deployments]# vim existing-keystone-v3.json</div><div class="line">&#123;</div><div class="line">    &quot;type&quot;: &quot;ExistingCloud&quot;,</div><div class="line">    &quot;auth_url&quot;: &quot;http://172.16.130.210:5000/v3&quot;,</div><div class="line">    &quot;region_name&quot;: &quot;RegionOne&quot;,</div><div class="line">    &quot;endpoint_type&quot;: &quot;public&quot;,</div><div class="line">    &quot;admin&quot;: &#123;</div><div class="line">        &quot;username&quot;: &quot;admin&quot;,</div><div class="line">        &quot;password&quot;: &quot;99cloud&quot;,</div><div class="line">        &quot;user_domain_name&quot;: &quot;deault&quot;,</div><div class="line">        &quot;project_name&quot;: &quot;admin&quot;,</div><div class="line">        &quot;project_domain_name&quot;: &quot;deault&quot;</div><div class="line">    &#125;,</div><div class="line">    &quot;https_insecure&quot;: false,</div><div class="line">    &quot;https_cacert&quot;: &quot;&quot;</div><div class="line">&#125;</div><div class="line"></div><div class="line">### 创建deployments</div><div class="line">(rally)[root@control01 deployments]#rally deployment create --file existing-keystone-v3.json --name 99cloud-regionOne</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">| uuid                                 | created_at          | name              | status           | active |</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">| e36d802c-2211-4bac-a8ea-2f3b967568b9 | 2017-05-08 03:07:46 | 99cloud-regionOne | deploy-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">Using deployment: e36d802c-2211-4bac-a8ea-2f3b967568b9</div><div class="line">~/.rally/openrc was updated</div><div class="line"></div><div class="line">HINTS:</div><div class="line"></div><div class="line">* To use standard OpenStack clients, set up your env by running:</div><div class="line">	source ~/.rally/openrc</div><div class="line">  OpenStack clients are now configured, e.g run:</div><div class="line">	openstack image list</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name              | status            | active |</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing          | cleanup-&gt;finished |        |</div><div class="line">| e36d802c-2211-4bac-a8ea-2f3b967568b9 | 2017-05-08 03:07:46 | 99cloud-regionOne | deploy-&gt;finished  | *      |</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--</div><div class="line">### 还有一种创建方法，就是使用环境变量去创建</div><div class="line">### 我们先删除之前创建的</div><div class="line">(rally)[root@control01 deployments]# rally deployment destroy 99cloud-regionOne</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name     | status            | active |</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing | cleanup-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">### (rally)[root@control01 /]# cat openrc</div><div class="line">export OS_REGION_NAME=RegionOne</div><div class="line">export OS_PROJECT_DOMAIN_NAME=default</div><div class="line">export OS_USER_DOMAIN_NAME=default</div><div class="line">export OS_PROJECT_NAME=admin</div><div class="line">export OS_TENANT_NAME=admin</div><div class="line">export OS_USERNAME=admin</div><div class="line">export OS_PASSWORD=99cloud</div><div class="line">export OS_AUTH_URL=http://172.16.130.210:35357/v3</div><div class="line">export OS_INTERFACE=internal</div><div class="line">export OS_IDENTITY_API_VERSION=3</div><div class="line"></div><div class="line">(rally)[root@control01 /]# source openrc</div><div class="line">## 测试下环境变量是否可用</div><div class="line">(rally)[root@control01 deployments]# openstack image list</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| ID                                   | Name                              | Status |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| 83dc79c8-c6df-4e23-808c-0209778be1b2 | 123                               | active |</div><div class="line">| 9d4cc662-bdfb-46cb-996d-3b773ee161d5 | a1                                | active |</div><div class="line">| 255cc63c-f635-4bbb-850c-e319d2e4c17d | cenos-raw                         | active |</div><div class="line">| 63c5d475-e96a-4c1f-985b-12685aa2a95b | centos6.5                         | active |</div><div class="line">| 15ed4618-4b3b-4cc3-a9ef-6967e3a3091d | centos7                           | active |</div><div class="line">| 15f04241-38cc-482d-b6a3-42ba9d29f47a | cirros                            | active |</div><div class="line">| 6491747b-2fea-4d7c-b034-b3fe5089df2c | d1                                | active |</div><div class="line">| 4f99d882-04af-47bc-9e2d-a12aaecbf753 | s_rally_e4dbf0c1_LdpjrVlZ-shelved | active |</div><div class="line">| 6a45e590-08fc-471f-b4d8-9a6195e88d07 | s_rally_e4dbf0c1_f3TP5nP4-shelved | active |</div><div class="line">| a166585b-fb88-4c0a-a0c9-47443e9ca8be | s_rally_e4dbf0c1_lEthjCi9-shelved | active |</div><div class="line">| fa680415-4448-4564-9b22-bdf2b86b6cd2 | s_rally_e4dbf0c1_nuqTKzuQ-shelved | active |</div><div class="line">| 6eec3597-ee52-436c-9970-ec11415cbb4e | sdf1                              | active |</div><div class="line">| 1e84937a-a700-447b-8ffc-3f162127300d | snap1                             | active |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">(rally)[root@control01 deployments]# rally deployment create --fromenv --name regiOne-99cloud</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">| uuid                                 | created_at          | name            | status           | active |</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">| 6682d272-5d99-400b-9de9-c4d46a705ba6 | 2017-05-08 03:21:46 | regiOne-99cloud | deploy-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">Using deployment: 6682d272-5d99-400b-9de9-c4d46a705ba6</div><div class="line">~/.rally/openrc was updated</div><div class="line"></div><div class="line">HINTS:</div><div class="line"></div><div class="line">* To use standard OpenStack clients, set up your env by running:</div><div class="line">	source ~/.rally/openrc</div><div class="line">  OpenStack clients are now configured, e.g run:</div><div class="line">	openstack image list</div><div class="line">(rally)[root@control01 deployments]# source ~/.rally/openrc</div><div class="line">### 测试deployments是否可用</div><div class="line">(rally)[root@control01 deployments]# openstack image list</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| ID                                   | Name                              | Status |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| 83dc79c8-c6df-4e23-808c-0209778be1b2 | 123                               | active |</div><div class="line">| 9d4cc662-bdfb-46cb-996d-3b773ee161d5 | a1                                | active |</div><div class="line">| 255cc63c-f635-4bbb-850c-e319d2e4c17d | cenos-raw                         | active |</div><div class="line">| 63c5d475-e96a-4c1f-985b-12685aa2a95b | centos6.5                         | active |</div><div class="line">| 15ed4618-4b3b-4cc3-a9ef-6967e3a3091d | centos7                           | active |</div><div class="line">| 15f04241-38cc-482d-b6a3-42ba9d29f47a | cirros                            | active |</div><div class="line">| 6491747b-2fea-4d7c-b034-b3fe5089df2c | d1                                | active |</div><div class="line">| 4f99d882-04af-47bc-9e2d-a12aaecbf753 | s_rally_e4dbf0c1_LdpjrVlZ-shelved | active |</div><div class="line">| 6a45e590-08fc-471f-b4d8-9a6195e88d07 | s_rally_e4dbf0c1_f3TP5nP4-shelved | active |</div><div class="line">| a166585b-fb88-4c0a-a0c9-47443e9ca8be | s_rally_e4dbf0c1_lEthjCi9-shelved | active |</div><div class="line">| fa680415-4448-4564-9b22-bdf2b86b6cd2 | s_rally_e4dbf0c1_nuqTKzuQ-shelved | active |</div><div class="line">| 6eec3597-ee52-436c-9970-ec11415cbb4e | sdf1                              | active |</div><div class="line">| 1e84937a-a700-447b-8ffc-3f162127300d | snap1                             | active |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name            | status            | active |</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing        | cleanup-&gt;finished |        |</div><div class="line">| 6682d272-5d99-400b-9de9-c4d46a705ba6 | 2017-05-08 03:21:46 | regiOne-99cloud | deploy-&gt;finished  | *      |</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div></pre></td></tr></table></figure>
+<h3 id="初始化rally"><a href="#初始化rally" class="headerlink" title="初始化rally"></a>初始化rally</h3><h4 id="Registering-an-OpenStack-deployment-in-Rally"><a href="#Registering-an-OpenStack-deployment-in-Rally" class="headerlink" title="Registering an OpenStack deployment in Rally"></a>Registering an OpenStack deployment in Rally</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div></pre></td><td class="code"><pre><div class="line"># 进入rally 容器</div><div class="line">[root@control01 ~]# docker exec -it -u root rally bash</div><div class="line">(rally)[root@control01 /]#</div><div class="line"></div><div class="line">(rally)[root@control01 deployments]# vim existing-keystone-v3.json</div><div class="line">&#123;</div><div class="line">    &quot;type&quot;: &quot;ExistingCloud&quot;,</div><div class="line">    &quot;auth_url&quot;: &quot;http://172.16.130.210:5000/v3&quot;,</div><div class="line">    &quot;region_name&quot;: &quot;RegionOne&quot;,</div><div class="line">    &quot;endpoint_type&quot;: &quot;public&quot;,</div><div class="line">    &quot;admin&quot;: &#123;</div><div class="line">        &quot;username&quot;: &quot;admin&quot;,</div><div class="line">        &quot;password&quot;: &quot;99cloud&quot;,</div><div class="line">        &quot;user_domain_name&quot;: &quot;deault&quot;,</div><div class="line">        &quot;project_name&quot;: &quot;admin&quot;,</div><div class="line">        &quot;project_domain_name&quot;: &quot;deault&quot;</div><div class="line">    &#125;,</div><div class="line">    &quot;https_insecure&quot;: false,</div><div class="line">    &quot;https_cacert&quot;: &quot;&quot;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#123;% qnimg test/test.png title:test alt:test %&#125;</div><div class="line"></div><div class="line">### 创建deployments</div><div class="line">(rally)[root@control01 deployments]#rally deployment create --file existing-keystone-v3.json --name 99cloud-regionOne</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">| uuid                                 | created_at          | name              | status           | active |</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">| e36d802c-2211-4bac-a8ea-2f3b967568b9 | 2017-05-08 03:07:46 | 99cloud-regionOne | deploy-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+-------------------+------------------+--------+</div><div class="line">Using deployment: e36d802c-2211-4bac-a8ea-2f3b967568b9</div><div class="line">~/.rally/openrc was updated</div><div class="line"></div><div class="line">HINTS:</div><div class="line"></div><div class="line">* To use standard OpenStack clients, set up your env by running:</div><div class="line">	source ~/.rally/openrc</div><div class="line">  OpenStack clients are now configured, e.g run:</div><div class="line">	openstack image list</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name              | status            | active |</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing          | cleanup-&gt;finished |        |</div><div class="line">| e36d802c-2211-4bac-a8ea-2f3b967568b9 | 2017-05-08 03:07:46 | 99cloud-regionOne | deploy-&gt;finished  | *      |</div><div class="line">+--------------------------------------+---------------------+-------------------+-------------------+--</div><div class="line">### 还有一种创建方法，就是使用环境变量去创建</div><div class="line">### 我们先删除之前创建的</div><div class="line">(rally)[root@control01 deployments]# rally deployment destroy 99cloud-regionOne</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name     | status            | active |</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing | cleanup-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+----------+-------------------+--------+</div><div class="line">### (rally)[root@control01 /]# cat openrc</div><div class="line">export OS_REGION_NAME=RegionOne</div><div class="line">export OS_PROJECT_DOMAIN_NAME=default</div><div class="line">export OS_USER_DOMAIN_NAME=default</div><div class="line">export OS_PROJECT_NAME=admin</div><div class="line">export OS_TENANT_NAME=admin</div><div class="line">export OS_USERNAME=admin</div><div class="line">export OS_PASSWORD=99cloud</div><div class="line">export OS_AUTH_URL=http://172.16.130.210:35357/v3</div><div class="line">export OS_INTERFACE=internal</div><div class="line">export OS_IDENTITY_API_VERSION=3</div><div class="line"></div><div class="line">(rally)[root@control01 /]# source openrc</div><div class="line">## 测试下环境变量是否可用</div><div class="line">(rally)[root@control01 deployments]# openstack image list</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| ID                                   | Name                              | Status |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| 83dc79c8-c6df-4e23-808c-0209778be1b2 | 123                               | active |</div><div class="line">| 9d4cc662-bdfb-46cb-996d-3b773ee161d5 | a1                                | active |</div><div class="line">| 255cc63c-f635-4bbb-850c-e319d2e4c17d | cenos-raw                         | active |</div><div class="line">| 63c5d475-e96a-4c1f-985b-12685aa2a95b | centos6.5                         | active |</div><div class="line">| 15ed4618-4b3b-4cc3-a9ef-6967e3a3091d | centos7                           | active |</div><div class="line">| 15f04241-38cc-482d-b6a3-42ba9d29f47a | cirros                            | active |</div><div class="line">| 6491747b-2fea-4d7c-b034-b3fe5089df2c | d1                                | active |</div><div class="line">| 4f99d882-04af-47bc-9e2d-a12aaecbf753 | s_rally_e4dbf0c1_LdpjrVlZ-shelved | active |</div><div class="line">| 6a45e590-08fc-471f-b4d8-9a6195e88d07 | s_rally_e4dbf0c1_f3TP5nP4-shelved | active |</div><div class="line">| a166585b-fb88-4c0a-a0c9-47443e9ca8be | s_rally_e4dbf0c1_lEthjCi9-shelved | active |</div><div class="line">| fa680415-4448-4564-9b22-bdf2b86b6cd2 | s_rally_e4dbf0c1_nuqTKzuQ-shelved | active |</div><div class="line">| 6eec3597-ee52-436c-9970-ec11415cbb4e | sdf1                              | active |</div><div class="line">| 1e84937a-a700-447b-8ffc-3f162127300d | snap1                             | active |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">(rally)[root@control01 deployments]# rally deployment create --fromenv --name regiOne-99cloud</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">| uuid                                 | created_at          | name            | status           | active |</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">| 6682d272-5d99-400b-9de9-c4d46a705ba6 | 2017-05-08 03:21:46 | regiOne-99cloud | deploy-&gt;finished |        |</div><div class="line">+--------------------------------------+---------------------+-----------------+------------------+--------+</div><div class="line">Using deployment: 6682d272-5d99-400b-9de9-c4d46a705ba6</div><div class="line">~/.rally/openrc was updated</div><div class="line"></div><div class="line">HINTS:</div><div class="line"></div><div class="line">* To use standard OpenStack clients, set up your env by running:</div><div class="line">	source ~/.rally/openrc</div><div class="line">  OpenStack clients are now configured, e.g run:</div><div class="line">	openstack image list</div><div class="line">(rally)[root@control01 deployments]# source ~/.rally/openrc</div><div class="line">### 测试deployments是否可用</div><div class="line">(rally)[root@control01 deployments]# openstack image list</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| ID                                   | Name                              | Status |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">| 83dc79c8-c6df-4e23-808c-0209778be1b2 | 123                               | active |</div><div class="line">| 9d4cc662-bdfb-46cb-996d-3b773ee161d5 | a1                                | active |</div><div class="line">| 255cc63c-f635-4bbb-850c-e319d2e4c17d | cenos-raw                         | active |</div><div class="line">| 63c5d475-e96a-4c1f-985b-12685aa2a95b | centos6.5                         | active |</div><div class="line">| 15ed4618-4b3b-4cc3-a9ef-6967e3a3091d | centos7                           | active |</div><div class="line">| 15f04241-38cc-482d-b6a3-42ba9d29f47a | cirros                            | active |</div><div class="line">| 6491747b-2fea-4d7c-b034-b3fe5089df2c | d1                                | active |</div><div class="line">| 4f99d882-04af-47bc-9e2d-a12aaecbf753 | s_rally_e4dbf0c1_LdpjrVlZ-shelved | active |</div><div class="line">| 6a45e590-08fc-471f-b4d8-9a6195e88d07 | s_rally_e4dbf0c1_f3TP5nP4-shelved | active |</div><div class="line">| a166585b-fb88-4c0a-a0c9-47443e9ca8be | s_rally_e4dbf0c1_lEthjCi9-shelved | active |</div><div class="line">| fa680415-4448-4564-9b22-bdf2b86b6cd2 | s_rally_e4dbf0c1_nuqTKzuQ-shelved | active |</div><div class="line">| 6eec3597-ee52-436c-9970-ec11415cbb4e | sdf1                              | active |</div><div class="line">| 1e84937a-a700-447b-8ffc-3f162127300d | snap1                             | active |</div><div class="line">+--------------------------------------+-----------------------------------+--------+</div><div class="line">(rally)[root@control01 deployments]# rally deployment list</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div><div class="line">| uuid                                 | created_at          | name            | status            | active |</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div><div class="line">| af993ae9-363e-4701-b343-626063eaf715 | 2017-04-26 07:13:50 | existing        | cleanup-&gt;finished |        |</div><div class="line">| 6682d272-5d99-400b-9de9-c4d46a705ba6 | 2017-05-08 03:21:46 | regiOne-99cloud | deploy-&gt;finished  | *      |</div><div class="line">+--------------------------------------+---------------------+-----------------+-------------------+--------+</div></pre></td></tr></table></figure>
 
           
         
