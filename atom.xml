@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhubingbing.net/"/>
-  <updated>2017-08-01T02:23:03.000Z</updated>
+  <updated>2017-09-21T12:08:09.000Z</updated>
   <id>http://zhubingbing.net/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>magnum调研02</title>
+    <link href="http://zhubingbing.net/2017/09/21/openstack/magnum/magnum-02/"/>
+    <id>http://zhubingbing.net/2017/09/21/openstack/magnum/magnum-02/</id>
+    <published>2017-09-21T11:30:00.000Z</published>
+    <updated>2017-09-21T12:08:09.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;p&gt;通过之前初步调研，magnum确实能把k8s启动起来。但是k8s一些组件都需要自己手动安装，这点很不好。&lt;br&gt;然后我查看代码，发现最新的o
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://zhubingbing.net/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
+    
+      <category term="magnum" scheme="http://zhubingbing.net/tags/magnum/"/>
+    
+  </entry>
   
   <entry>
     <title>Openshift-02</title>
@@ -153,6 +175,28 @@
   </entry>
   
   <entry>
+    <title>rally-first</title>
+    <link href="http://zhubingbing.net/2017/07/06/openstack/rally/"/>
+    <id>http://zhubingbing.net/2017/07/06/openstack/rally/</id>
+    <published>2017-07-06T04:30:00.000Z</published>
+    <updated>2017-09-21T08:56:33.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
+    
+      <category term="rally" scheme="http://zhubingbing.net/tags/rally/"/>
+    
+  </entry>
+  
+  <entry>
     <title>How to use tempest in kolla</title>
     <link href="http://zhubingbing.net/2017/07/06/openstack/tempest/"/>
     <id>http://zhubingbing.net/2017/07/06/openstack/tempest/</id>
@@ -172,28 +216,6 @@
       <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
     
       <category term="tempest" scheme="http://zhubingbing.net/tags/tempest/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rally-first</title>
-    <link href="http://zhubingbing.net/2017/07/06/openstack/rally/"/>
-    <id>http://zhubingbing.net/2017/07/06/openstack/rally/</id>
-    <published>2017-07-06T04:30:00.000Z</published>
-    <updated>2017-09-21T08:56:33.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
-    
-    </summary>
-    
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
-    
-    
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
-    
-      <category term="rally" scheme="http://zhubingbing.net/tags/rally/"/>
     
   </entry>
   
