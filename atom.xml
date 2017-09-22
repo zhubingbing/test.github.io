@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Zhubingbing</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/child/"/>
+  <updated>2017-09-21T12:08:09.000Z</updated>
+  <id>http://yoursite.com/child/</id>
+  
+  <author>
+    <name>zhubingbing</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>magnum调研02</title>
+    <link href="http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/"/>
+    <id>http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/</id>
+    <published>2017-09-21T11:30:00.000Z</published>
+    <updated>2017-09-21T12:08:09.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;p&gt;通过之前初步调研，magnum确实能把k8s启动起来。但是k8s一些组件都需要自己手动安装，这点很不好。&lt;br&gt;然后我查看代码，发现最新的o
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="magnum" scheme="http://yoursite.com/child/tags/magnum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>How to use tempest in kolla</title>
+    <link href="http://yoursite.com/child/2017/08/16/openstack/tempest/"/>
+    <id>http://yoursite.com/child/2017/08/16/openstack/tempest/</id>
+    <published>2017-08-16T04:30:00.000Z</published>
+    <updated>2017-09-22T02:20:44.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Tempest-介绍&quot;&gt;&lt;a href=&quot;#Tempest-介绍&quot; class=&quot;headerlink&quot; title=&quot;Tempest 介绍&quot;&gt;&lt;/a&gt;Tempest 介绍&lt;/h3&gt;&lt;p&gt;在接触tempest之前我们应该有如下疑问。&lt;/p&gt;
+&lt;p&gt;&lt;img src
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="tempest" scheme="http://yoursite.com/child/tags/tempest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>opneshift 多节点测试</title>
+    <link href="http://yoursite.com/child/2017/08/01/openshift/openshift-02/"/>
+    <id>http://yoursite.com/child/2017/08/01/openshift/openshift-02/</id>
+    <published>2017-08-01T04:02:00.000Z</published>
+    <updated>2017-09-22T02:21:00.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Openshift-多节点测试&quot;&gt;&lt;a href=&quot;#Openshift-多节点测试&quot; class=&quot;headerlink&quot; title=&quot;Openshift 多节点测试&quot;&gt;&lt;/a&gt;Openshift 多节点测试&lt;/h3&gt;&lt;h4 id=&quot;部署设置inventory
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kolla 介绍</title>
+    <link href="http://yoursite.com/child/2017/07/24/openstack/kolla-01/"/>
+    <id>http://yoursite.com/child/2017/07/24/openstack/kolla-01/</id>
+    <published>2017-07-23T22:30:00.000Z</published>
+    <updated>2017-09-22T02:21:03.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;kolla总结&quot;&gt;&lt;a href=&quot;#kolla总结&quot; class=&quot;headerlink&quot; title=&quot;kolla总结&quot;&gt;&lt;/a&gt;kolla总结&lt;/h3&gt;&lt;p&gt;在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。&lt;/p&gt;
+&lt;h4 id=&quot;kolla的
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openshift部署之前环境准备</title>
+    <link href="http://yoursite.com/child/2017/07/17/openshift/openshift-env-reday/"/>
+    <id>http://yoursite.com/child/2017/07/17/openshift/openshift-env-reday/</id>
+    <published>2017-07-16T22:30:00.000Z</published>
+    <updated>2017-09-22T02:01:08.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openshift部署之前环境准备&quot;&gt;&lt;a href=&quot;#openshift部署之前环境准备&quot; class=&quot;headerlink&quot; title=&quot;openshift部署之前环境准备&quot;&gt;&lt;/a&gt;openshift部署之前环境准备&lt;/h3&gt;&lt;h4 id=&quot;准备工作-
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rally-01</title>
+    <link href="http://yoursite.com/child/2017/07/16/openstack/rally/"/>
+    <id>http://yoursite.com/child/2017/07/16/openstack/rally/</id>
+    <published>2017-07-16T04:30:00.000Z</published>
+    <updated>2017-09-22T02:21:09.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="rally" scheme="http://yoursite.com/child/tags/rally/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openshift iso 制作</title>
+    <link href="http://yoursite.com/child/2017/07/14/openshift/openshift-iso/"/>
+    <id>http://yoursite.com/child/2017/07/14/openshift/openshift-iso/</id>
+    <published>2017-07-14T04:37:00.000Z</published>
+    <updated>2017-09-22T02:20:57.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;制作iso过程文档&quot;&gt;&lt;a href=&quot;#制作iso过程文档&quot; class=&quot;headerlink&quot; title=&quot;制作iso过程文档&quot;&gt;&lt;/a&gt;制作iso过程文档&lt;/h2&gt;&lt;h3 id=&quot;制作openshift-iso&quot;&gt;&lt;a href=&quot;#制作openshif
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>制作 openshift iso</title>
+    <link href="http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/"/>
+    <id>http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-09-22T01:42:39.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###制作iso过程文档&lt;/p&gt;
+&lt;h3 id=&quot;制作openshift-iso&quot;&gt;&lt;a href=&quot;#制作openshift-iso&quot; class=&quot;headerlink&quot; title=&quot;制作openshift iso&quot;&gt;&lt;/a&gt;制作openshift iso&lt;/h3&gt;&lt;
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Openshift-01</title>
+    <link href="http://yoursite.com/child/2017/07/14/openshift/openshift%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/child/2017/07/14/openshift/openshift介绍/</id>
+    <published>2017-07-14T04:21:00.000Z</published>
+    <updated>2017-09-22T02:21:19.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openshift-架构&quot;&gt;&lt;a href=&quot;#openshift-架构&quot; class=&quot;headerlink&quot; title=&quot;openshift 架构&quot;&gt;&lt;/a&gt;openshift 架构&lt;/h3&gt;&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kolla之reconfigure</title>
+    <link href="http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/"/>
+    <id>http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/</id>
+    <published>2017-07-09T03:30:00.000Z</published>
+    <updated>2017-09-22T02:21:06.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;今天好好理理kolla reconfigure如何玩的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;kolla的配置管理主要是管理openstack service config文件；&lt;br&gt;主要实现是&lt;/p&gt;
+&lt;figure class=&quot;high
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+  </entry>
+  
+</feed>

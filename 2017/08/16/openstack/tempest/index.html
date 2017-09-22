@@ -1,0 +1,1298 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Rotobo Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="openstack,tempest," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhubingbing" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Tempest 介绍在接触tempest之前我们应该有如下疑问。  Tempest是什么Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分. 主要用于什么测试？（1）A">
+<meta name="keywords" content="openstack,tempest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to use tempest in kolla">
+<meta property="og:url" content="http://yoursite.com/child/2017/08/16/openstack/tempest/index.html">
+<meta property="og:site_name" content="Zhubingbing">
+<meta property="og:description" content="Tempest 介绍在接触tempest之前我们应该有如下疑问。  Tempest是什么Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分. 主要用于什么测试？（1）A">
+<meta property="og:image" content="http://yoursite.com/images/tempest.png">
+<meta property="og:updated_time" content="2017-09-22T02:20:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to use tempest in kolla">
+<meta name="twitter:description" content="Tempest 介绍在接触tempest之前我们应该有如下疑问。  Tempest是什么Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分. 主要用于什么测试？（1）A">
+<meta name="twitter:image" content="http://yoursite.com/images/tempest.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/child/2017/08/16/openstack/tempest/"/>
+
+
+
+
+
+  <title>How to use tempest in kolla | Zhubingbing</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhubingbing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/08/16/openstack/tempest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">How to use tempest in kolla</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T12:30:00+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/16/openstack/tempest/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/08/16/openstack/tempest/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Tempest-介绍"><a href="#Tempest-介绍" class="headerlink" title="Tempest 介绍"></a>Tempest 介绍</h3><p>在接触tempest之前我们应该有如下疑问。</p>
+<p><img src="/images/tempest.png" alt=""></p>
+<h4 id="Tempest是什么"><a href="#Tempest是什么" class="headerlink" title="Tempest是什么"></a>Tempest是什么</h4><p>Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分.</p>
+<h4 id="主要用于什么测试？"><a href="#主要用于什么测试？" class="headerlink" title="主要用于什么测试？"></a>主要用于什么测试？</h4><p>（1）API接口测试</p>
+<p>（2）复杂场景测试</p>
+<p>（3）单元测试</p>
+<h3 id="使用kolla部署tempest"><a href="#使用kolla部署tempest" class="headerlink" title="使用kolla部署tempest"></a>使用kolla部署tempest</h3><ol>
+<li><p>在/etc/kolla/globals.yml开启tempest同时设置tempest相应的配置参数（image_id等）</p>
+<p><strong>注: 我是使用cirros镜像进行测试，按照实际情况替换相应参数</strong></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# vim /etc/kolla/globals.yml</div><div class="line">enable_tempest: &quot;yes&quot;</div><div class="line">tempest_image_id: &quot;570cab5e-4609-43cc-8c1e-3f7d7217ed30&quot;</div><div class="line">tempest_flavor_ref_id: &quot;1&quot;</div><div class="line">tempest_public_network_id: &quot;4c5928f2-6ade-498f-a692-98a775a7183a&quot;</div><div class="line">tempest_floating_network_name: &quot;public1&quot;</div></pre></td></tr></table></figure>
+<p>参数以如下命令获得</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># image id</div><div class="line">[root@control01 ~]# openstack image show cirros -c id -f value</div><div class="line">570cab5e-4609-43cc-8c1e-3f7d7217ed30</div><div class="line"></div><div class="line"># flavor_ref_id</div><div class="line">[root@control01 ~]# nova flavor-list</div><div class="line">+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</div><div class="line">| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |</div><div class="line">+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</div><div class="line">| 1  | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |</div><div class="line">| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |</div><div class="line">| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |</div><div class="line">| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |</div><div class="line">| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True</div><div class="line"></div><div class="line"># public_network_id</div><div class="line">[root@control01 ~]# openstack network show public1 -c id -f value</div><div class="line">4c5928f2-6ade-498f-a692-98a775a7183a</div><div class="line"></div><div class="line"># floating_network_name</div><div class="line">[root@control01 ~]# openstack network list</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div><div class="line">| ID                                   | Name     | Subnets                              |</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div><div class="line">| 0474116d-0fbd-41a3-ab0c-2c2d11545937 | demo-net | 7366e03d-027b-4a44-b270-d0478584f3e8 |</div><div class="line">| 4c5928f2-6ade-498f-a692-98a775a7183a | public1  | 2c47f34c-f55a-4739-a677-2cbfa56b6312 |</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div></pre></td></tr></table></figure>
+<ol>
+<li>使用kolla-ansible deploy部署tempest</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@control01 ~]# kolla-ansible deploy -t tempest</div><div class="line">## 看到tempest容器运行部署就算成功</div><div class="line">root@control01 ~]# docker ps | grep tempest</div><div class="line">95b57e77b006        kolla/centos-source-tempest:5.0.0                     &quot;kolla_start&quot;            46 hours ago        Up 21 hours</div></pre></td></tr></table></figure>
+<h3 id="Tempest使用"><a href="#Tempest使用" class="headerlink" title="Tempest使用"></a>Tempest使用</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="了解tempest-cmd基本使用"><a href="#了解tempest-cmd基本使用" class="headerlink" title="了解tempest cmd基本使用"></a>了解tempest cmd基本使用</h5><p><a href="https://specs.openstack.org/openstack/qa-specs/specs/tempest/tempest-run-cmd.html" target="_blank" rel="external">官网文档</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# tempest --help</div><div class="line">usage: tempest [--version] [-v | -q] [--log-file LOG_FILE] [-h] [--debug]</div><div class="line"></div><div class="line">Tempest cli application</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  --version            show program&apos;s version number and exit</div><div class="line">  -v, --verbose        Increase verbosity of output. Can be repeated.</div><div class="line">  -q, --quiet          Suppress output except warnings and errors.</div><div class="line">  --log-file LOG_FILE  Specify a file to log output. Disabled by default.</div><div class="line">  -h, --help           Show help message and exit.</div><div class="line">  --debug              Show tracebacks on errors.</div><div class="line"></div><div class="line">Commands:</div><div class="line">  account-generator  Create accounts.yaml file for concurrent test runs.</div><div class="line">  cleanup        Cleanup after tempest run</div><div class="line">  complete       print bash completion command</div><div class="line">  help           print detailed help for another command</div><div class="line">  init           Setup a local working environment for running tempest</div><div class="line">  list-plugins   List all tempest plugins</div><div class="line">  run            Run tempest</div><div class="line">  verify-config  Verify your current tempest configuration</div><div class="line">  workspace list  Outputs the name and path of all known tempest workspaces</div><div class="line">  workspace move  Changes the path of a given tempest workspace --name to --path</div><div class="line">  workspace register  Registers a new tempest workspace via a given --name and --path</div><div class="line">  workspace remove  Deletes the entry for a given tempest workspace --name</div><div class="line">  workspace rename  Renames a tempest workspace from --old-name to --new-name</div></pre></td></tr></table></figure>
+<p>常用的命令有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 为tempest初始化working environment</div><div class="line">tempest init</div><div class="line"></div><div class="line"># 验证配置是否正确</div><div class="line">tempest verify-config</div><div class="line"></div><div class="line"># 执行tempest测试</div><div class="line">tempest run</div></pre></td></tr></table></figure>
+<h5 id="配置tempest-conf"><a href="#配置tempest-conf" class="headerlink" title="配置tempest.conf"></a>配置tempest.conf</h5><p>下面是kolla tempest.conf的模版</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">[DEFAULT]</div><div class="line">debug = &#123;&#123; openstack_logging_debug &#125;&#125;</div><div class="line">log_file = tempest.log</div><div class="line">use_stderr = False</div><div class="line">log_dir = /var/log/kolla/tempest/</div><div class="line"></div><div class="line">[auth]</div><div class="line">admin_username = &#123;&#123; openstack_auth.username &#125;&#125;</div><div class="line">admin_password = &#123;&#123; keystone_admin_password &#125;&#125;</div><div class="line">admin_project_name = &#123;&#123; openstack_auth.project_name &#125;&#125;</div><div class="line">admin_domain_name = &#123;&#123; openstack_auth.domain_name &#125;&#125;</div><div class="line"></div><div class="line"></div><div class="line">[dashboard]</div><div class="line">dashboard_url = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;</div><div class="line">login_url = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;/auth/login/</div><div class="line"></div><div class="line">[service_available]</div><div class="line">cinder = &#123;&#123; enable_cinder &#125;&#125;</div><div class="line">neutron = &#123;&#123; enable_neutron &#125;&#125;</div><div class="line">glance = &#123;&#123; enable_glance &#125;&#125;</div><div class="line">swift = &#123;&#123; enable_swift &#125;&#125;</div><div class="line">nova = &#123;&#123; enable_nova &#125;&#125;</div><div class="line">heat = &#123;&#123; enable_heat &#125;&#125;</div><div class="line">horizon = &#123;&#123; enable_horizon &#125;&#125;</div><div class="line">ceilometer = &#123;&#123; enable_ceilometer &#125;&#125;</div><div class="line"></div><div class="line">[compute]</div><div class="line">max_microversion = latest</div><div class="line">image_ref = &#123;&#123; tempest_image_id &#125;&#125;</div><div class="line">image_ref_alt = &#123;&#123; tempest_image_alt_id &#125;&#125;</div><div class="line">flavor_ref = &#123;&#123; tempest_flavor_ref_id &#125;&#125;</div><div class="line">flavor_ref_alt = &#123;&#123; tempest_flavor_ref_alt_id &#125;&#125;</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line"></div><div class="line">[dashboard]</div><div class="line">dashboard_url = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;/</div><div class="line">login_url = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;/auth/login</div><div class="line"></div><div class="line">[identity]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line">auth_version = v3</div><div class="line">uri = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;/v2.0</div><div class="line">uri_v3 = &#123;&#123; internal_protocol &#125;&#125;://&#123;&#123; kolla_internal_fqdn &#125;&#125;:&#123;&#123; keystone_admin_port &#125;&#125;/v3</div><div class="line"></div><div class="line">[image]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line">http_image = &#123;&#123; image_url &#125;&#125;</div><div class="line"></div><div class="line">[network]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line">public_network_id =  &#123;&#123; tempest_public_network_id &#125;&#125;</div><div class="line">floating_network_name = &#123;&#123; tempest_floating_network_name &#125;&#125;</div><div class="line">project_networks_reachable = false</div><div class="line"></div><div class="line">[network-feature-enabled]</div><div class="line">ipv6 = false</div><div class="line"></div><div class="line">[object-storage]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line"></div><div class="line">[orchestration]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line"></div><div class="line">[volume]</div><div class="line">region = &#123;&#123; openstack_region_name &#125;&#125;</div><div class="line"></div><div class="line">[volume-feature-enabled]</div><div class="line">api_v1 = False</div><div class="line"></div><div class="line">[validation]</div><div class="line">image_ssh_user = &#123;&#123; tempest_image_ssh_user &#125;&#125;</div><div class="line">image_ssh_password = &#123;&#123; tempest_image_ssh_password &#125;&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用tempest测试api接口"><a href="#使用tempest测试api接口" class="headerlink" title="使用tempest测试api接口"></a>使用tempest测试api接口</h4><p><strong><em>明确需求</em></strong>：</p>
+<ul>
+<li>指定某些api进行测试；例如我只想测试 compute的相关api</li>
+<li>执行所有的测试</li>
+<li>单项api测试</li>
+<li>去掉某些我不想测试的api</li>
+</ul>
+<h5 id="执行所有测试"><a href="#执行所有测试" class="headerlink" title="执行所有测试"></a>执行所有测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 验证你的配置是否正确</div><div class="line">tempest verify-config</div><div class="line"></div><div class="line"># 执行所有测试</div><div class="line">tempest run --subunit &gt; result.subunit</div><div class="line"></div><div class="line"># 生成测试报告result.html</div><div class="line">subunit2html result.subunit</div></pre></td></tr></table></figure>
+<h5 id="黑名单–blacklist-file的使用"><a href="#黑名单–blacklist-file的使用" class="headerlink" title="黑名单–blacklist-file的使用"></a>黑名单–blacklist-file的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">--blacklist-file &lt;file name&gt;</div><div class="line">  Sample regex file:</div><div class="line"></div><div class="line">      (^tempest\.api) # Comments about this regex</div><div class="line">      tempest.scenario.test_server_basic_ops # Matches this test explicitly</div></pre></td></tr></table></figure>
+<p>例如除了tempest.scenario不测，其他的都测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat blacklist</div><div class="line">tempest.scenario.*</div><div class="line"></div><div class="line">tempest run --blacklist-file blacklist</div></pre></td></tr></table></figure>
+<h5 id="白名单–whitelist-file的使用"><a href="#白名单–whitelist-file的使用" class="headerlink" title="白名单–whitelist-file的使用"></a>白名单–whitelist-file的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 只测试tempest.api.compute</div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat whitefile</div><div class="line">tempest.api.compute.*</div><div class="line"></div><div class="line">tempest run --whitelist-file whitefile</div><div class="line"></div><div class="line"># 测试一个api接口</div><div class="line"></div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat one_whitefile</div><div class="line">tempest.api.compute.images.test_list_image_filters.ListImageFiltersTestJSON.test_list_images_filter_by_changes_since</div><div class="line"></div><div class="line">tempest run --whitelist-file one_whitefile</div></pre></td></tr></table></figure>
+<h5 id="使用ipdb调试tempest-api"><a href="#使用ipdb调试tempest-api" class="headerlink" title="使用ipdb调试tempest api"></a>使用ipdb调试tempest api</h5><p>安装ipdb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install ipdb</div></pre></td></tr></table></figure>
+<p>在程序需要中断的地方插入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import ipdb; ipdb.set_trace()</div></pre></td></tr></table></figure>
+<p>运行程序后, 会在执行到set_trace()的时候中断程序 并出现提示符</p>
+<p>(ipdb) …</p>
+<p>这时输入help即可看到ipdb下常用的命令啦</p>
+<p>比较常用的是看看当前的变量 a 以及下一步 n</p>
+<p>还有就是 dir() 方法 可以查看一个对象有那些方法可以调用</p>
+<p>ipdb比pdb的强大在于 他包含啦 ipython 特性. 可以支持tab补全</p>
+<p>下面ipdb调试tempest api接口的一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">vim tempest/api/compute/images/test_list_image_filters.py</div><div class="line">    @decorators.idempotent_id(&apos;a3f5b513-aeb3-42a9-b18e-f091ef73254d&apos;)</div><div class="line">    def test_list_images_filter_by_status(self):</div><div class="line">        # The list of images should contain only images with the</div><div class="line">        # provided status</div><div class="line">        import ipdb; ipdb.set_trace()</div><div class="line">        params = &#123;&apos;status&apos;: &apos;ACTIVE&apos;&#125;</div><div class="line">        images = self.client.list_images(**params)[&apos;images&apos;]</div><div class="line"></div><div class="line">        self.assertNotEmpty([i for i in images if i[&apos;id&apos;] == self.image1_id])</div><div class="line">        self.assertNotEmpty([i for i in images if i[&apos;id&apos;] == self.image2_id])</div><div class="line">        self.assertNotEmpty([i for i in images if i[&apos;id&apos;] == self.image3_id])</div><div class="line"></div><div class="line">## 进行调试</div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# python -m testtools.run tempest.api.compute.images.test_list_image_filters.ListImageFiltersTestJSON.test_list_images_filter_by_changes_since</div><div class="line">Tests running...</div><div class="line">/var/lib/kolla/venv/lib/python2.7/site-packages/IPython/core/debugger.py:243: DeprecationWarning: The `color_scheme` argument is deprecated since version 5.1</div><div class="line">  DeprecationWarning)</div><div class="line">&gt; /tempest-source/tempest-16.0.1.dev380/tempest/api/compute/images/test_list_image_filters.py(100)resource_setup()</div><div class="line">     99         # Create instances and snapshots via nova</div><div class="line">--&gt; 100         cls.server1 = cls.create_test_server()</div><div class="line">    101</div><div class="line"></div><div class="line">ipdb&gt;</div></pre></td></tr></table></figure>
+<h5 id="测试脚本"><a href="#测试脚本" class="headerlink" title="测试脚本"></a>测试脚本</h5><p>下面是一个简单的测试脚本，测试基本都是通过的，在控制节点执行这个脚本就ok；</p>
+<p>报告生成在 ／tmp/tempest目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">[root@control01 kolla-test]# cat run_tempest.sh</div><div class="line">#!bin/bash</div><div class="line"></div><div class="line">TEMPEST_PATH=&quot;/tmp/tempest&quot;</div><div class="line">TEMPEST_FILE=&quot;/tmp/tempest/results.html&quot;</div><div class="line"></div><div class="line">if [ ! -d &quot;$TEMPEST_PATH&quot; ]; then</div><div class="line">  mkdir &quot;$TEMPEST_PATH&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">if [ -f &quot;$TEMPEST_FILE&quot; ]; then</div><div class="line">  rm -f  &quot;$TEMPEST_FILE&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">cat &lt;&lt; EOF &gt; &quot;blacklist&quot;</div><div class="line">tempest.api.compute.images.test_list_image_filters.ListImageFiltersTestJSON</div><div class="line">tempest.api.network.admin.test_metering_extensions.MeteringTestJSON</div><div class="line">tempest.api.network.test_extensions.ExtensionsTestJSON</div><div class="line">tempest.api.volume.test_volume_delete_cascade.VolumesDeleteCascade</div><div class="line">tempest.api.compute.admin.test_auto_allocate_network.AutoAllocateNetworkTest</div><div class="line">tempest.api.compute.servers.test_list_server_filters.ListServerFiltersTestJSON</div><div class="line">tempest.api.compute.admin.test_server_diagnostics.ServerDiagnosticsV248Test</div><div class="line">tempest.api.compute.images.test_images.ImagesTestJSON</div><div class="line">tempest.api.compute.servers.test_delete_server.DeleteServersTestJSON</div><div class="line">tempest.api.compute.volumes.test_attach_volume.AttachVolumeShelveTestJSON</div><div class="line">tempest.api.compute.images.test_images_oneserver.ImagesOneServerTestJSON</div><div class="line">tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON</div><div class="line">tempest.api.compute.servers.test_servers_negative.ServersNegativeTestJSON</div><div class="line">tempest.api.volume.admin.test_volume_types.VolumeTypesTest</div><div class="line">tempest.api.volume.admin.test_volumes_backup.VolumesBackupsAdminTest</div><div class="line">tempest.api.volume.test_volume_delete_cascade.VolumesDeleteCascade</div><div class="line">tempest.api.volume.test_volumes_backup.VolumesBackupsTest</div><div class="line">tempest.api.volume.test_volumes_snapshots.VolumesSnapshotTestJSON</div><div class="line">tempest.scenario.test_minimum_basic.TestMinimumBasicScenario</div><div class="line">tempest.scenario.test_shelve_instance.TestShelveInstance</div><div class="line">tempest.scenario.test_snapshot_pattern.TestSnapshotPattern</div><div class="line">tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern</div><div class="line">tempest.scenario.test_security_groups_basic_ops.TestSecurityGroupsBasicOps</div><div class="line">tempest.scenario.test_encrypted_cinder_volumes.TestEncryptedCinderVolumes</div><div class="line">EOF</div><div class="line"></div><div class="line">docker cp blacklist tempest:/tempest/blacklist</div><div class="line">docker exec tempest bash -c &apos;tempest run --config-file /etc/tempest/tempest.conf --blacklist-file /tempest/blacklist --subunit &gt; /tmp/results.subunit&apos;</div><div class="line">docker exec tempest bash -c &apos;subunit2html /tmp/results.subunit /tmp/results.html&apos;</div><div class="line">docker cp tempest:/tmp/results.html  $TEMPEST_FIL</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-pay.jpg" alt="zhubingbing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"># openstack</a>
+          
+            <a href="/tags/tempest/" rel="tag"># tempest</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/01/openshift/openshift-02/" rel="next" title="opneshift 多节点测试">
+                <i class="fa fa-chevron-left"></i> opneshift 多节点测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/21/openstack/magnum/magnum-02/" rel="prev" title="magnum调研02">
+                magnum调研02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhubingbing" />
+          <p class="site-author-name" itemprop="name">zhubingbing</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhubingbing" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/zhubingbing" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhubingbing" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/zhubingbing" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/zhubingbing" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tempest-介绍"><span class="nav-number">1.</span> <span class="nav-text">Tempest 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tempest是什么"><span class="nav-number">1.1.</span> <span class="nav-text">Tempest是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要用于什么测试？"><span class="nav-number">1.2.</span> <span class="nav-text">主要用于什么测试？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用kolla部署tempest"><span class="nav-number">2.</span> <span class="nav-text">使用kolla部署tempest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tempest使用"><span class="nav-number">3.</span> <span class="nav-text">Tempest使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备工作"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#了解tempest-cmd基本使用"><span class="nav-number">3.1.1.</span> <span class="nav-text">了解tempest cmd基本使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置tempest-conf"><span class="nav-number">3.1.2.</span> <span class="nav-text">配置tempest.conf</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用tempest测试api接口"><span class="nav-number">3.2.</span> <span class="nav-text">使用tempest测试api接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#执行所有测试"><span class="nav-number">3.2.1.</span> <span class="nav-text">执行所有测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#黑名单–blacklist-file的使用"><span class="nav-number">3.2.2.</span> <span class="nav-text">黑名单–blacklist-file的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#白名单–whitelist-file的使用"><span class="nav-number">3.2.3.</span> <span class="nav-text">白名单–whitelist-file的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用ipdb调试tempest-api"><span class="nav-number">3.2.4.</span> <span class="nav-text">使用ipdb调试tempest api</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#测试脚本"><span class="nav-number">3.2.5.</span> <span class="nav-text">测试脚本</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhubingbing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyt7hBR7h';
+      var conf = '40c40d7bca2d9c15d2be2c020e79536b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
