@@ -95,7 +95,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="kolla,openstack," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -113,17 +113,12 @@
 
 
 
-<meta name="description" content="今天好好理理kolla reconfigure如何玩的  kolla的配置管理主要是管理openstack service config文件；主要实现是 1kolla-ansible reconfigure reconfigure 使用下面以1个例子来演示下 修改nova.conf,重启相关服务 在部署节点 新建／etc/kolla/config/nova/nova.conf  123456##">
-<meta name="keywords" content="kolla,openstack">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kolla之reconfigure">
-<meta property="og:url" content="http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zhubingbing">
+<meta property="og:url" content="http://yoursite.com/child/page/2/index.html">
 <meta property="og:site_name" content="Zhubingbing">
-<meta property="og:description" content="今天好好理理kolla reconfigure如何玩的  kolla的配置管理主要是管理openstack service config文件；主要实现是 1kolla-ansible reconfigure reconfigure 使用下面以1个例子来演示下 修改nova.conf,重启相关服务 在部署节点 新建／etc/kolla/config/nova/nova.conf  123456##">
-<meta property="og:updated_time" content="2017-09-22T02:21:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kolla之reconfigure">
-<meta name="twitter:description" content="今天好好理理kolla reconfigure如何玩的  kolla的配置管理主要是管理openstack service config文件；主要实现是 1kolla-ansible reconfigure reconfigure 使用下面以1个例子来演示下 修改nova.conf,重启相关服务 在部署节点 新建／etc/kolla/config/nova/nova.conf  123456##">
+<meta name="twitter:title" content="Zhubingbing">
 
 
 
@@ -151,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/"/>
+  <link rel="canonical" href="http://yoursite.com/child/page/2/"/>
 
 
 
 
 
-  <title>kolla之reconfigure | Zhubingbing</title>
+  <title>Zhubingbing</title>
   
 
 
@@ -182,7 +177,9 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -309,9 +306,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -337,7 +334,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">kolla之reconfigure</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/09/openstack/kolla-reconfigure/" itemprop="url">kolla之reconfigure</a></h1>
         
 
         <div class="post-meta">
@@ -392,7 +391,7 @@
               </span>
               
                 <a href="/2017/07/09/openstack/kolla-reconfigure/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/09/openstack/kolla-reconfigure/" itemprop="commentsCount"></span>
+                  <span id="url::http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/" class="cy_cmt_count" data-xid="2017/07/09/openstack/kolla-reconfigure/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -401,11 +400,6 @@
           
           
 
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-            </span>
           
 
           
@@ -422,7 +416,9 @@
       
 
       
-        <blockquote>
+        
+          
+            <blockquote>
 <p>今天好好理理kolla reconfigure如何玩的</p>
 </blockquote>
 <p>kolla的配置管理主要是管理openstack service config文件；<br>主要实现是</p>
@@ -466,113 +462,46 @@
 <p>这里最核心的实现就是merge_configs。<br>action plugin中在merge_configs.py作用是导入template模板，并且run。代码在/usr/share/kolla-ansible/ansible/action_plugins/merge_configs.py</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div></pre></td><td class="code"><pre><div class="line">import collections</div><div class="line">import inspect</div><div class="line">import os</div><div class="line"></div><div class="line">from ansible.plugins import action</div><div class="line">from six import StringIO</div><div class="line"></div><div class="line">from oslo_config import iniparser</div><div class="line"></div><div class="line"></div><div class="line">class OverrideConfigParser(iniparser.BaseParser):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        self._cur_sections = collections.OrderedDict()</div><div class="line">        self._sections = collections.OrderedDict()</div><div class="line">        self._cur_section = None</div><div class="line"></div><div class="line">    def assignment(self, key, value):</div><div class="line">        cur_value = self._cur_section.get(key)</div><div class="line">        if len(value) == 1 and value[0] == &apos;&apos;:</div><div class="line">            value = []</div><div class="line">        if not cur_value:</div><div class="line">            self._cur_section[key] = [value]</div><div class="line">        else:</div><div class="line">            self._cur_section[key].append(value)</div><div class="line"></div><div class="line">    def parse(self, lineiter):</div><div class="line">        self._cur_sections = collections.OrderedDict()</div><div class="line">        super(OverrideConfigParser, self).parse(lineiter)</div><div class="line"></div><div class="line">        # merge _cur_sections into _sections</div><div class="line">        for section, values in self._cur_sections.items():</div><div class="line">            if section not in self._sections:</div><div class="line">                self._sections[section] = collections.OrderedDict()</div><div class="line">            for key, value in values.items():</div><div class="line">                self._sections[section][key] = value</div><div class="line"></div><div class="line">    def new_section(self, section):</div><div class="line">        cur_section = self._cur_sections.get(section)</div><div class="line">        if not cur_section:</div><div class="line">            cur_section = collections.OrderedDict()</div><div class="line">            self._cur_sections[section] = cur_section</div><div class="line">        self._cur_section = cur_section</div><div class="line">        return cur_section</div><div class="line"></div><div class="line">    def write(self, fp):</div><div class="line">        def write_key_value(key, values):</div><div class="line">            for v in values:</div><div class="line">                if not v:</div><div class="line">                    fp.write(&apos;&#123;&#125; =\n&apos;.format(key))</div><div class="line">                for index, value in enumerate(v):</div><div class="line">                    if index == 0:</div><div class="line">                        fp.write(&apos;&#123;&#125; = &#123;&#125;\n&apos;.format(key, value))</div><div class="line">                    else:</div><div class="line">                        fp.write(&apos;&#123;&#125;   &#123;&#125;\n&apos;.format(len(key)*&apos; &apos;, value))</div><div class="line"></div><div class="line">        def write_section(section):</div><div class="line">            for key, values in section.items():</div><div class="line">                write_key_value(key, values)</div><div class="line"></div><div class="line">        for section in self._sections:</div><div class="line">            fp.write(&apos;[&#123;&#125;]\n&apos;.format(section))</div><div class="line">            write_section(self._sections[section])</div><div class="line">            fp.write(&apos;\n&apos;)</div><div class="line"></div><div class="line"></div><div class="line">class ActionModule(action.ActionBase):</div><div class="line"></div><div class="line">    TRANSFERS_FILES = True</div><div class="line"></div><div class="line">    def read_config(self, source, config):</div><div class="line">        # Only use config if present</div><div class="line">        if os.access(source, os.R_OK):</div><div class="line">            with open(source, &apos;r&apos;) as f:</div><div class="line">                template_data = f.read()</div><div class="line">            result = self._templar.template(template_data)</div><div class="line">            fakefile = StringIO(result)</div><div class="line">            config.parse(fakefile)</div><div class="line">            fakefile.close()</div><div class="line"></div><div class="line">    def run(self, tmp=None, task_vars=None):</div><div class="line"></div><div class="line">        if task_vars is None:</div><div class="line">            task_vars = dict()</div><div class="line">        result = super(ActionModule, self).run(tmp, task_vars)</div><div class="line"></div><div class="line">        # NOTE(jeffrey4l): Ansible 2.1 add a remote_user param to the</div><div class="line">        # _make_tmp_path function.  inspect the number of the args here. In</div><div class="line">        # this way, ansible 2.0 and ansible 2.1 are both supported</div><div class="line">        make_tmp_path_args = inspect.getargspec(self._make_tmp_path)[0]</div><div class="line">        if not tmp and len(make_tmp_path_args) == 1:</div><div class="line">            tmp = self._make_tmp_path()</div><div class="line">        if not tmp and len(make_tmp_path_args) == 2:</div><div class="line">            remote_user = (task_vars.get(&apos;ansible_user&apos;)</div><div class="line">                           or self._play_context.remote_user)</div><div class="line">            tmp = self._make_tmp_path(remote_user)</div><div class="line"></div><div class="line">        sources = self._task.args.get(&apos;sources&apos;, None)</div><div class="line">        extra_vars = self._task.args.get(&apos;vars&apos;, list())</div><div class="line"></div><div class="line">        if not isinstance(sources, list):</div><div class="line">            sources = [sources]</div><div class="line"></div><div class="line">        temp_vars = task_vars.copy()</div><div class="line">        temp_vars.update(extra_vars)</div><div class="line"></div><div class="line">        config = OverrideConfigParser()</div><div class="line">        old_vars = self._templar._available_variables</div><div class="line">        self._templar.set_available_variables(temp_vars)</div><div class="line"></div><div class="line">        for source in sources:</div><div class="line">            self.read_config(source, config)</div><div class="line"></div><div class="line">        self._templar.set_available_variables(old_vars)</div><div class="line">        # Dump configparser to string via an emulated file</div><div class="line"></div><div class="line">        fakefile = StringIO()</div><div class="line">        config.write(fakefile)</div><div class="line"></div><div class="line">        remote_path = self._connection._shell.join_path(tmp, &apos;src&apos;)</div><div class="line">        xfered = self._transfer_data(remote_path, fakefile.getvalue())</div><div class="line">        fakefile.close()</div><div class="line"></div><div class="line">        new_module_args = self._task.args.copy()</div><div class="line">        new_module_args.pop(&apos;vars&apos;, None)</div><div class="line">        new_module_args.pop(&apos;sources&apos;, None)</div><div class="line"></div><div class="line">        new_module_args.update(</div><div class="line">            dict(</div><div class="line">                src=xfered</div><div class="line">            )</div><div class="line">        )</div><div class="line"></div><div class="line">        result.update(self._execute_module(module_name=&apos;copy&apos;,</div><div class="line">                                           module_args=new_module_args,</div><div class="line">                                           task_vars=task_vars,</div><div class="line">                                           tmp=tmp))</div><div class="line">        return result</div></pre></td></tr></table></figure>
 
+          
+        
       
     </div>
 
     <div>
       
-        
-
-      
     </div>
 
     <div>
       
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechat-pay.jpg" alt="zhubingbing WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-    </div>
-  </div>
-
-
-      
     </div>
 
     <div>
-      
-        
-
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/kolla/" rel="tag"># kolla</a>
-          
-            <a href="/tags/openstack/" rel="tag"># openstack</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/14/openshift/openshift介绍/" rel="prev" title="Openshift-01">
-                Openshift-01 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
-      
-    </div>
-  </div>
 
 
           </div>
@@ -580,12 +509,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="SOHUCS"></div>
-    
-  </div>
-
 
         </div>
         
@@ -605,17 +528,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -731,22 +645,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#reconfigure-使用"><span class="nav-number">1.</span> <span class="nav-text">reconfigure 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#修改nova-conf-重启相关服务"><span class="nav-number">1.1.</span> <span class="nav-text">修改nova.conf,重启相关服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reconfigure-代码流程"><span class="nav-number">2.</span> <span class="nav-text">reconfigure 代码流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ansible-role是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">ansible role是什么？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#config-yml"><span class="nav-number">3.</span> <span class="nav-text">config.yml</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -885,10 +783,10 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-
+  
 
   
 
@@ -929,18 +827,7 @@
 
 
   
-    <script type="text/javascript">
-    (function(){
-      var appid = 'cyt7hBR7h';
-      var conf = '40c40d7bca2d9c15d2be2c020e79536b';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      if (width < 960) {
-      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
-        window.changyan.api.config({appid:appid,conf:conf})});
-      }
-    })();
-    </script>
-    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt7hBR7h"></script>
   
 
 

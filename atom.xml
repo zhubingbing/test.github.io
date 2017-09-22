@@ -38,6 +38,27 @@
   </entry>
   
   <entry>
+    <title>zsh no_nomatch *</title>
+    <link href="http://yoursite.com/child/2017/09/21/macos/zsh/"/>
+    <id>http://yoursite.com/child/2017/09/21/macos/zsh/</id>
+    <published>2017-09-21T04:30:00.000Z</published>
+    <updated>2017-09-22T02:48:08.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在 zsh 下使用 find 命令查找指定目录下所有头文件时出现问题：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div 
+    
+    </summary>
+    
+      <category term="macos" scheme="http://yoursite.com/child/categories/macos/"/>
+    
+    
+      <category term="zsh" scheme="http://yoursite.com/child/tags/zsh/"/>
+    
+  </entry>
+  
+  <entry>
     <title>How to use tempest in kolla</title>
     <link href="http://yoursite.com/child/2017/08/16/openstack/tempest/"/>
     <id>http://yoursite.com/child/2017/08/16/openstack/tempest/</id>
