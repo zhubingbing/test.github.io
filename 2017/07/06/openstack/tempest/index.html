@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Zhubingbing">
 <meta property="og:description" content="Tempest 介绍在接触tempest之前我们应该有如下疑问。  Tempest是什么Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分. 主要用于什么测试？（1）A">
 <meta property="og:image" content="http://yoursite.com/images/tempest.png">
-<meta property="og:updated_time" content="2017-07-13T09:04:34.000Z">
+<meta property="og:updated_time" content="2017-09-22T02:06:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to use tempest in kolla">
 <meta name="twitter:description" content="Tempest 介绍在接触tempest之前我们应该有如下疑问。  Tempest是什么Tempest为OpenStack的功能测试、集成测试项目，它被设计为可在各种不同项目中使用。在OpenStack核心项目中的单元测试代码中经常可以看到它的身影，在一些孵化项目中也会使用Tempest去测试。它可以验证代码的正确性，已经成为OpenStack项目中不可或缺的组成部分. 主要用于什么测试？（1）A">
@@ -435,7 +435,7 @@
 <p><strong>注: 我是使用cirros镜像进行测试，按照实际情况替换相应参数</strong></p>
 </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# vim /etc/kolla/globals.yml</div><div class="line">enable_tempest: &quot;yes&quot; </div><div class="line">tempest_image_id: &quot;570cab5e-4609-43cc-8c1e-3f7d7217ed30&quot;</div><div class="line">tempest_flavor_ref_id: &quot;1&quot;</div><div class="line">tempest_public_network_id: &quot;4c5928f2-6ade-498f-a692-98a775a7183a&quot;</div><div class="line">tempest_floating_network_name: &quot;public1&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@control01 ~]# vim /etc/kolla/globals.yml</div><div class="line">enable_tempest: &quot;yes&quot;</div><div class="line">tempest_image_id: &quot;570cab5e-4609-43cc-8c1e-3f7d7217ed30&quot;</div><div class="line">tempest_flavor_ref_id: &quot;1&quot;</div><div class="line">tempest_public_network_id: &quot;4c5928f2-6ade-498f-a692-98a775a7183a&quot;</div><div class="line">tempest_floating_network_name: &quot;public1&quot;</div></pre></td></tr></table></figure>
 <p>参数以如下命令获得</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># image id</div><div class="line">[root@control01 ~]# openstack image show cirros -c id -f value</div><div class="line">570cab5e-4609-43cc-8c1e-3f7d7217ed30</div><div class="line"></div><div class="line"># flavor_ref_id</div><div class="line">[root@control01 ~]# nova flavor-list</div><div class="line">+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</div><div class="line">| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |</div><div class="line">+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</div><div class="line">| 1  | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |</div><div class="line">| 2  | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |</div><div class="line">| 3  | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |</div><div class="line">| 4  | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |</div><div class="line">| 5  | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True</div><div class="line"></div><div class="line"># public_network_id</div><div class="line">[root@control01 ~]# openstack network show public1 -c id -f value</div><div class="line">4c5928f2-6ade-498f-a692-98a775a7183a</div><div class="line"></div><div class="line"># floating_network_name</div><div class="line">[root@control01 ~]# openstack network list</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div><div class="line">| ID                                   | Name     | Subnets                              |</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div><div class="line">| 0474116d-0fbd-41a3-ab0c-2c2d11545937 | demo-net | 7366e03d-027b-4a44-b270-d0478584f3e8 |</div><div class="line">| 4c5928f2-6ade-498f-a692-98a775a7183a | public1  | 2c47f34c-f55a-4739-a677-2cbfa56b6312 |</div><div class="line">+--------------------------------------+----------+--------------------------------------+</div></pre></td></tr></table></figure>
 <ol>
@@ -455,11 +455,11 @@
 <li>单项api测试</li>
 <li>去掉某些我不想测试的api</li>
 </ul>
-<h5 id="执行所有测试"><a href="#执行所有测试" class="headerlink" title="执行所有测试"></a>执行所有测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 验证你的配置是否正确</div><div class="line">tempest verify-config</div><div class="line"></div><div class="line"># 执行所有测试</div><div class="line">tempest run --subunit &gt; result.subunit </div><div class="line"></div><div class="line"># 生成测试报告result.html</div><div class="line">subunit2html result.subunit</div></pre></td></tr></table></figure>
+<h5 id="执行所有测试"><a href="#执行所有测试" class="headerlink" title="执行所有测试"></a>执行所有测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 验证你的配置是否正确</div><div class="line">tempest verify-config</div><div class="line"></div><div class="line"># 执行所有测试</div><div class="line">tempest run --subunit &gt; result.subunit</div><div class="line"></div><div class="line"># 生成测试报告result.html</div><div class="line">subunit2html result.subunit</div></pre></td></tr></table></figure>
 <h5 id="黑名单–blacklist-file的使用"><a href="#黑名单–blacklist-file的使用" class="headerlink" title="黑名单–blacklist-file的使用"></a>黑名单–blacklist-file的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">--blacklist-file &lt;file name&gt;</div><div class="line">  Sample regex file:</div><div class="line"></div><div class="line">      (^tempest\.api) # Comments about this regex</div><div class="line">      tempest.scenario.test_server_basic_ops # Matches this test explicitly</div></pre></td></tr></table></figure>
 <p>例如除了tempest.scenario不测，其他的都测</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat blacklist</div><div class="line">tempest.scenario.*</div><div class="line"></div><div class="line">tempest run --blacklist-file blacklist</div></pre></td></tr></table></figure>
-<h5 id="白名单–whitelist-file的使用"><a href="#白名单–whitelist-file的使用" class="headerlink" title="白名单–whitelist-file的使用"></a>白名单–whitelist-file的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 只测试tempest.api.compute </div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat whitefile</div><div class="line">tempest.api.compute.*</div><div class="line"></div><div class="line">tempest run --whitelist-file whitefile</div><div class="line"></div><div class="line"># 测试一个api接口</div><div class="line"></div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat one_whitefile</div><div class="line">tempest.api.compute.images.test_list_image_filters.ListImageFiltersTestJSON.test_list_images_filter_by_changes_since</div><div class="line"></div><div class="line">tempest run --whitelist-file one_whitefile</div></pre></td></tr></table></figure>
+<h5 id="白名单–whitelist-file的使用"><a href="#白名单–whitelist-file的使用" class="headerlink" title="白名单–whitelist-file的使用"></a>白名单–whitelist-file的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 只测试tempest.api.compute</div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat whitefile</div><div class="line">tempest.api.compute.*</div><div class="line"></div><div class="line">tempest run --whitelist-file whitefile</div><div class="line"></div><div class="line"># 测试一个api接口</div><div class="line"></div><div class="line">(tempest)[root@control01 tempest-16.0.1.dev380]# cat one_whitefile</div><div class="line">tempest.api.compute.images.test_list_image_filters.ListImageFiltersTestJSON.test_list_images_filter_by_changes_since</div><div class="line"></div><div class="line">tempest run --whitelist-file one_whitefile</div></pre></td></tr></table></figure>
 <h5 id="使用ipdb调试tempest-api"><a href="#使用ipdb调试tempest-api" class="headerlink" title="使用ipdb调试tempest api"></a>使用ipdb调试tempest api</h5><p>安装ipdb</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install ipdb</div></pre></td></tr></table></figure>
 <p>在程序需要中断的地方插入</p>
@@ -535,18 +535,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/06/openstack/rally/" rel="next" title="rally-first">
-                <i class="fa fa-chevron-left"></i> rally-first
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/14/openstack/制作openshift iso/" rel="prev" title="openshift iso 制作">
-                openshift iso 制作 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/06/openstack/rally/" rel="prev" title="rally-01">
+                rally-01 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -644,7 +640,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

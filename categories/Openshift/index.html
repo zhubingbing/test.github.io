@@ -319,7 +319,7 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2017/07/14/openstack/制作openshift iso/" itemprop="url">
+            <a class="post-title-link" href="/2017/07/14/openshift/openshift-iso/" itemprop="url">
               
                 <span itemprop="name">openshift iso 制作</span>
               
@@ -386,7 +386,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1022,7 +1022,29 @@
 
 </body>
 </html>
-    });
+rchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
     }
 
     // handle and trigger popup window;
