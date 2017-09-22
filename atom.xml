@@ -120,9 +120,9 @@
       <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
     
     
-      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
-    
       <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
     
   </entry>
   
@@ -164,9 +164,9 @@
       <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
     
     
-      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
-    
       <category term="rally" scheme="http://yoursite.com/child/tags/rally/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
   </entry>
   
@@ -255,9 +255,9 @@
       <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
     
     
-      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
-    
       <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
     
   </entry>
   

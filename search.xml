@@ -55,8 +55,8 @@
         <category>openstack</category>
       </categories>
       <tags>
-        <tag>kolla</tag>
         <tag>openstack</tag>
+        <tag>kolla</tag>
       </tags>
   </entry>
   <entry>
@@ -79,8 +79,8 @@
         <category>openstack</category>
       </categories>
       <tags>
-        <tag>openstack</tag>
         <tag>rally</tag>
+        <tag>openstack</tag>
       </tags>
   </entry>
   <entry>
@@ -126,8 +126,8 @@
         <category>openstack</category>
       </categories>
       <tags>
-        <tag>kolla</tag>
         <tag>openstack</tag>
+        <tag>kolla</tag>
       </tags>
   </entry>
 </search>
