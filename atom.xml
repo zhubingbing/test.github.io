@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://zhubingbing.net/"/>
+  <link href="http://yoursite.com/child/"/>
   <updated>2017-09-21T12:08:09.000Z</updated>
-  <id>http://zhubingbing.net/</id>
+  <id>http://yoursite.com/child/</id>
   
   <author>
     <name>zhubingbing</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>magnum调研02</title>
-    <link href="http://zhubingbing.net/2017/09/21/openstack/magnum/magnum-02/"/>
-    <id>http://zhubingbing.net/2017/09/21/openstack/magnum/magnum-02/</id>
+    <link href="http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/"/>
+    <id>http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/</id>
     <published>2017-09-21T11:30:00.000Z</published>
     <updated>2017-09-21T12:08:09.000Z</updated>
     
@@ -28,19 +28,19 @@
     
     </summary>
     
-      <category term="openstack" scheme="http://zhubingbing.net/categories/openstack/"/>
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
     
     
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
-      <category term="magnum" scheme="http://zhubingbing.net/tags/magnum/"/>
+      <category term="magnum" scheme="http://yoursite.com/child/tags/magnum/"/>
     
   </entry>
   
   <entry>
     <title>Openshift-02</title>
-    <link href="http://zhubingbing.net/2017/08/01/openstack/Openshift%20%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%8B%E8%AF%95/"/>
-    <id>http://zhubingbing.net/2017/08/01/openstack/Openshift 多节点测试/</id>
+    <link href="http://yoursite.com/child/2017/08/01/openstack/Openshift%20%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%8B%E8%AF%95/"/>
+    <id>http://yoursite.com/child/2017/08/01/openstack/Openshift 多节点测试/</id>
     <published>2017-08-01T04:30:00.000Z</published>
     <updated>2017-08-01T02:23:03.000Z</updated>
     
@@ -50,19 +50,19 @@
     
     </summary>
     
-      <category term="Openshift" scheme="http://zhubingbing.net/categories/Openshift/"/>
+      <category term="Openshift" scheme="http://yoursite.com/child/categories/Openshift/"/>
     
     
-      <category term="Openshift" scheme="http://zhubingbing.net/tags/Openshift/"/>
+      <category term="Openshift" scheme="http://yoursite.com/child/tags/Openshift/"/>
     
-      <category term="pass" scheme="http://zhubingbing.net/tags/pass/"/>
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
   <entry>
     <title>openshift部署之前环境准备</title>
-    <link href="http://zhubingbing.net/2017/07/17/openstack/openshift%20%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%89%8D%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/"/>
-    <id>http://zhubingbing.net/2017/07/17/openstack/openshift 部署之前环境准备/</id>
+    <link href="http://yoursite.com/child/2017/07/17/openstack/openshift%20%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%89%8D%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/"/>
+    <id>http://yoursite.com/child/2017/07/17/openstack/openshift 部署之前环境准备/</id>
     <published>2017-07-16T22:30:00.000Z</published>
     <updated>2017-07-16T22:55:45.000Z</updated>
     
@@ -72,19 +72,42 @@
     
     </summary>
     
-      <category term="Openshift" scheme="http://zhubingbing.net/categories/Openshift/"/>
+      <category term="Openshift" scheme="http://yoursite.com/child/categories/Openshift/"/>
     
     
-      <category term="pass" scheme="http://zhubingbing.net/tags/pass/"/>
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
-      <category term="openshift" scheme="http://zhubingbing.net/tags/openshift/"/>
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>介绍 kolla</title>
+    <link href="http://yoursite.com/child/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/child/2017/07/14/openstack/kolla介绍/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-07-14T09:19:58.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;kolla总结&quot;&gt;&lt;a href=&quot;#kolla总结&quot; class=&quot;headerlink&quot; title=&quot;kolla总结&quot;&gt;&lt;/a&gt;kolla总结&lt;/h3&gt;&lt;p&gt;在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。&lt;/p&gt;
+&lt;h4 id=&quot;kolla的
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://yoursite.com/child/categories/Openstack/"/>
+    
+    
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
   </entry>
   
   <entry>
     <title>kolla之reconfigure</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/kolla-reconfigure/</id>
+    <link href="http://yoursite.com/child/2017/07/14/openstack/kolla-reconfigure/"/>
+    <id>http://yoursite.com/child/2017/07/14/openstack/kolla-reconfigure/</id>
     <published>2017-07-14T04:30:00.000Z</published>
     <updated>2017-07-18T03:56:06.000Z</updated>
     
@@ -98,42 +121,19 @@
     
     </summary>
     
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
+      <category term="Openstack" scheme="http://yoursite.com/child/categories/Openstack/"/>
     
     
-      <category term="kolla" scheme="http://zhubingbing.net/tags/kolla/"/>
+      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
     
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>介绍 kolla</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/kolla%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/kolla介绍/</id>
-    <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-07-14T09:19:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;kolla总结&quot;&gt;&lt;a href=&quot;#kolla总结&quot; class=&quot;headerlink&quot; title=&quot;kolla总结&quot;&gt;&lt;/a&gt;kolla总结&lt;/h3&gt;&lt;p&gt;在kolla项目下也快1年啦，也该总结下, 文笔不好权当记录。&lt;/p&gt;
-&lt;h4 id=&quot;kolla的
-    
-    </summary>
-    
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
-    
-    
-      <category term="kolla" scheme="http://zhubingbing.net/tags/kolla/"/>
-    
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
   </entry>
   
   <entry>
     <title>Openshift-01</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/openshift%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/openshift介绍/</id>
+    <link href="http://yoursite.com/child/2017/07/14/openstack/openshift%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/child/2017/07/14/openstack/openshift介绍/</id>
     <published>2017-07-14T04:30:00.000Z</published>
     <updated>2017-09-21T09:17:12.000Z</updated>
     
@@ -143,19 +143,19 @@
     
     </summary>
     
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
+      <category term="Openstack" scheme="http://yoursite.com/child/categories/Openstack/"/>
     
     
-      <category term="Openshift" scheme="http://zhubingbing.net/tags/Openshift/"/>
+      <category term="Openshift" scheme="http://yoursite.com/child/tags/Openshift/"/>
     
-      <category term="pass" scheme="http://zhubingbing.net/tags/pass/"/>
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
   <entry>
     <title>openshift iso 制作</title>
-    <link href="http://zhubingbing.net/2017/07/14/openstack/%E5%88%B6%E4%BD%9Copenshift%20iso/"/>
-    <id>http://zhubingbing.net/2017/07/14/openstack/制作openshift iso/</id>
+    <link href="http://yoursite.com/child/2017/07/14/openstack/%E5%88%B6%E4%BD%9Copenshift%20iso/"/>
+    <id>http://yoursite.com/child/2017/07/14/openstack/制作openshift iso/</id>
     <published>2017-07-14T04:30:00.000Z</published>
     <updated>2017-07-30T08:27:27.000Z</updated>
     
@@ -165,41 +165,19 @@
     
     </summary>
     
-      <category term="OpenShift" scheme="http://zhubingbing.net/categories/OpenShift/"/>
+      <category term="OpenShift" scheme="http://yoursite.com/child/categories/OpenShift/"/>
     
     
-      <category term="pass" scheme="http://zhubingbing.net/tags/pass/"/>
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
-      <category term="openshift" scheme="http://zhubingbing.net/tags/openshift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rally-first</title>
-    <link href="http://zhubingbing.net/2017/07/06/openstack/rally/"/>
-    <id>http://zhubingbing.net/2017/07/06/openstack/rally/</id>
-    <published>2017-07-06T04:30:00.000Z</published>
-    <updated>2017-09-21T08:56:33.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
-    
-    </summary>
-    
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
-    
-    
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
-    
-      <category term="rally" scheme="http://zhubingbing.net/tags/rally/"/>
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
     
   </entry>
   
   <entry>
     <title>How to use tempest in kolla</title>
-    <link href="http://zhubingbing.net/2017/07/06/openstack/tempest/"/>
-    <id>http://zhubingbing.net/2017/07/06/openstack/tempest/</id>
+    <link href="http://yoursite.com/child/2017/07/06/openstack/tempest/"/>
+    <id>http://yoursite.com/child/2017/07/06/openstack/tempest/</id>
     <published>2017-07-06T04:30:00.000Z</published>
     <updated>2017-07-13T09:04:34.000Z</updated>
     
@@ -210,12 +188,34 @@
     
     </summary>
     
-      <category term="Openstack" scheme="http://zhubingbing.net/categories/Openstack/"/>
+      <category term="Openstack" scheme="http://yoursite.com/child/categories/Openstack/"/>
     
     
-      <category term="openstack" scheme="http://zhubingbing.net/tags/openstack/"/>
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
-      <category term="tempest" scheme="http://zhubingbing.net/tags/tempest/"/>
+      <category term="tempest" scheme="http://yoursite.com/child/tags/tempest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rally-first</title>
+    <link href="http://yoursite.com/child/2017/07/06/openstack/rally/"/>
+    <id>http://yoursite.com/child/2017/07/06/openstack/rally/</id>
+    <published>2017-07-06T04:30:00.000Z</published>
+    <updated>2017-09-21T08:56:33.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;openstack-测试介绍&quot;&gt;&lt;a href=&quot;#openstack-测试介绍&quot; class=&quot;headerlink&quot; title=&quot;openstack 测试介绍&quot;&gt;&lt;/a&gt;openstack 测试介绍&lt;/h3&gt;&lt;h3 id=&quot;Rally-介绍&quot;&gt;&lt;a href
+    
+    </summary>
+    
+      <category term="Openstack" scheme="http://yoursite.com/child/categories/Openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="rally" scheme="http://yoursite.com/child/tags/rally/"/>
     
   </entry>
   
