@@ -1,0 +1,1286 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Rotobo Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="pass,kubernetes," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhubingbing" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="需求 容器调度策略管理, 能够指定app部署在指定目标服务器。 容器节点的创建或销毁 容器(应用)按需求水平扩展 健康状态检查与异常恢复 容器的资源管理与限制 服务及应用管理 负载均衡 应用配置的管理  指定app部署在指定目标服务器1、查看node的labels, k8s主要是通过labels来实现多维度的资源分组管理功能。123456[root@te-lgs3rgroc5-0-dvcxdlqu">
+<meta name="keywords" content="pass,kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes 需求验证">
+<meta property="og:url" content="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/index.html">
+<meta property="og:site_name" content="Zhubingbing">
+<meta property="og:description" content="需求 容器调度策略管理, 能够指定app部署在指定目标服务器。 容器节点的创建或销毁 容器(应用)按需求水平扩展 健康状态检查与异常恢复 容器的资源管理与限制 服务及应用管理 负载均衡 应用配置的管理  指定app部署在指定目标服务器1、查看node的labels, k8s主要是通过labels来实现多维度的资源分组管理功能。123456[root@te-lgs3rgroc5-0-dvcxdlqu">
+<meta property="og:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb.png">
+<meta property="og:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb-2.png">
+<meta property="og:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-app.png">
+<meta property="og:updated_time" content="2017-09-25T13:12:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kubernetes 需求验证">
+<meta name="twitter:description" content="需求 容器调度策略管理, 能够指定app部署在指定目标服务器。 容器节点的创建或销毁 容器(应用)按需求水平扩展 健康状态检查与异常恢复 容器的资源管理与限制 服务及应用管理 负载均衡 应用配置的管理  指定app部署在指定目标服务器1、查看node的labels, k8s主要是通过labels来实现多维度的资源分组管理功能。123456[root@te-lgs3rgroc5-0-dvcxdlqu">
+<meta name="twitter:image" content="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/"/>
+
+
+
+
+
+  <title>kubernetes 需求验证 | Zhubingbing</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhubingbing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">kubernetes 需求验证</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T16:30:00+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/09/25/kubernetes/kubernete-01/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/09/25/kubernetes/kubernete-01/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ol>
+<li>容器调度策略管理, 能够指定app部署在指定目标服务器。</li>
+<li>容器节点的创建或销毁</li>
+<li>容器(应用)按需求水平扩展</li>
+<li>健康状态检查与异常恢复</li>
+<li>容器的资源管理与限制</li>
+<li>服务及应用管理</li>
+<li>负载均衡</li>
+<li>应用配置的管理</li>
+</ol>
+<h3 id="指定app部署在指定目标服务器"><a href="#指定app部署在指定目标服务器" class="headerlink" title="指定app部署在指定目标服务器"></a>指定app部署在指定目标服务器</h3><p>1、查看node的labels, k8s主要是通过labels来实现多维度的资源分组管理功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get node --show-labels</div><div class="line">NAME                                                    STATUS                     AGE       LABELS</div><div class="line">te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo   Ready                      4d        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div><div class="line">te-ipopai2hb7-1-t7xfovwwvv2r-kube-minion-yih3r5xg2pay   Ready                      1h        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-1-t7xfovwwvv2r-kube-minion-yih3r5xg2pay</div><div class="line">te-ipopai2hb7-2-snxnzgqn4unf-kube-minion-jurzrnmkamjb   Ready                      1h        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-2-snxnzgqn4unf-kube-minion-jurzrnmkamjb</div><div class="line">te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f   Ready,SchedulingDisabled   4d        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f</div></pre></td></tr></table></figure></p>
+<p>2、使用nodeSelector，选定node节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">example git:(master) ✗ cat hello.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: hello-nginx</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      livenessProbe:</div><div class="line">        tcpSocket:</div><div class="line">          port: 80</div><div class="line">  restartPolicy: Always</div><div class="line">  nodeSelector:</div><div class="line">    kubernetes.io/hostname: te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div><div class="line">---</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: hello-nginx-service</div><div class="line">spec:</div><div class="line">  type: NodePort</div><div class="line">  sessionAffinity: ClientIP</div><div class="line">  selector:</div><div class="line">    app: nginx</div><div class="line">  ports:</div><div class="line">    - port: 80</div><div class="line">      nodePort: 30080</div></pre></td></tr></table></figure>
+<p>3、 创建hello.yaml, 如下可以看出部署在te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo节点上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">kubectl create -f hello.yaml</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pods hello-nginx  -o wide</div><div class="line">NAME          READY     STATUS    RESTARTS   AGE       IP            NODE</div><div class="line">hello-nginx   1/1       Running   0          32m       10.100.59.5   te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div></pre></td></tr></table></figure></p>
+<h3 id="容器节点上的任务创建或销毁"><a href="#容器节点上的任务创建或销毁" class="headerlink" title="容器节点上的任务创建或销毁"></a>容器节点上的任务创建或销毁</h3><p>上面已经部署了hello-nginx pod, 可以使用以下命令进行销毁<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. kubectl delete -f hello.yaml</div><div class="line">2. kubectl delete pod hello-nginx</div></pre></td></tr></table></figure></p>
+<h3 id="容器-应用-按需求水平扩展"><a href="#容器-应用-按需求水平扩展" class="headerlink" title="容器(应用)按需求水平扩展"></a>容器(应用)按需求水平扩展</h3><p>我们在生产系统中会遇到某个服务需要扩缩容的场景，k8s利用rc的scale机制来完成这些工作。</p>
+<p>创建rc-nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">example git:(master) ✗ cat hello-rc.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: ReplicationController</div><div class="line">metadata:</div><div class="line">  name: rc-nginx</div><div class="line">spec:</div><div class="line">  replicas: 2</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">        app: rc-ginx</div><div class="line">    spec:</div><div class="line">      containers:</div><div class="line">      - name: nginx-2</div><div class="line">        image: 172.16.130.151:4000/nginx</div><div class="line">        ports:</div><div class="line">        - containerPort: 80</div><div class="line"></div><div class="line"> kubectl create -f hello-rc.yaml</div></pre></td></tr></table></figure></p>
+<p>使用scale 扩容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl scale rc rc-nginx --replicas=3</div><div class="line">replicationcontroller &quot;rc-nginx&quot; scaled</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get rc</div><div class="line">NAME       DESIRED   CURRENT   READY     AGE</div><div class="line">rc-nginx   3         3         3         3m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME             READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx      1/1       Running   0          2h</div><div class="line">nginx            1/1       Running   0          4d</div><div class="line">rc-nginx-2r19p   1/1       Running   0          3m</div><div class="line">rc-nginx-79553   1/1       Running   0          10s</div><div class="line">rc-nginx-c6k7f   1/1       Running   0          3m</div></pre></td></tr></table></figure></p>
+<p>使用scale 缩容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl scale rc rc-nginx --replicas=1</div><div class="line">replicationcontroller &quot;rc-nginx&quot; scaled</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get rc</div><div class="line">NAME       DESIRED   CURRENT   READY     AGE</div><div class="line">rc-nginx   1         1         1         6m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME             READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx      1/1       Running   0          2h</div><div class="line">nginx            1/1       Running   0          4d</div><div class="line">rc-nginx-c6k7f   1/1       Running   0          6m</div></pre></td></tr></table></figure></p>
+<h3 id="健康状态检查与异常恢复"><a href="#健康状态检查与异常恢复" class="headerlink" title="健康状态检查与异常恢复"></a>健康状态检查与异常恢复</h3><p>k8s pod 的健康检查主要分为2类:</p>
+<ol>
+<li>livenesssProbe 探针: 用于判断容器是否存活(Running状态),如果livenesssProbe探针探测到容器不健康，则使用kubelet<br>杀掉该容器，并根据容器的重启策略做出相应的处理。如果pod不包含livenesssProbe探针，那么kubelet认为该容器livenesssProbe探针返回值永远是success。</li>
+<li>readinessProbe 探针: 用于判断容器是否启动完成(ready 状态), 可以接受请求. 如果readinessProbe探针检测到失败,则pod的状态将会被修改。 endpoint controller将从<br>service的endpoint 中删除包含该容器所在pod的endpoint.</li>
+</ol>
+<p>使用livenesssProbe探针(TcpSocketAction)通过容器的ip地址和端口号执行tcp检查，如果能够建立tcp链接，则表明健康<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: pod-with-healthcheck</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      livenessProbe:</div><div class="line">        tcpSocket:</div><div class="line">          port: 80</div><div class="line">        initialDelaySeconds: 15</div><div class="line">        timeoutSeconds: 1</div><div class="line">  restartPolicy: Always</div></pre></td></tr></table></figure></p>
+<p>异常恢复主要是通过rc完成的，下面删除rc-nginx中的一个pod，rc检测到系统没有期望的pod数量，<br>rc就会启动一个pod来满足期望的数量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running   0          2h</div><div class="line">nginx                  1/1       Running   0          4d</div><div class="line">pod-with-healthcheck   1/1       Running   0          4m</div><div class="line">rc-nginx-c6k7f         1/1       Running   0          34m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl delete pod rc-nginx-c6k7f</div><div class="line">pod &quot;rc-nginx-c6k7f&quot; deleted</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS              RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running             0          2h</div><div class="line">nginx                  1/1       Running             0          4d</div><div class="line">pod-with-healthcheck   1/1       Running             0          4m</div><div class="line">rc-nginx-f0v5f         0/1       ContainerCreating   0          2s</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running   0          2h</div><div class="line">nginx                  1/1       Running   0          4d</div><div class="line">pod-with-healthcheck   1/1       Running   0          4m</div><div class="line">rc-nginx-f0v5f         1/1       Running   0          6s</div></pre></td></tr></table></figure></p>
+<h3 id="容器的资源管理和限制"><a href="#容器的资源管理和限制" class="headerlink" title="容器的资源管理和限制"></a>容器的资源管理和限制</h3><h4 id="设置资源限制（QOS）的原因"><a href="#设置资源限制（QOS）的原因" class="headerlink" title="设置资源限制（QOS）的原因"></a>设置资源限制（QOS）的原因</h4><p>如果未做过节点 nodeSelector，亲和性（node affinity）或pod亲和、反亲和性（pod affinity/anti-affinity）等Pod高级调度策略设置，我们没有办法指定服务部署到指定机器上，如此可能会造成cpu或内存等密集型的pod同时分配到相同Node，造成资源竞争。另一方面，如果未对资源进行限制，一些关键的服务可能会因为资源竞争因OOM（Out of Memory）等原因被kill掉，或者被限制CPU使用。</p>
+<h4 id="资源需求（Requests）和限制（-Limits）"><a href="#资源需求（Requests）和限制（-Limits）" class="headerlink" title="资源需求（Requests）和限制（ Limits）"></a>资源需求（Requests）和限制（ Limits）</h4><p>对于每一个资源，container可以指定具体的资源需求（requests）和限制（limits），requests申请范围是0到node节点的最大配置，而limits申请范围是requests到无限，即0 &lt;= requests &lt;=Node Allocatable, requests &lt;= limits &lt;= Infinity。<br>对于CPU，如果pod中服务使用CPU超过设置的limits，pod不会被kill掉但会被限制。如果没有设置limits，pod可以使用全部空闲的cpu资源。<br>对于内存，当一个pod使用内存超过了设置的limits，pod中container的进程会被kernel因OOM kill掉。当container因为OOM被kill掉时，系统倾向于在其原所在的机器上重启该container或本机或其他重新创建一个pod。</p>
+<p>example-1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: pod-with-healthcheck</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      resources:</div><div class="line"></div><div class="line">  restartPolicy: Always</div></pre></td></tr></table></figure></p>
+<h3 id="服务及应用管理"><a href="#服务及应用管理" class="headerlink" title="服务及应用管理"></a>服务及应用管理</h3><p>首先使用nginx-deployment.yaml文件创建一个Nginx Deployment，文件内容如图所示：</p>
+<p>首先创建两个运行Nginx服务的Pod,待Pod运行之后查看一下它们的IP，并在k8s集群内通过podIP和containerPort来访问Nginx服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">apiVersion: extensions/v1beta1</div><div class="line">kind: Deployment</div><div class="line">metadata:</div><div class="line">  name: nginx-deployment</div><div class="line">spec:</div><div class="line">  replicas: 2</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">         app: nginx-1</div><div class="line">    spec:</div><div class="line">       containers:</div><div class="line">         - name: nginx</div><div class="line">           image: 172.16.130.151:4000/nginx</div><div class="line">           ports:</div><div class="line">            - containerPort: 80</div><div class="line">---</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: nginx-service</div><div class="line">  labels:</div><div class="line">    app: nginx-1</div><div class="line">spec:</div><div class="line">  ports:</div><div class="line">  - port: 80</div><div class="line">    targetPort: 80</div><div class="line">    protocol: TCP</div><div class="line">  selector:</div><div class="line">    app: nginx-1</div><div class="line">  type: LoadBalancer</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">查看pod ip</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pods -o yaml -l app=nginx-1 | grep podIP</div><div class="line">    podIP: 10.100.83.3</div><div class="line">    podIP: 10.100.81.5</div></pre></td></tr></table></figure>
+<h4 id="在集群内访问Nginx服务"><a href="#在集群内访问Nginx服务" class="headerlink" title="在集群内访问Nginx服务"></a>在集群内访问Nginx服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# curl 10.100.83.3:80</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">        width: 35em;</div><div class="line">        margin: 0 auto;</div><div class="line">        font-family: Tahoma, Verdana, Arial, sans-serif;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</div><div class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</div><div class="line">working. Further configuration is required.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;For online documentation and support please refer to</div><div class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</div><div class="line">Commercial support is available at</div><div class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html</div></pre></td></tr></table></figure>
+<h4 id="使用Service发现服务"><a href="#使用Service发现服务" class="headerlink" title="使用Service发现服务"></a>使用Service发现服务</h4><p>创建之后，仍需要获取Service的Cluster-IP，再结合Port访问Nginx服务。</p>
+<p>Service可以将pod IP封装起来，即使Pod发生重建，依然可以通过Service来访问Pod提供的服务。此外，Service还解决了负载均衡的问题，大家可以多访问几次Service，然后通过kubectl logs <pod name="">来查看两个Nginx Pod的访问日志来确认。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">## 获取ip</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get service nginx-service</div><div class="line">NAME            CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE</div><div class="line">nginx-service   10.254.145.0   10.0.0.16     80:32182/TCP   10m</div></pre></td></tr></table></figure></pod></p>
+<p>在集群内访问Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get service nginx-service</div><div class="line">NAME            CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE</div><div class="line">nginx-service   10.254.145.0   10.0.0.16     80:32182/TCP   10m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# curl 10.254.145.0</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">        width: 35em;</div><div class="line">        margin: 0 auto;</div><div class="line">        font-family: Tahoma, Verdana, Arial, sans-serif;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</div><div class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</div><div class="line">working. Further configuration is required.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;For online documentation and support please refer to</div><div class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</div><div class="line">Commercial support is available at</div><div class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>service 负载均衡,从下面日志看，通过对service的请求，均衡分发到pod上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl logs nginx-deployment-1286323699-3qsj5</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:01:42 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:02:40 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:04:48 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:30 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:33 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:08:24 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:08:25 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl logs nginx-deployment-1286323699-j695f</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:29 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:31 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:32 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:32 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div></pre></td></tr></table></figure></p>
+<h4 id="使用LoadBalancer访问服务"><a href="#使用LoadBalancer访问服务" class="headerlink" title="使用LoadBalancer访问服务"></a>使用LoadBalancer访问服务</h4><p>这里使用neutron lbass作为负载均衡，<br>这时候我们可以去界面（horizon）上查看下lb创建情况</p>
+<img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb.png">
+<p>创建成功我们给他分配一个浮动ip<br><img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb-2.png"><br>通过浮动ip访问应用<br><img title="nginx-app" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-app.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://owmc1r5wc.bkt.clouddn.com/wechat-pay.jpg" alt="zhubingbing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pass/" rel="tag"># pass</a>
+          
+            <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/21/openstack/magnum/magnum-02/" rel="next" title="magnum调研02">
+                <i class="fa fa-chevron-left"></i> magnum调研02
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="zhubingbing" />
+          <p class="site-author-name" itemprop="name">zhubingbing</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhubingbing" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/zhubingbing" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/zhubingbing" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/zhubingbing" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/zhubingbing" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指定app部署在指定目标服务器"><span class="nav-number">1.1.</span> <span class="nav-text">指定app部署在指定目标服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器节点上的任务创建或销毁"><span class="nav-number">1.2.</span> <span class="nav-text">容器节点上的任务创建或销毁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器-应用-按需求水平扩展"><span class="nav-number">1.3.</span> <span class="nav-text">容器(应用)按需求水平扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#健康状态检查与异常恢复"><span class="nav-number">1.4.</span> <span class="nav-text">健康状态检查与异常恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器的资源管理和限制"><span class="nav-number">1.5.</span> <span class="nav-text">容器的资源管理和限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置资源限制（QOS）的原因"><span class="nav-number">1.5.1.</span> <span class="nav-text">设置资源限制（QOS）的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源需求（Requests）和限制（-Limits）"><span class="nav-number">1.5.2.</span> <span class="nav-text">资源需求（Requests）和限制（ Limits）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务及应用管理"><span class="nav-number">1.6.</span> <span class="nav-text">服务及应用管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在集群内访问Nginx服务"><span class="nav-number">1.6.1.</span> <span class="nav-text">在集群内访问Nginx服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Service发现服务"><span class="nav-number">1.6.2.</span> <span class="nav-text">使用Service发现服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用LoadBalancer访问服务"><span class="nav-number">1.6.3.</span> <span class="nav-text">使用LoadBalancer访问服务</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhubingbing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyt7hBR7h';
+      var conf = '40c40d7bca2d9c15d2be2c020e79536b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

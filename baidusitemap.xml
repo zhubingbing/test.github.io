@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/</loc>
+    <lastmod>2017-09-25T13:12:53.000Z</lastmod>
+    <data>
+        <display>
+        <title>kubernetes 需求验证</title>
+        <pubTime>2017-09-25T08:30:00.000Z</pubTime>
+        
+        <tag>pass</tag>
+         
+        <tag>kubernetes</tag>
+         
+         
+           
+             
+              <breadCrumb title="kubernetes" url="http://yoursite.com/child/categories/kubernetes/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/child/2017/09/21/macos/zsh/</loc>
     <lastmod>2017-09-22T02:48:08.000Z</lastmod>
     <data>
@@ -31,9 +53,9 @@
         <title>Openshift-01</title>
         <pubTime>2017-07-14T04:21:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -53,9 +75,9 @@
         <title>rally-01</title>
         <pubTime>2017-07-16T04:30:00.000Z</pubTime>
         
-        <tag>rally</tag>
-         
         <tag>openstack</tag>
+         
+        <tag>rally</tag>
          
          
            
@@ -75,9 +97,9 @@
         <title>kolla之reconfigure</title>
         <pubTime>2017-07-09T03:30:00.000Z</pubTime>
         
-        <tag>openstack</tag>
-         
         <tag>kolla</tag>
+         
+        <tag>openstack</tag>
          
          
            
@@ -97,9 +119,9 @@
         <title>kolla 介绍</title>
         <pubTime>2017-07-23T22:30:00.000Z</pubTime>
         
-        <tag>openstack</tag>
-         
         <tag>kolla</tag>
+         
+        <tag>openstack</tag>
          
          
            
@@ -119,9 +141,9 @@
         <title>opneshift 多节点测试</title>
         <pubTime>2017-08-01T04:02:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -141,9 +163,9 @@
         <title>openshift iso 制作</title>
         <pubTime>2017-07-14T04:37:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -185,9 +207,9 @@
         <title>openshift部署之前环境准备</title>
         <pubTime>2017-07-16T22:30:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            

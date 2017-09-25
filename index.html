@@ -317,6 +317,191 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/25/kubernetes/kubernete-01/" itemprop="url">kubernetes 需求验证</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T16:30:00+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/09/25/kubernetes/kubernete-01/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/" class="cy_cmt_count" data-xid="2017/09/25/kubernetes/kubernete-01/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ol>
+<li>容器调度策略管理, 能够指定app部署在指定目标服务器。</li>
+<li>容器节点的创建或销毁</li>
+<li>容器(应用)按需求水平扩展</li>
+<li>健康状态检查与异常恢复</li>
+<li>容器的资源管理与限制</li>
+<li>服务及应用管理</li>
+<li>负载均衡</li>
+<li>应用配置的管理</li>
+</ol>
+<h3 id="指定app部署在指定目标服务器"><a href="#指定app部署在指定目标服务器" class="headerlink" title="指定app部署在指定目标服务器"></a>指定app部署在指定目标服务器</h3><p>1、查看node的labels, k8s主要是通过labels来实现多维度的资源分组管理功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get node --show-labels</div><div class="line">NAME                                                    STATUS                     AGE       LABELS</div><div class="line">te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo   Ready                      4d        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div><div class="line">te-ipopai2hb7-1-t7xfovwwvv2r-kube-minion-yih3r5xg2pay   Ready                      1h        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-1-t7xfovwwvv2r-kube-minion-yih3r5xg2pay</div><div class="line">te-ipopai2hb7-2-snxnzgqn4unf-kube-minion-jurzrnmkamjb   Ready                      1h        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=nova,kubernetes.io/hostname=te-ipopai2hb7-2-snxnzgqn4unf-kube-minion-jurzrnmkamjb</div><div class="line">te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f   Ready,SchedulingDisabled   4d        beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f</div></pre></td></tr></table></figure></p>
+<p>2、使用nodeSelector，选定node节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">example git:(master) ✗ cat hello.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: hello-nginx</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      livenessProbe:</div><div class="line">        tcpSocket:</div><div class="line">          port: 80</div><div class="line">  restartPolicy: Always</div><div class="line">  nodeSelector:</div><div class="line">    kubernetes.io/hostname: te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div><div class="line">---</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: hello-nginx-service</div><div class="line">spec:</div><div class="line">  type: NodePort</div><div class="line">  sessionAffinity: ClientIP</div><div class="line">  selector:</div><div class="line">    app: nginx</div><div class="line">  ports:</div><div class="line">    - port: 80</div><div class="line">      nodePort: 30080</div></pre></td></tr></table></figure>
+<p>3、 创建hello.yaml, 如下可以看出部署在te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo节点上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">kubectl create -f hello.yaml</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pods hello-nginx  -o wide</div><div class="line">NAME          READY     STATUS    RESTARTS   AGE       IP            NODE</div><div class="line">hello-nginx   1/1       Running   0          32m       10.100.59.5   te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo</div></pre></td></tr></table></figure></p>
+<h3 id="容器节点上的任务创建或销毁"><a href="#容器节点上的任务创建或销毁" class="headerlink" title="容器节点上的任务创建或销毁"></a>容器节点上的任务创建或销毁</h3><p>上面已经部署了hello-nginx pod, 可以使用以下命令进行销毁<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. kubectl delete -f hello.yaml</div><div class="line">2. kubectl delete pod hello-nginx</div></pre></td></tr></table></figure></p>
+<h3 id="容器-应用-按需求水平扩展"><a href="#容器-应用-按需求水平扩展" class="headerlink" title="容器(应用)按需求水平扩展"></a>容器(应用)按需求水平扩展</h3><p>我们在生产系统中会遇到某个服务需要扩缩容的场景，k8s利用rc的scale机制来完成这些工作。</p>
+<p>创建rc-nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">example git:(master) ✗ cat hello-rc.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: ReplicationController</div><div class="line">metadata:</div><div class="line">  name: rc-nginx</div><div class="line">spec:</div><div class="line">  replicas: 2</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">        app: rc-ginx</div><div class="line">    spec:</div><div class="line">      containers:</div><div class="line">      - name: nginx-2</div><div class="line">        image: 172.16.130.151:4000/nginx</div><div class="line">        ports:</div><div class="line">        - containerPort: 80</div><div class="line"></div><div class="line"> kubectl create -f hello-rc.yaml</div></pre></td></tr></table></figure></p>
+<p>使用scale 扩容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl scale rc rc-nginx --replicas=3</div><div class="line">replicationcontroller &quot;rc-nginx&quot; scaled</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get rc</div><div class="line">NAME       DESIRED   CURRENT   READY     AGE</div><div class="line">rc-nginx   3         3         3         3m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME             READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx      1/1       Running   0          2h</div><div class="line">nginx            1/1       Running   0          4d</div><div class="line">rc-nginx-2r19p   1/1       Running   0          3m</div><div class="line">rc-nginx-79553   1/1       Running   0          10s</div><div class="line">rc-nginx-c6k7f   1/1       Running   0          3m</div></pre></td></tr></table></figure></p>
+<p>使用scale 缩容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl scale rc rc-nginx --replicas=1</div><div class="line">replicationcontroller &quot;rc-nginx&quot; scaled</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get rc</div><div class="line">NAME       DESIRED   CURRENT   READY     AGE</div><div class="line">rc-nginx   1         1         1         6m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME             READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx      1/1       Running   0          2h</div><div class="line">nginx            1/1       Running   0          4d</div><div class="line">rc-nginx-c6k7f   1/1       Running   0          6m</div></pre></td></tr></table></figure></p>
+<h3 id="健康状态检查与异常恢复"><a href="#健康状态检查与异常恢复" class="headerlink" title="健康状态检查与异常恢复"></a>健康状态检查与异常恢复</h3><p>k8s pod 的健康检查主要分为2类:</p>
+<ol>
+<li>livenesssProbe 探针: 用于判断容器是否存活(Running状态),如果livenesssProbe探针探测到容器不健康，则使用kubelet<br>杀掉该容器，并根据容器的重启策略做出相应的处理。如果pod不包含livenesssProbe探针，那么kubelet认为该容器livenesssProbe探针返回值永远是success。</li>
+<li>readinessProbe 探针: 用于判断容器是否启动完成(ready 状态), 可以接受请求. 如果readinessProbe探针检测到失败,则pod的状态将会被修改。 endpoint controller将从<br>service的endpoint 中删除包含该容器所在pod的endpoint.</li>
+</ol>
+<p>使用livenesssProbe探针(TcpSocketAction)通过容器的ip地址和端口号执行tcp检查，如果能够建立tcp链接，则表明健康<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: pod-with-healthcheck</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      livenessProbe:</div><div class="line">        tcpSocket:</div><div class="line">          port: 80</div><div class="line">        initialDelaySeconds: 15</div><div class="line">        timeoutSeconds: 1</div><div class="line">  restartPolicy: Always</div></pre></td></tr></table></figure></p>
+<p>异常恢复主要是通过rc完成的，下面删除rc-nginx中的一个pod，rc检测到系统没有期望的pod数量，<br>rc就会启动一个pod来满足期望的数量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running   0          2h</div><div class="line">nginx                  1/1       Running   0          4d</div><div class="line">pod-with-healthcheck   1/1       Running   0          4m</div><div class="line">rc-nginx-c6k7f         1/1       Running   0          34m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl delete pod rc-nginx-c6k7f</div><div class="line">pod &quot;rc-nginx-c6k7f&quot; deleted</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS              RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running             0          2h</div><div class="line">nginx                  1/1       Running             0          4d</div><div class="line">pod-with-healthcheck   1/1       Running             0          4m</div><div class="line">rc-nginx-f0v5f         0/1       ContainerCreating   0          2s</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pod</div><div class="line">NAME                   READY     STATUS    RESTARTS   AGE</div><div class="line">hello-nginx            1/1       Running   0          2h</div><div class="line">nginx                  1/1       Running   0          4d</div><div class="line">pod-with-healthcheck   1/1       Running   0          4m</div><div class="line">rc-nginx-f0v5f         1/1       Running   0          6s</div></pre></td></tr></table></figure></p>
+<h3 id="容器的资源管理和限制"><a href="#容器的资源管理和限制" class="headerlink" title="容器的资源管理和限制"></a>容器的资源管理和限制</h3><h4 id="设置资源限制（QOS）的原因"><a href="#设置资源限制（QOS）的原因" class="headerlink" title="设置资源限制（QOS）的原因"></a>设置资源限制（QOS）的原因</h4><p>如果未做过节点 nodeSelector，亲和性（node affinity）或pod亲和、反亲和性（pod affinity/anti-affinity）等Pod高级调度策略设置，我们没有办法指定服务部署到指定机器上，如此可能会造成cpu或内存等密集型的pod同时分配到相同Node，造成资源竞争。另一方面，如果未对资源进行限制，一些关键的服务可能会因为资源竞争因OOM（Out of Memory）等原因被kill掉，或者被限制CPU使用。</p>
+<h4 id="资源需求（Requests）和限制（-Limits）"><a href="#资源需求（Requests）和限制（-Limits）" class="headerlink" title="资源需求（Requests）和限制（ Limits）"></a>资源需求（Requests）和限制（ Limits）</h4><p>对于每一个资源，container可以指定具体的资源需求（requests）和限制（limits），requests申请范围是0到node节点的最大配置，而limits申请范围是requests到无限，即0 &lt;= requests &lt;=Node Allocatable, requests &lt;= limits &lt;= Infinity。<br>对于CPU，如果pod中服务使用CPU超过设置的limits，pod不会被kill掉但会被限制。如果没有设置limits，pod可以使用全部空闲的cpu资源。<br>对于内存，当一个pod使用内存超过了设置的limits，pod中container的进程会被kernel因OOM kill掉。当container因为OOM被kill掉时，系统倾向于在其原所在的机器上重启该container或本机或其他重新创建一个pod。</p>
+<p>example-1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: pod-with-healthcheck</div><div class="line">  labels:</div><div class="line">     app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">    - name: hello-ngix</div><div class="line">      image: 172.16.130.151:4000/nginx</div><div class="line">      imagePullPolicy: IfNotPresent</div><div class="line">      ports:</div><div class="line">        - containerPort: 80</div><div class="line">      resources:</div><div class="line"></div><div class="line">  restartPolicy: Always</div></pre></td></tr></table></figure></p>
+<h3 id="服务及应用管理"><a href="#服务及应用管理" class="headerlink" title="服务及应用管理"></a>服务及应用管理</h3><p>首先使用nginx-deployment.yaml文件创建一个Nginx Deployment，文件内容如图所示：</p>
+<p>首先创建两个运行Nginx服务的Pod,待Pod运行之后查看一下它们的IP，并在k8s集群内通过podIP和containerPort来访问Nginx服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">apiVersion: extensions/v1beta1</div><div class="line">kind: Deployment</div><div class="line">metadata:</div><div class="line">  name: nginx-deployment</div><div class="line">spec:</div><div class="line">  replicas: 2</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">         app: nginx-1</div><div class="line">    spec:</div><div class="line">       containers:</div><div class="line">         - name: nginx</div><div class="line">           image: 172.16.130.151:4000/nginx</div><div class="line">           ports:</div><div class="line">            - containerPort: 80</div><div class="line">---</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: nginx-service</div><div class="line">  labels:</div><div class="line">    app: nginx-1</div><div class="line">spec:</div><div class="line">  ports:</div><div class="line">  - port: 80</div><div class="line">    targetPort: 80</div><div class="line">    protocol: TCP</div><div class="line">  selector:</div><div class="line">    app: nginx-1</div><div class="line">  type: LoadBalancer</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">查看pod ip</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pods -o yaml -l app=nginx-1 | grep podIP</div><div class="line">    podIP: 10.100.83.3</div><div class="line">    podIP: 10.100.81.5</div></pre></td></tr></table></figure>
+<h4 id="在集群内访问Nginx服务"><a href="#在集群内访问Nginx服务" class="headerlink" title="在集群内访问Nginx服务"></a>在集群内访问Nginx服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# curl 10.100.83.3:80</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">        width: 35em;</div><div class="line">        margin: 0 auto;</div><div class="line">        font-family: Tahoma, Verdana, Arial, sans-serif;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</div><div class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</div><div class="line">working. Further configuration is required.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;For online documentation and support please refer to</div><div class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</div><div class="line">Commercial support is available at</div><div class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html</div></pre></td></tr></table></figure>
+<h4 id="使用Service发现服务"><a href="#使用Service发现服务" class="headerlink" title="使用Service发现服务"></a>使用Service发现服务</h4><p>创建之后，仍需要获取Service的Cluster-IP，再结合Port访问Nginx服务。</p>
+<p>Service可以将pod IP封装起来，即使Pod发生重建，依然可以通过Service来访问Pod提供的服务。此外，Service还解决了负载均衡的问题，大家可以多访问几次Service，然后通过kubectl logs <pod name="">来查看两个Nginx Pod的访问日志来确认。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">## 获取ip</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get service nginx-service</div><div class="line">NAME            CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE</div><div class="line">nginx-service   10.254.145.0   10.0.0.16     80:32182/TCP   10m</div></pre></td></tr></table></figure></pod></p>
+<p>在集群内访问Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get service nginx-service</div><div class="line">NAME            CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE</div><div class="line">nginx-service   10.254.145.0   10.0.0.16     80:32182/TCP   10m</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# curl 10.254.145.0</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">        width: 35em;</div><div class="line">        margin: 0 auto;</div><div class="line">        font-family: Tahoma, Verdana, Arial, sans-serif;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</div><div class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</div><div class="line">working. Further configuration is required.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;For online documentation and support please refer to</div><div class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</div><div class="line">Commercial support is available at</div><div class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>service 负载均衡,从下面日志看，通过对service的请求，均衡分发到pod上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl logs nginx-deployment-1286323699-3qsj5</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:01:42 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:02:40 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:04:48 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:30 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:33 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:08:24 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:08:25 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl logs nginx-deployment-1286323699-j695f</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:29 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:31 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:32 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div><div class="line">10.0.0.7 - - [25/Sep/2017:10:07:32 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.51.0&quot; &quot;-&quot;</div></pre></td></tr></table></figure></p>
+<h4 id="使用LoadBalancer访问服务"><a href="#使用LoadBalancer访问服务" class="headerlink" title="使用LoadBalancer访问服务"></a>使用LoadBalancer访问服务</h4><p>这里使用neutron lbass作为负载均衡，<br>这时候我们可以去界面（horizon）上查看下lb创建情况</p>
+<img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb.png">
+<p>创建成功我们给他分配一个浮动ip<br><img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb-2.png"><br>通过浮动ip访问应用<br><img title="nginx-app" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-app.png"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1862,163 +2047,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/07/14/openshift/openshift介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhubingbing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhubingbing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/14/openshift/openshift介绍/" itemprop="url">Openshift-01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:21:00+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openshift/" itemprop="url" rel="index">
-                    <span itemprop="name">openshift</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/07/14/openshift/openshift介绍/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/child/2017/07/14/openshift/openshift介绍/" class="cy_cmt_count" data-xid="2017/07/14/openshift/openshift介绍/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="openshift-架构"><a href="#openshift-架构" class="headerlink" title="openshift 架构"></a>openshift 架构</h3><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>OpenShift是一个私有的PaaS（Platform-as-a-Service）解决方案，主要用来在容器中搭建、部署以及运行应用程序。它是基于Apache 2.0许可的开源软件， 并且发行了两个版本， 一个是社区版， 一个是企业版，由红帽主导。</p>
-<h3 id="OpenShift-Origin"><a href="#OpenShift-Origin" class="headerlink" title="OpenShift Origin"></a>OpenShift Origin</h3><p>从2014年7月开始，OpenShift就己经着力于研究一个非常出色的项目，该项目是将技术架构和与Docker、Kubernetes整合到一起（现在这是一件很常见的事）。</p>
-<p>一年前启动这个项目对于OpenShift来说是一个大胆而且充满风险的的决策。确实如此，当时云平台的竞争处于白热化的巅峰时期，而此时OpenShift就决定冒着风险启动这样一个非常重要的重建项目，这个风险主要来自于他们需要停止新特性的开发并妥协旧版本之间的兼容性问题。但是现在，我们相信他们作了一个正确的决定。</p>
-<p>到目前为止，社区版本联合了86名GitHub上（GitHub是红帽上10个最活跃项目之一）的开发志愿者。在12个月中己经进行了16次的迭代，并且刚刚发行了第一版。</p>
-<p>尽管这个方案主要是由红帽在推动，但它非常依赖Kubernetes（来源于Google）。由此引发了到底由谁来支配和主导的问题，该问题依赖于两个公司之间的协作和版本基准，Google开发出新特性后会发生什么？他们会关注Kubernetes还是OpenShift？很显然，这个问题还没有答案。</p>
-<p>但是，Google的技术支持部门己经确认，由两家公司同时主导只会给OpenShift带来更多益处。它将成为比Docker企业版更具竟争力的产品（机器、组建和群）。</p>
-<h3 id="OpenShift-技术堆栈"><a href="#OpenShift-技术堆栈" class="headerlink" title="OpenShift 技术堆栈"></a>OpenShift 技术堆栈</h3><img title="标题" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/test/test.png">
-<p>从技术堆栈的角度分析，作为一个容器云，OpenShift自底而上包含了以下几个层次：基础架构层、容器引擎层、容器编排层、PaaS服务层、界面及工具层<br><img src="/images/openshif技术堆栈.png" alt=""></p>
-<h4 id="基础架构层"><a href="#基础架构层" class="headerlink" title="基础架构层"></a>基础架构层</h4><p>基础架构层为OpenShift平台的运行提供了基础的运行环境。OpenShift支持运行在物理机、虚拟机、基础架构云（如OpenStack、Amazon Web Service、Microsoft Azure等）或混合云上。在操作系统层面，OpenShift支持多种不同的Linux操作系统，如企业级的Red Hat Enterprise Linux、社区的CentOS。</p>
-<h4 id="容器引擎层"><a href="#容器引擎层" class="headerlink" title="容器引擎层"></a>容器引擎层</h4><p>OpenShift目前以Docker作为平台的容器引擎。Docker是当前主流的容器引擎，已经在社区及许多企业的环境中进行了检验。事实证明Docker有能力为应用提供安全、稳定及高性能的运行环境。OpenShift运行的所有容器应用最终落到最底层的实现，其实就是一个个Docker容器实例。OpenShift对Docker整合是开放式的。OpenShift并没有修改Docker的任何代码，完全基于原生的Docker。熟悉Docker的用户对OpenShift能快速上手。同时，Docker现有的庞大的镜像资源都可以无缝地接入OpenShift平台。</p>
-<h4 id="容器编排层"><a href="#容器编排层" class="headerlink" title="容器编排层"></a>容器编排层</h4><p>目前大家对容器编排的讨论已经成为容器相关话题中的一个热点。Kubernetes是Google在内部多年容器使用经验基础上的一次总结。Kubernetes设计的目的是满足在大规模集群环境下对容器的调度和部署的需求。Kubernetes是OpenShift的重要组件，OpenShift平台上的许多对象和概念都是衍生自Kubernetes，如Pod、Namespace、Replication Controller等。与对Docker的集成一样，OpenShift并没有尝试从代码上定制Kubernetes，OpenShift对Kubernetes<br>的整合是叠加式的，在OpenShift集群上仍然可以通过Kubernetes的原生命令来操作Kubernetes的原生对象</p>
-<h4 id="Pass服务层"><a href="#Pass服务层" class="headerlink" title="Pass服务层"></a>Pass服务层</h4><p>Docker和Kubernetes为OpenShift提供了一个良好的基础，但是只有容器引擎和容器编排工具并不能大幅度提高生产效率，形成真正的生产力。正如Kubernetes在其主页上自我介绍所描述的那样，Kubernetes关注的核心是容器应用的编排和部署，它并不是一个完整的PaaS解决方案。容器平台最终的目的是向上层应用服务提供支持，加速应用开发、部署和运维的速度和效率。OpenShift在PaaS服务层默认提供了丰富的开发语言、开发框架、数据库及中间件的支持。用户可以在OpenShift这个平台上快速部署和获取一个数据库、分布式缓存或者业务规则引擎的服务。除了Docker Hub上的社区镜像外，OpenShift还有一个重要的服务提供方：Red Hat。Red Hat旗下的JBoss中间件系列几乎全线的产品都已经容器化。JBoss中间件包含了开发框架、开发工具、应用服务器、消息中间件、SOA套件、业务流程平台（BPM）、单点登录、应用监控、应用性能管理（APM）、分布式缓存及数据虚拟化等产品。这些中间件可以直接通过OpenShift容器云对用户提供服务。通过OpenShift，可以快速搭建一个Database as a Service，即DBaaS，一个BPMaaS，或者Redis-aaS等。</p>
-<h4 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h4><p>云平台一个很重要的特点是强调用户的自助服务，从而降低运维成本，提高服务效率。界面和工具是容器云平台上的最后一公里接入，好的界面和工具集合能帮助用户更高效地完成相关的任务。OpenShift提供了自动化流程Source to Image，即S2I，帮助用户容器化用各种编程语言开发的应用源代码。用户可以直接使用S2I或者把现有的流程与S2I整合，从而实现开发流程的持续集成和持续交付。提升开发、测试和部署的自动化程度，最终提高开发、测试及部署的效率，缩短上市时间。OpenShift提供了多种用户的接入渠道：Web控制台、命令行、IDE集成及RESTful编程接口。这些都是一个完善的企业级平台必不可少的组件。<br>针对容器应用的运维及集群的运维，OpenShift提供了性能度量采集、日志聚合模块及运维管理套件，帮助运维用户完成日常的应用及集群运维任务</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2068,7 +2096,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2079,7 +2107,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2090,7 +2118,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

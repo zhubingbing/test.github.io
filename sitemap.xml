@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/</loc>
+    
+    <lastmod>2017-09-25T13:12:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/child/2017/09/21/macos/zsh/</loc>
     
     <lastmod>2017-09-22T02:48:08.000Z</lastmod>
