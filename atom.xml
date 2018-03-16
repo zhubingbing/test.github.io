@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/child/"/>
-  <updated>2017-09-25T13:49:57.000Z</updated>
+  <updated>2017-11-09T11:43:24.000Z</updated>
   <id>http://yoursite.com/child/</id>
   
   <author>
@@ -16,11 +16,166 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://yoursite.com/child/2017/11/09/go/go-01/"/>
+    <id>http://yoursite.com/child/2017/11/09/go/go-01/</id>
+    <published>2017-11-09T11:43:24.000Z</published>
+    <updated>2017-11-09T11:43:24.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/child/2017/11/09/pouch/pouch-01/"/>
+    <id>http://yoursite.com/child/2017/11/09/pouch/pouch-01/</id>
+    <published>2017-11-09T06:56:17.000Z</published>
+    <updated>2017-11-09T06:56:17.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/child/2017/11/07/kubernetes/docker/"/>
+    <id>http://yoursite.com/child/2017/11/07/kubernetes/docker/</id>
+    <published>2017-11-07T10:32:29.000Z</published>
+    <updated>2017-11-07T10:32:29.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>opencord</title>
+    <link href="http://yoursite.com/child/2017/10/30/opencord/install_opencord/"/>
+    <id>http://yoursite.com/child/2017/10/30/opencord/install_opencord/</id>
+    <published>2017-10-30T08:30:00.000Z</published>
+    <updated>2018-03-16T08:02:49.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;opencord安装&quot;&gt;&lt;a href=&quot;#opencord安装&quot; class=&quot;headerlink&quot; title=&quot;opencord安装&quot;&gt;&lt;/a&gt;opencord安装&lt;/h2&gt;&lt;p&gt;安装参考link: &lt;a href=&quot;https://guide.openc
+    
+    </summary>
+    
+      <category term="opencord" scheme="http://yoursite.com/child/categories/opencord/"/>
+    
+    
+      <category term="sdn" scheme="http://yoursite.com/child/tags/sdn/"/>
+    
+      <category term="opencord" scheme="http://yoursite.com/child/tags/opencord/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ansible openstack</title>
+    <link href="http://yoursite.com/child/2017/10/22/openstack/openstack02/"/>
+    <id>http://yoursite.com/child/2017/10/22/openstack/openstack02/</id>
+    <published>2017-10-22T11:30:00.000Z</published>
+    <updated>2017-11-01T08:46:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;使用ansible 快速部署openstack poc环境。&lt;/li&gt;
+&lt;li&gt;熟悉ansible 操作openstack&lt;/l
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="ansible" scheme="http://yoursite.com/child/tags/ansible/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>期货做盘-1</title>
+    <link href="http://yoursite.com/child/2017/10/18/study/busyness-1/"/>
+    <id>http://yoursite.com/child/2017/10/18/study/busyness-1/</id>
+    <published>2017-10-18T03:08:00.000Z</published>
+    <updated>2017-11-01T08:46:53.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;期货交易&quot;&gt;&lt;a href=&quot;#期货交易&quot; class=&quot;headerlink&quot; title=&quot;期货交易&quot;&gt;&lt;/a&gt;期货交易&lt;/h2&gt;&lt;p&gt;交易方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;趋势背离买卖点&lt;/li&gt;
+&lt;li&gt;平台买卖点&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;均线买卖点&lt;/p
+    
+    </summary>
+    
+      <category term="交易" scheme="http://yoursite.com/child/categories/%E4%BA%A4%E6%98%93/"/>
+    
+    
+      <category term="期货" scheme="http://yoursite.com/child/tags/%E6%9C%9F%E8%B4%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openshift-离线环境部署</title>
+    <link href="http://yoursite.com/child/2017/10/09/openshift/iso-ready/"/>
+    <id>http://yoursite.com/child/2017/10/09/openshift/iso-ready/</id>
+    <published>2017-10-09T08:30:00.000Z</published>
+    <updated>2017-11-01T08:46:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;之前制作了一个不够智能，随着版本的升级又要重新制作，很烦。&lt;/p&gt;
+&lt;h2 id=&quot;思考&quot;&gt;&lt;a href=&quot;#思考&quot; class=&quot;hea
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>open</title>
+    <link href="http://yoursite.com/child/2017/09/25/study/study-plan/"/>
+    <id>http://yoursite.com/child/2017/09/25/study/study-plan/</id>
+    <published>2017-09-25T08:30:00.000Z</published>
+    <updated>2017-11-01T08:46:31.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/categories/kubernetes/"/>
+    
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/tags/kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
     <title>测试验证k8s功能</title>
     <link href="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/"/>
     <id>http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/</id>
     <published>2017-09-25T08:30:00.000Z</published>
-    <updated>2017-09-25T13:49:57.000Z</updated>
+    <updated>2017-09-25T13:52:53.000Z</updated>
     
     <summary type="html">
     
@@ -49,6 +204,29 @@
     <summary type="html">
     
       &lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;p&gt;通过之前初步调研，magnum确实能把k8s启动起来。但是k8s一些组件都需要自己手动安装，这点很不好。&lt;br&gt;然后我查看代码，发现最新的o
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
+    
+    
+      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
+    
+      <category term="magnum" scheme="http://yoursite.com/child/tags/magnum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openstack 通用设计思路</title>
+    <link href="http://yoursite.com/child/2017/09/21/openstack/openstack-01/"/>
+    <id>http://yoursite.com/child/2017/09/21/openstack/openstack-01/</id>
+    <published>2017-09-21T11:30:00.000Z</published>
+    <updated>2017-10-09T06:42:50.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;img alt=&quot;注释&quot; src=&quot;http://owmc1r5wc.bkt.clouddn.com/static/images/openstack/openstack-publick.jpg&quot;&gt;
+&lt;h3 id=&quot;API-前端服务&quot;&gt;&lt;a href=&quot;#API-前端服务&quot; cl
     
     </summary>
     
@@ -121,9 +299,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -166,9 +344,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -210,9 +388,31 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
+  </entry>
+  
+  <entry>
+    <title>openshift v3.6 多节点安装</title>
+    <link href="http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/"/>
+    <id>http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-10-09T06:42:56.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;设置ssh-无密码登陆&quot;&gt;&lt;a href=&quot;#设置ssh-无密码登陆&quot; class=&quot;headerlink&quot; title=&quot;设置ssh 无密码登陆&quot;&gt;&lt;/a&gt;设置ssh 无密码登陆&lt;/h3&gt;&lt;p&gt;默认在 ~/.ssh目录生成两个文件：&lt;br&gt; id_rsa    
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -234,54 +434,6 @@
     
     
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Openshift-01</title>
-    <link href="http://yoursite.com/child/2017/07/14/openshift/openshift%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://yoursite.com/child/2017/07/14/openshift/openshift介绍/</id>
-    <published>2017-07-14T04:21:00.000Z</published>
-    <updated>2017-09-22T02:21:19.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;openshift-架构&quot;&gt;&lt;a href=&quot;#openshift-架构&quot; class=&quot;headerlink&quot; title=&quot;openshift 架构&quot;&gt;&lt;/a&gt;openshift 架构&lt;/h3&gt;&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;
-    
-    </summary>
-    
-      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
-    
-    
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kolla之reconfigure</title>
-    <link href="http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/"/>
-    <id>http://yoursite.com/child/2017/07/09/openstack/kolla-reconfigure/</id>
-    <published>2017-07-09T03:30:00.000Z</published>
-    <updated>2017-09-22T02:21:06.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;今天好好理理kolla reconfigure如何玩的&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;kolla的配置管理主要是管理openstack service config文件；&lt;br&gt;主要实现是&lt;/p&gt;
-&lt;figure class=&quot;high
-    
-    </summary>
-    
-      <category term="openstack" scheme="http://yoursite.com/child/categories/openstack/"/>
-    
-    
-      <category term="kolla" scheme="http://yoursite.com/child/tags/kolla/"/>
-    
-      <category term="openstack" scheme="http://yoursite.com/child/tags/openstack/"/>
     
   </entry>
   

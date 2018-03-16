@@ -2,9 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/child/2017/10/30/opencord/install_opencord/</loc>
+    
+    <lastmod>2018-03-16T08:02:49.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/11/09/go/go-01/</loc>
+    
+    <lastmod>2017-11-09T11:43:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/11/09/pouch/pouch-01/</loc>
+    
+    <lastmod>2017-11-09T06:56:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/11/07/kubernetes/docker/</loc>
+    
+    <lastmod>2017-11-07T10:32:29.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/10/18/study/busyness-1/</loc>
+    
+    <lastmod>2017-11-01T08:46:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/10/22/openstack/openstack02/</loc>
+    
+    <lastmod>2017-11-01T08:46:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/10/09/openshift/iso-ready/</loc>
+    
+    <lastmod>2017-11-01T08:46:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/09/25/study/study-plan/</loc>
+    
+    <lastmod>2017-11-01T08:46:31.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/</loc>
+    
+    <lastmod>2017-10-09T06:42:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/child/2017/09/21/openstack/openstack-01/</loc>
+    
+    <lastmod>2017-10-09T06:42:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/</loc>
     
-    <lastmod>2017-09-25T13:49:57.000Z</lastmod>
+    <lastmod>2017-09-25T13:52:53.000Z</lastmod>
     
   </url>
   
