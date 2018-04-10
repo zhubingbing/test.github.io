@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/child/2018/04/10/kubernetes/kubernetes-2/</loc>
+    <lastmod>2018-04-10T11:10:02.000Z</lastmod>
+    <data>
+        <display>
+        <title>kubernetes 1.9 快速部署(开发环境)</title>
+        <pubTime>2018-04-10T08:30:00.000Z</pubTime>
+        
+        <tag>pass</tag>
+         
+        <tag>kubernetes</tag>
+         
+         
+           
+             
+              <breadCrumb title="kubernetes" url="http://yoursite.com/child/categories/kubernetes/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/child/2018/03/01/opencord/install_opencord/</loc>
     <lastmod>2018-03-16T08:09:21.000Z</lastmod>
     <data>
@@ -47,21 +69,6 @@
         <display>
         <title></title>
         <pubTime>2017-11-09T06:56:17.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/child/2017/11/07/kubernetes/docker/</loc>
-    <lastmod>2017-11-07T10:32:29.000Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2017-11-07T10:32:29.000Z</pubTime>
         
          
            
@@ -120,9 +127,9 @@
         <title>openshift-离线环境部署</title>
         <pubTime>2017-10-09T08:30:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -164,9 +171,9 @@
         <title>openshift v3.6 多节点安装</title>
         <pubTime>2017-07-14T04:30:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -250,9 +257,9 @@
         <title>Openshift-01</title>
         <pubTime>2017-07-14T04:21:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -338,9 +345,9 @@
         <title>opneshift 多节点测试</title>
         <pubTime>2017-08-01T04:02:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -360,9 +367,9 @@
         <title>openshift iso 制作</title>
         <pubTime>2017-07-14T04:37:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            
@@ -404,9 +411,9 @@
         <title>openshift部署之前环境准备</title>
         <pubTime>2017-07-16T22:30:00.000Z</pubTime>
         
-        <tag>openshift</tag>
-         
         <tag>pass</tag>
+         
+        <tag>openshift</tag>
          
          
            

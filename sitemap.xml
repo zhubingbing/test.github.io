@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/child/2018/04/10/kubernetes/kubernetes-2/</loc>
+    
+    <lastmod>2018-04-10T11:10:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/child/2018/03/01/opencord/install_opencord/</loc>
     
     <lastmod>2018-03-16T08:09:21.000Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://yoursite.com/child/2017/11/09/pouch/pouch-01/</loc>
     
     <lastmod>2017-11-09T06:56:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/child/2017/11/07/kubernetes/docker/</loc>
-    
-    <lastmod>2017-11-07T10:32:29.000Z</lastmod>
     
   </url>
   

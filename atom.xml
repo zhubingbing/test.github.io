@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/child/"/>
-  <updated>2018-03-16T08:09:21.000Z</updated>
+  <updated>2018-04-10T11:10:02.000Z</updated>
   <id>http://yoursite.com/child/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kubernetes 1.9 快速部署(开发环境)</title>
+    <link href="http://yoursite.com/child/2018/04/10/kubernetes/kubernetes-2/"/>
+    <id>http://yoursite.com/child/2018/04/10/kubernetes/kubernetes-2/</id>
+    <published>2018-04-10T08:30:00.000Z</published>
+    <updated>2018-04-10T11:10:02.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;kubernetes安装&quot;&gt;&lt;a href=&quot;#kubernetes安装&quot; class=&quot;headerlink&quot; title=&quot;kubernetes安装&quot;&gt;&lt;/a&gt;kubernetes安装&lt;/h2&gt;&lt;p&gt;以下为基于Ubuntu 16.04/CentOS 7.4 快
+    
+    </summary>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/categories/kubernetes/"/>
+    
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>opencord</title>
@@ -57,20 +79,6 @@
     <id>http://yoursite.com/child/2017/11/09/pouch/pouch-01/</id>
     <published>2017-11-09T06:56:17.000Z</published>
     <updated>2017-11-09T06:56:17.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://yoursite.com/child/2017/11/07/kubernetes/docker/"/>
-    <id>http://yoursite.com/child/2017/11/07/kubernetes/docker/</id>
-    <published>2017-11-07T10:32:29.000Z</published>
-    <updated>2017-11-07T10:32:29.000Z</updated>
     
     <summary type="html">
     
@@ -144,9 +152,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
     
   </entry>
   
@@ -299,9 +307,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
     
   </entry>
   
@@ -344,9 +352,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
     
   </entry>
   
@@ -388,31 +396,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
-  </entry>
-  
-  <entry>
-    <title>openshift v3.6 多节点安装</title>
-    <link href="http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/"/>
-    <id>http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/</id>
-    <published>2017-07-14T04:30:00.000Z</published>
-    <updated>2017-10-09T06:42:56.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;设置ssh-无密码登陆&quot;&gt;&lt;a href=&quot;#设置ssh-无密码登陆&quot; class=&quot;headerlink&quot; title=&quot;设置ssh 无密码登陆&quot;&gt;&lt;/a&gt;设置ssh 无密码登陆&lt;/h3&gt;&lt;p&gt;默认在 ~/.ssh目录生成两个文件：&lt;br&gt; id_rsa    
-    
-    </summary>
-    
-      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
-    
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
-    
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -432,6 +418,28 @@
     
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
+    
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>openshift v3.6 多节点安装</title>
+    <link href="http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/"/>
+    <id>http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/</id>
+    <published>2017-07-14T04:30:00.000Z</published>
+    <updated>2017-10-09T06:42:56.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;设置ssh-无密码登陆&quot;&gt;&lt;a href=&quot;#设置ssh-无密码登陆&quot; class=&quot;headerlink&quot; title=&quot;设置ssh 无密码登陆&quot;&gt;&lt;/a&gt;设置ssh 无密码登陆&lt;/h3&gt;&lt;p&gt;默认在 ~/.ssh目录生成两个文件：&lt;br&gt; id_rsa    
+    
+    </summary>
+    
+      <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
+    
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
     

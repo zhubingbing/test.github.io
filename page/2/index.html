@@ -1704,6 +1704,158 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/openshift/openshfit-iso/" itemprop="url">制作 openshift iso</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openshift/" itemprop="url" rel="index">
+                    <span itemprop="name">openshift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/14/openshift/openshfit-iso/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/" class="cy_cmt_count" data-xid="2017/07/14/openshift/openshfit-iso/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###制作iso过程文档</p>
+<h3 id="制作openshift-iso"><a href="#制作openshift-iso" class="headerlink" title="制作openshift iso"></a>制作openshift iso</h3><p>Fedora发行版制作的工具主要有revisor和pungi两种；<br>revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；<br>pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；<br>下面是使用 pungi来制作的iso</p>
+<h3 id="安装pungi"><a href="#安装pungi" class="headerlink" title="安装pungi"></a>安装pungi</h3><p>以下都是环境都是基于centos7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">## 安装epel repo</div><div class="line">yum install -y epel-release</div><div class="line"></div><div class="line">## 安装elrepo</div><div class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</div><div class="line">rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm</div><div class="line"></div><div class="line">## 安装 pungi</div><div class="line">yum install -y pungi hfsplus-tools kmod-hfs kmod-hfsplus docker</div></pre></td></tr></table></figure>
+<h3 id="使用pungi-build-iso"><a href="#使用pungi-build-iso" class="headerlink" title="使用pungi build iso"></a>使用pungi build iso</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone http://gitlab.sh.99cloud.net/zhubingbing/openshift-iso.git</div><div class="line">cd openshif-iso</div><div class="line"></div><div class="line">./build cobbler  //先build cobbler tar包</div><div class="line">./build   //等待10几分钟iso就build好了</div><div class="line">ls /root/kolla-iso/Ocata/x86_64/iso/CentOS-DVD-x86_64-Ocata.iso</div></pre></td></tr></table></figure>
+<h3 id="build-sh代码"><a href="#build-sh代码" class="headerlink" title="build.sh代码"></a>build.sh代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash -e</div><div class="line">case $1 in</div><div class="line">    &apos;&apos;)</div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -G -C -B</div><div class="line">rsync -a isolinux.cfg Ocata/x86_64/os/isolinux/</div><div class="line">rsync -a os_ks.cfg Ocata/x86_64/os/images/ks.cfg</div><div class="line">mount Ocata/x86_64/os/images/efiboot.img /mnt</div><div class="line">rsync -a grub.cfg /mnt/EFI/BOOT/</div><div class="line">rsync -a grub.cfg Ocata/x86_64/os/EFI/BOOT/</div><div class="line">umount /mnt</div><div class="line">rm -f Ocata/x86_64/os/images/macboot.img</div><div class="line">mkdir Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/init.sh Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/cobbler.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/docker-registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-ansible.tar.gz Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-package.tar Ocata/x86_64/os/extras</div><div class="line"></div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -I</div><div class="line">        ;;</div><div class="line">    &quot;cobbler&quot; )</div><div class="line">docker build -t cobbler cobbler/build/; docker save cobbler &gt; cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">    &quot;clean&quot;)</div><div class="line">rm -rf  centos centos-extras docker epel logs ourtree work ocata Ocata cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">esac</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">## 这些包自己预先准备好，因为过大就没放在github上面，路径是存在 openshif-iso/openshift/目录下面，如果没有这个目录自己建立</div><div class="line">[root@localhost openshift]# ls</div><div class="line">centos-openshift-origin.tar  docker-registry.tar  openshift-ansible.tar.gz  openshift-package.tar  registry.tar</div><div class="line">[root@localhost openshift]# du -h</div><div class="line">1.8G	.</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/07/14/openshift/09-27-openshift-03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1817,158 +1969,6 @@
 <h2 id="bug"><a href="#bug" class="headerlink" title="bug"></a>bug</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">error: %preun(tuned-profiles-origin-node-3.6.0-1.0.c4dd4cf.x86_64) scriptlet failed, exit status 1</div><div class="line">Error in PREUN scriptlet in rpm package tuned-profiles-origin-node-3.6.0-1.0.c4dd4cf.x86_64</div><div class="line">  Verifying  : tuned-profiles-origin-node-3.6.0-1.0.c4dd4cf.x86_64                                                                                                                                         1/1</div><div class="line"></div><div class="line">Failed:</div><div class="line">  tuned-profiles-origin-node.x86_64 0:3.6.0-1.0.c4dd4cf</div><div class="line"></div><div class="line">解决方案</div><div class="line">rpm -e --noscripts --allmatches tuned-profiles-origin-node.x86_64</div></pre></td></tr></table></figure>
 <h3 id="安装openshift"><a href="#安装openshift" class="headerlink" title="安装openshift"></a>安装openshift</h3><p>下载openshift-ansible<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/openshift/openshift-ansible.git</div></pre></td></tr></table></figure></p>
 <p>修改/etc/ansible/host文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhubingbing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhubingbing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/14/openshift/openshfit-iso/" itemprop="url">制作 openshift iso</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T12:30:00+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openshift/" itemprop="url" rel="index">
-                    <span itemprop="name">openshift</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/07/14/openshift/openshfit-iso/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/child/2017/07/14/openshift/openshfit-iso/" class="cy_cmt_count" data-xid="2017/07/14/openshift/openshfit-iso/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>###制作iso过程文档</p>
-<h3 id="制作openshift-iso"><a href="#制作openshift-iso" class="headerlink" title="制作openshift iso"></a>制作openshift iso</h3><p>Fedora发行版制作的工具主要有revisor和pungi两种；<br>revisor是一个图形化的工具，也可用命令行，但是经常会有bug，而且比较臃肿，感觉是给初级用户用的；<br>pungi是Fedora官方制作（或叫spin）发行版的工具，命令行，总共也就4、5个Python文件；<br>下面是使用 pungi来制作的iso</p>
-<h3 id="安装pungi"><a href="#安装pungi" class="headerlink" title="安装pungi"></a>安装pungi</h3><p>以下都是环境都是基于centos7</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">## 安装epel repo</div><div class="line">yum install -y epel-release</div><div class="line"></div><div class="line">## 安装elrepo</div><div class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</div><div class="line">rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm</div><div class="line"></div><div class="line">## 安装 pungi</div><div class="line">yum install -y pungi hfsplus-tools kmod-hfs kmod-hfsplus docker</div></pre></td></tr></table></figure>
-<h3 id="使用pungi-build-iso"><a href="#使用pungi-build-iso" class="headerlink" title="使用pungi build iso"></a>使用pungi build iso</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone http://gitlab.sh.99cloud.net/zhubingbing/openshift-iso.git</div><div class="line">cd openshif-iso</div><div class="line"></div><div class="line">./build cobbler  //先build cobbler tar包</div><div class="line">./build   //等待10几分钟iso就build好了</div><div class="line">ls /root/kolla-iso/Ocata/x86_64/iso/CentOS-DVD-x86_64-Ocata.iso</div></pre></td></tr></table></figure>
-<h3 id="build-sh代码"><a href="#build-sh代码" class="headerlink" title="build.sh代码"></a>build.sh代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash -e</div><div class="line">case $1 in</div><div class="line">    &apos;&apos;)</div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -G -C -B</div><div class="line">rsync -a isolinux.cfg Ocata/x86_64/os/isolinux/</div><div class="line">rsync -a os_ks.cfg Ocata/x86_64/os/images/ks.cfg</div><div class="line">mount Ocata/x86_64/os/images/efiboot.img /mnt</div><div class="line">rsync -a grub.cfg /mnt/EFI/BOOT/</div><div class="line">rsync -a grub.cfg Ocata/x86_64/os/EFI/BOOT/</div><div class="line">umount /mnt</div><div class="line">rm -f Ocata/x86_64/os/images/macboot.img</div><div class="line">mkdir Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/init.sh Ocata/x86_64/os/extras</div><div class="line">rsync -a cobbler/cobbler.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/docker-registry.tar Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-ansible.tar.gz Ocata/x86_64/os/extras</div><div class="line">rsync -a openshift/openshift-package.tar Ocata/x86_64/os/extras</div><div class="line"></div><div class="line">pungi --name=CentOS --ver=Ocata -c ks.cfg --isfinal --nosource --nodebuginfo --force -I</div><div class="line">        ;;</div><div class="line">    &quot;cobbler&quot; )</div><div class="line">docker build -t cobbler cobbler/build/; docker save cobbler &gt; cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">    &quot;clean&quot;)</div><div class="line">rm -rf  centos centos-extras docker epel logs ourtree work ocata Ocata cobbler/cobbler.tar</div><div class="line">        ;;</div><div class="line">esac</div></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">## 这些包自己预先准备好，因为过大就没放在github上面，路径是存在 openshif-iso/openshift/目录下面，如果没有这个目录自己建立</div><div class="line">[root@localhost openshift]# ls</div><div class="line">centos-openshift-origin.tar  docker-registry.tar  openshift-ansible.tar.gz  openshift-package.tar  registry.tar</div><div class="line">[root@localhost openshift]# du -h</div><div class="line">1.8G	.</div></pre></td></tr></table></figure>
 
           
         
