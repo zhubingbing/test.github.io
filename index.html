@@ -432,6 +432,35 @@
 <h3 id="6-安装主要组件"><a href="#6-安装主要组件" class="headerlink" title="6. 安装主要组件"></a>6. 安装主要组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 安装kubedns</div><div class="line">kubectl create -f /etc/ansible/manifests/kubedns</div><div class="line"># 安装heapster</div><div class="line">kubectl create -f /etc/ansible/manifests/heapster</div><div class="line"># 安装dashboard</div><div class="line">kubectl create -f /etc/ansible/manifests/dashboard</div></pre></td></tr></table></figure>
 <h3 id="7-清理集群"><a href="#7-清理集群" class="headerlink" title="7. 清理集群"></a>7. 清理集群</h3><p>以上步骤创建的K8S开发测试环境请尽情折腾，碰到错误尽量通过查看日志、上网搜索、提交issues等方式解决；当然如果是彻底奔溃了，可以清理集群后重新创建。</p>
 <p>一步清理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ansible-playbook 99.clean.yml</div></pre></td></tr></table></figure></p>
+<h2 id="helm-安装"><a href="#helm-安装" class="headerlink" title="helm 安装"></a>helm 安装</h2><p>Helm是一个kubernetes应用的包管理工具，用来管理charts——预先配置好的安装包资源，有点类似于Ubuntu的APT和CentOS中的yum。</p>
+<p>Helm chart是用来封装kubernetes原生应用程序的yaml文件，可以在你部署应用的时候自定义应用程序的一些metadata，便与应用程序的分发。</p>
+<p>Helm和charts的主要作用：</p>
+<ul>
+<li><ol>
+<li>应用程序封装</li>
+</ol>
+</li>
+<li><ol>
+<li>版本管理</li>
+</ol>
+</li>
+<li><ol>
+<li>依赖检查</li>
+</ol>
+</li>
+<li><ol>
+<li>便于应用程序分发</li>
+</ol>
+</li>
+</ul>
+<h3 id="下载helm安装脚本"><a href="#下载helm安装脚本" class="headerlink" title="下载helm安装脚本"></a>下载helm安装脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get &gt; get_helm.sh</div><div class="line">chmod 700 get_helm.sh</div><div class="line">./get_helm.sh</div></pre></td></tr></table></figure>
+<p>创建tiller的serviceaccount和clusterrolebinding<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">kubectl create serviceaccount --namespace kube-system tiller</div><div class="line">kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller</div></pre></td></tr></table></figure></p>
+<p>然后安装helm服务端tiller，(目前最新版v2.8.2，可以使用阿里云镜像，如： helm init –upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.8.2 –stable-repo-url <a href="https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts）" target="_blank" rel="external">https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts）</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.8.2 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts</div></pre></td></tr></table></figure></p>
+<p>我们使用-i指定自己的镜像，因为官方的镜像因为某些原因无法拉取，官方镜像地址是：gcr.io/kubernetes-helm/tiller:v2.8.1 该镜像的版本与helm客户端的版本相同，使用helm version可查看helm客户端版本。</p>
+<p>为应用程序设置serviceAccount：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kubectl patch deploy --namespace kube-system tiller-deploy -p &apos;&#123;&quot;spec&quot;:&#123;&quot;template&quot;:&#123;&quot;spec&quot;:&#123;&quot;serviceAccount&quot;:&quot;tiller&quot;&#125;&#125;&#125;&#125;&apos;</div></pre></td></tr></table></figure>
+<p>检查是否安装成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ kubectl -n kube-system get pods|grep tiller</div><div class="line">tiller-deploy-2372561459-f6p0z         1/1       Running   0          1h</div><div class="line">$ helm version</div><div class="line">Client: &amp;version.Version&#123;SemVer:&quot;v2.3.1&quot;, GitCommit:&quot;32562a3040bb5ca690339b9840b6f60f8ce25da4&quot;, GitTreeState:&quot;clean&quot;&#125;</div><div class="line">Server: &amp;version.Version&#123;SemVer:&quot;v2.3.1&quot;, GitCommit:&quot;32562a3040bb5ca690339b9840b6f60f8ce25da4&quot;, GitTreeState:&quot;clean&quot;&#125;</div></pre></td></tr></table></figure></p>
+<p>问题备注：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@os-k8s- 1 ~]# helm version</div><div class="line">Client: &amp;amp;version.Version&#123;SemVer:&amp;quot;v2.8.2&amp;quot;,</div><div class="line">GitCommit:&amp;quot;a80231648a1473929271764b920a8e346f6de844&amp;quot;,</div><div class="line">GitTreeState:&amp;quot;clean&amp;quot;&#125;</div><div class="line">E0330 07:23:56.629068 19376 portforward.go:331] an error occurred</div><div class="line">forwarding 36439 -&amp;gt; 44134: error forwarding port 44134 to pod</div><div class="line">bed7fcf1f11f86b5f6d1da916d2bdd04139ab5818616b41e8104937f6643edc4, uid :</div><div class="line">unable to do port forwarding: socat not found</div><div class="line">## 需要安装socat</div><div class="line">yum install –y socat</div></pre></td></tr></table></figure></p>
 
           
         
@@ -1351,150 +1380,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/25/study/study-plan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhubingbing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhubingbing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/25/study/study-plan/" itemprop="url">open</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T16:30:00+08:00">
-                2017-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/09/25/study/study-plan/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/child/2017/09/25/study/study-plan/" class="cy_cmt_count" data-xid="2017/09/25/study/study-plan/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/25/kubernetes/kubernete-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1680,7 +1565,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/25/study/study-plan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhubingbing">
@@ -1699,7 +1584,151 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/21/openstack/magnum/magnum-02/" itemprop="url">magnum调研02</a></h1>
+                <a class="post-title-link" href="/2017/09/25/study/study-plan/" itemprop="url">open</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T16:30:00+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/09/25/study/study-plan/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/child/2017/09/25/study/study-plan/" class="cy_cmt_count" data-xid="2017/09/25/study/study-plan/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2017/09/21/openstack/openstack-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhubingbing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhubingbing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/openstack/openstack-01/" itemprop="url">openstack 通用设计思路</a></h1>
         
 
         <div class="post-meta">
@@ -1753,8 +1782,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/09/21/openstack/magnum/magnum-02/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/child/2017/09/21/openstack/magnum/magnum-02/" class="cy_cmt_count" data-xid="2017/09/21/openstack/magnum/magnum-02/" itemprop="commentsCount" ></span>
+                <a href="/2017/09/21/openstack/openstack-01/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/child/2017/09/21/openstack/openstack-01/" class="cy_cmt_count" data-xid="2017/09/21/openstack/openstack-01/" itemprop="commentsCount" ></span>
                 </a>
               
             
@@ -1781,30 +1810,15 @@
       
         
           
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>通过之前初步调研，magnum确实能把k8s启动起来。但是k8s一些组件都需要自己手动安装，这点很不好。<br>然后我查看代码，发现最新的ocata代码已经支持heat 部署k8s的dns、dashboard等。monitor在pike版本代码也已经支持。</p>
-<img title="magnum01" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum01.png">
-<p>看到这里有点小激动啊，那说明我用magnum一键能部署一个带高级功能的k8s平台。</p>
-<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>这些内容在 magnum-调研01可以查看</p>
-<p>1、 准备registry，因为要离线安装（主要gcr.io被墙了），所有搭建自己的registry</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">## 启动私有的registry</div><div class="line">docker run -d -p 4000:5000 -v /opt/registry:/var/lib/registry --restart=always --name registry registry:2</div><div class="line"></div><div class="line">## 所需镜像</div><div class="line">google_containers/kube-ui:v4</div><div class="line">google_containers/pause-amd64:3.0</div><div class="line">google_containers/hyperkube:v1.5.3</div><div class="line">google_containers/pause:0.8.0</div><div class="line">google_containers/kubedns-amd64:1.9</div><div class="line">google_containers/dnsmasq-metrics-amd64:1.0</div><div class="line">google_containers/kube-dnsmasq-amd64:1.4</div><div class="line">google_containers/exechealthz-amd64:1.2</div><div class="line">google_containers/defaultbackend:1.0</div><div class="line">google_containers/nginx-ingress-controller:0.9.0-beta.11</div><div class="line"></div><div class="line">## 上传镜像（可以简单写个shell脚本自动去做）</div><div class="line">registry_url=192.168.21.10:5000</div><div class="line">docker tag gcr.io/google_containers/kube-ui:v4 $registry_url/google_containers/kube-ui:v4</div><div class="line">docker push $registry_url/google_containers/kube-ui:v4</div></pre></td></tr></table></figure>
-<p>2、fedora镜像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">## 下载fedora镜像</div><div class="line"></div><div class="line">wget https://fedorapeople.org/groups/magnum/fedora-atomic-latest.qcow2</div><div class="line"></div><div class="line">## 上传镜像</div><div class="line"></div><div class="line">openstack image create \</div><div class="line">                      --disk-format=qcow2 \</div><div class="line">                      --container-format=bare \</div><div class="line">                      --file=fedora-atomic-latest.qcow2 \</div><div class="line">                      --property os_distro=&apos;fedora-atomic&apos; \</div><div class="line">                      fedora-atomic-latest</div></pre></td></tr></table></figure>
-<h3 id="使用kolla部署magnum"><a href="#使用kolla部署magnum" class="headerlink" title="使用kolla部署magnum"></a>使用kolla部署magnum</h3><p>注: 这里不详细介绍如何使用kolla部署magnum了,kolla-ansible使用可以参考官网文档（<a href="https://github.com/openstack/kolla-ansible）" target="_blank" rel="external">https://github.com/openstack/kolla-ansible）</a></p>
-<p>在/etc/kolla/globals.yml 打开magnum、neutron-lbass(因为要使用lb功能)，存储使用ceph,基础组件都打开<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# cat /etc/kolla/globals.yml</div><div class="line">enable_horizon_magnum: &quot;&#123;&#123; enable_magnum | bool &#125;&#125;&quot;</div><div class="line">enable_magnum: &quot;yes&quot;</div><div class="line">enable_neutron_lbaas: &quot;yes&quot;</div><div class="line">[root@master ~]# kolla-ansible deploy</div></pre></td></tr></table></figure></p>
-<h3 id="创建magnum-k8s-template"><a href="#创建magnum-k8s-template" class="headerlink" title="创建magnum k8s template"></a>创建magnum k8s template</h3><p>参数根据自己的实际情况进行调整<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"> magnum cluster-template-create kubernetes-cluster-template-1 \</div><div class="line">                     --image fedora-atomic-latest \</div><div class="line">                     --keypair mykey \</div><div class="line">                     --external-network public1 \</div><div class="line">                     --dns-nameserver 8.8.8.8 \</div><div class="line">                     --master-flavor 4C.4G \</div><div class="line">                     --flavor 4C.4G \</div><div class="line">                     --labels kube_dashboard_enabled=True,flannel_backend=host-gw \</div><div class="line">                     --coe kubernetes \</div><div class="line">                     --docker-volume-size 40 \</div><div class="line">                     --floating-ip-enabled \</div><div class="line">                     --volume-driver cinder \</div><div class="line">                     --insecure-registry 172.16.130.151:4000</div><div class="line"></div><div class="line">## 参数说明</div><div class="line">这里的参数需要注意的就是 --labels这个参数，因为文档里面没有详细介绍，像</div><div class="line">kube_dashboard_enabled，后面的监控啊，调整flannel的参数等等都需要使用这个参数</div><div class="line"></div><div class="line">## 相关代码</div><div class="line">代码路径 magnum/magnum/drivers/heat/k8s_template_def.py</div><div class="line">![](leanote://file/getImage?fileId=59c2490959398d3414000004)</div><div class="line"></div><div class="line">## 创建成功如下显示</div><div class="line">[root@master ~]# magnum cluster-template-show kubernetes-cluster-template-1</div><div class="line">+-----------------------+------------------------------------------------------------------+</div><div class="line">| Property              | Value                                                            |</div><div class="line">+-----------------------+------------------------------------------------------------------+</div><div class="line">| insecure_registry     | 172.16.130.151:4000                                              |</div><div class="line">| labels                | &#123;&apos;flannel_backend&apos;: &apos;host-gw&apos;, &apos;kube_dashboard_enabled&apos;: &apos;True&apos;&#125; |</div><div class="line">| updated_at            | -                                                                |</div><div class="line">| floating_ip_enabled   | True                                                             |</div><div class="line">| fixed_subnet          | -                                                                |</div><div class="line">| master_flavor_id      | 4C.4G                                                            |</div><div class="line">| uuid                  | 669e5b3a-2cdf-42c1-9b8c-656b0f3bba6a                             |</div><div class="line">| no_proxy              | -                                                                |</div><div class="line">| https_proxy           | -                                                                |</div><div class="line">| tls_disabled          | False                                                            |</div><div class="line">| keypair_id            | mykey                                                            |</div><div class="line">| public                | False                                                            |</div><div class="line">| http_proxy            | -                                                                |</div><div class="line">| docker_volume_size    | 40                                                               |</div><div class="line">| server_type           | vm                                                               |</div><div class="line">| external_network_id   | public1                                                          |</div><div class="line">| cluster_distro        | fedora-atomic                                                    |</div><div class="line">| image_id              | fedora-atomic-latest                                             |</div><div class="line">| volume_driver         | cinder                                                           |</div><div class="line">| registry_enabled      | False                                                            |</div><div class="line">| docker_storage_driver | devicemapper                                                     |</div><div class="line">| apiserver_port        | -                                                                |</div><div class="line">| name                  | kubernetes-cluster-template-1                                    |</div><div class="line">| created_at            | 2017-09-20T03:09:26+00:00                                        |</div><div class="line">| network_driver        | flannel                                                          |</div><div class="line">| fixed_network         | -                                                                |</div><div class="line">| coe                   | kubernetes                                                       |</div><div class="line">| flavor_id             | 4C.4G                                                            |</div><div class="line">| master_lb_enabled     | False                                                            |</div><div class="line">| dns_nameserver        | 8.8.8.8                                                          |</div><div class="line">+-----------------------+------------------------------------------------------------------+</div></pre></td></tr></table></figure></p>
-<h3 id="创建k8s-集群"><a href="#创建k8s-集群" class="headerlink" title="创建k8s 集群"></a>创建k8s 集群</h3><p>创建1个master节点和2个node节点的k8s集群</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">magnum cluster-create --node-count 2 --master-count 1 --cluster-template k8s-cluster-template</div><div class="line"></div><div class="line">## 创建成功如下</div><div class="line">[root@master ~]# magnum cluster-show test-3</div><div class="line">+---------------------+------------------------------------------------------------+</div><div class="line">| Property            | Value                                                      |</div><div class="line">+---------------------+------------------------------------------------------------+</div><div class="line">| status              | CREATE_COMPLETE                                            |</div><div class="line">| cluster_template_id | 4886c5b3-2f0f-4b1a-94a4-7f7c4f6eb0d9                       |</div><div class="line">| node_addresses      | [&apos;172.16.150.164&apos;, &apos;172.16.150.169&apos;]                       |</div><div class="line">| uuid                | 65c95601-8871-48de-8ebc-e2efe848111c                       |</div><div class="line">| stack_id            | 2ba19cad-8ed9-47ab-8340-a4f26b57e333                       |</div><div class="line">| status_reason       | Stack CREATE completed successfully                        |</div><div class="line">| created_at          | 2017-09-20T07:20:29+00:00                                  |</div><div class="line">| updated_at          | 2017-09-20T07:24:03+00:00                                  |</div><div class="line">| coe_version         | v1.5.3                                                     |</div><div class="line">| keypair             | mykey                                                      |</div><div class="line">| api_address         | https://172.16.150.154:6443                                |</div><div class="line">| master_addresses    | [&apos;172.16.150.154&apos;]                                         |</div><div class="line">| create_timeout      | 60                                                         |</div><div class="line">| node_count          | 2                                                          |</div><div class="line">| discovery_url       | https://discovery.etcd.io/d88395d69fa826a349ad7c7323977cec |</div><div class="line">| master_count        | 1                                                          |</div><div class="line">| container_version   | 1.12.6                                                     |</div><div class="line">| name                | test-3                                                     |</div><div class="line">+---------------------+------------------------------------------------------------+</div></pre></td></tr></table></figure>
-<h3 id="访问k8s集群"><a href="#访问k8s集群" class="headerlink" title="访问k8s集群"></a>访问k8s集群</h3><p>访问k8s集群有2种方式<br>1、 登入k8s master节点能够直接使用k8s命令<br>2、 远程访问可以使用 magnum cluster-config 生成所需的ca文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">## 直接登陆master节点访问</div><div class="line"></div><div class="line">[root@master ~]# nova list</div><div class="line">/usr/lib/python2.7/site-packages/novaclient/client.py:278: UserWarning: The &apos;tenant_id&apos; argument is deprecated in Ocata and its use may result in errors in future releases. As &apos;project_id&apos; is provided, the &apos;tenant_id&apos; argument will be ignored.</div><div class="line">  warnings.warn(msg)</div><div class="line">+--------------------------------------+-------------------------------------------------------+--------+------------+-------------+-----------------------------------+</div><div class="line">| ID                                   | Name                                                  | Status | Task State | Power State | Networks                          |</div><div class="line">+--------------------------------------+-------------------------------------------------------+--------+------------+-------------+-----------------------------------+</div><div class="line">| dd8d6bf1-882c-4132-b90e-fbf251a04351 | te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo | ACTIVE | -          | Running     | private=10.0.0.9, 172.16.150.164  |</div><div class="line">| 215e1f59-8270-488b-b02a-1f83f0ad8fae | te-ipopai2hb7-1-5z3wzug3hsjg-kube-minion-ktzk5ugdsclg | ACTIVE | -          | Running     | private=10.0.0.12, 172.16.150.169 |</div><div class="line">| e45e4f94-d9d3-4b6b-8632-9437d7fa7101 | te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f | ACTIVE | -          | Running     | private=10.0.0.7, 172.16.150.154  |</div><div class="line">| a435bda3-dbfb-4df1-b426-42f4142f1b4d | te-tcrckexviy-0-66y6o7a76osg-kube-master-yozurhnfidfw | ACTIVE | -          | Running     | private=10.0.0.12, 172.16.150.158 |</div><div class="line">+--------------------------------------+-------------------------------------------------------+--------+------------+-------------+-----------------------------------+</div><div class="line">[root@master ~]# ssh fedora@172.16.150.154</div><div class="line">Warning: Permanently added &apos;172.16.150.154&apos; (ECDSA) to the list of known hosts.</div><div class="line">Last login: Wed Sep 20 09:34:09 2017 from 172.16.150.163</div><div class="line">[fedora@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f ~]$</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get node</div><div class="line">NAME                                                    STATUS                     AGE</div><div class="line">te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo   Ready                      3h</div><div class="line">te-ipopai2hb7-1-5z3wzug3hsjg-kube-minion-ktzk5ugdsclg   Ready                      3h</div><div class="line">te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f   Ready,SchedulingDisabled   3h</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get pods --all-namespaces</div><div class="line">NAMESPACE     NAME                                                                            READY     STATUS    RESTARTS   AGE</div><div class="line">default       nginx                                                                           1/1       Running   0          1h</div><div class="line">kube-system   coredns-2417336708-gv1df                                                        1/1       Running   0          3h</div><div class="line">kube-system   kube-controller-manager-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f   1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo                1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-ipopai2hb7-1-5z3wzug3hsjg-kube-minion-ktzk5ugdsclg                1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f                1/1       Running   0          3h</div><div class="line">kube-system   kube-scheduler-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f            1/1       Running   0          3h</div><div class="line">kube-system   kubernetes-dashboard-953129222-2m1fl                                            1/1       Running   0          3h</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]#</div><div class="line"></div><div class="line">## 使用magnum cluster-config</div><div class="line">[root@master ~]# mkdir -p ~/clusters/kubernetes-cluster</div><div class="line">[root@master ~]# $(magnum cluster-config test-3 --dir ~/clusters/kubernetes-cluster)</div><div class="line">export KUBECONFIG=/home/user/clusters/kubernetes-cluster/config</div><div class="line">[root@master ~]# kubectl -n kube-system get pod --all-namespaces</div><div class="line">NAMESPACE     NAME                                                                            READY     STATUS    RESTARTS   AGE</div><div class="line">default       nginx                                                                           1/1       Running   0          1h</div><div class="line">kube-system   coredns-2417336708-gv1df                                                        1/1       Running   0          3h</div><div class="line">kube-system   kube-controller-manager-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f   1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-ipopai2hb7-0-edce6decnmfd-kube-minion-guvv4egh2oeo                1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-ipopai2hb7-1-5z3wzug3hsjg-kube-minion-ktzk5ugdsclg                1/1       Running   0          3h</div><div class="line">kube-system   kube-proxy-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f                1/1       Running   0          3h</div><div class="line">kube-system   kube-scheduler-te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f            1/1       Running   0          3h</div><div class="line">kube-system   kubernetes-dashboard-953129222-2m1fl                                            1/1       Running   0          3h</div></pre></td></tr></table></figure></p>
-<h3 id="验证k8s功能"><a href="#验证k8s功能" class="headerlink" title="验证k8s功能"></a>验证k8s功能</h3><h4 id="dashboard"><a href="#dashboard" class="headerlink" title="dashboard"></a>dashboard</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">## 查看dashboard svc</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get svc -n kube-system</div><div class="line">NAME                   CLUSTER-IP    EXTERNAL-IP   PORT(S)         AGE</div><div class="line">kube-dns               10.254.0.10   &lt;none&gt;        53/UDP,53/TCP   3h</div><div class="line">kubernetes-dashboard   10.254.14.9   &lt;nodes&gt;       80:30029/TCP    3h</div><div class="line"></div><div class="line">## 查看dashboard svc的定义</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f fedora]# kubectl get svc kubernetes-dashboard -n kube-system -o yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  creationTimestamp: 2017-09-20T07:22:11Z</div><div class="line">  labels:</div><div class="line">    app: kubernetes-dashboard</div><div class="line">  name: kubernetes-dashboard</div><div class="line">  namespace: kube-system</div><div class="line">  resourceVersion: &quot;40&quot;</div><div class="line">  selfLink: /api/v1/namespaces/kube-system/services/kubernetes-dashboard</div><div class="line">  uid: 6af71858-9dd4-11e7-b8fc-fa163e86cfba</div><div class="line">spec:</div><div class="line">  clusterIP: 10.254.14.9</div><div class="line">  ports:</div><div class="line">  - nodePort: 30029</div><div class="line">    port: 80</div><div class="line">    protocol: TCP</div><div class="line">    targetPort: 9090</div><div class="line">  selector:</div><div class="line">    app: kubernetes-dashboard</div><div class="line">  sessionAffinity: None</div><div class="line">  type: NodePort</div><div class="line">status:</div><div class="line">  loadBalancer: &#123;&#125;</div><div class="line"></div><div class="line">从上面可以看出，dashboard service使用的是nodeport方式，那我们可以使用</div><div class="line">http://node_ip:30029 进行愉快的访问了</div></pre></td></tr></table></figure>
-<p>这就是我们k8s 的dashboard了</p>
-<img title="k8s-dashboard" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/k8s-dashboard.png">
-<h4 id="dns"><a href="#dns" class="headerlink" title="dns"></a>dns</h4><p>magnum k8s的dns服务默认使用<a href="https://github.com/coredns/deployment/blob/master/kubernetes/coredns.yaml.sed#L12" target="_blank" rel="external">coredns</a><br>具体实现可以参看<a href="https://github.com/coredns/deployment/blob/master/kubernetes/coredns.yaml.sed#L12" target="_blank" rel="external">coredns</a>的官网文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">创建一个buybox pod</div><div class="line">[root@master example]# cat busybox.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: busybox</div><div class="line">  namespace: default</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">  - image: 172.16.130.151:4000/busybox</div><div class="line">    command:</div><div class="line">      - sleep</div><div class="line">      - &quot;3600&quot;</div><div class="line">    imagePullPolicy: IfNotPresent</div><div class="line">    name: busybox</div><div class="line">  restartPolicy: Alway</div><div class="line">[root@master example]# kubectl create -f busybox.yaml</div><div class="line"></div><div class="line">## 完美解析, nice</div><div class="line">[root@master example]# kubectl exec busybox nslookup kubernetes</div><div class="line">Server:    10.254.0.10</div><div class="line">Address 1: 10.254.0.10 kube-dns.kube-system.svc.cluster.local</div><div class="line">Name:      kubernetes</div><div class="line">Address 1: 10.254.0.1 kubernetes.default.svc.cluster.local</div></pre></td></tr></table></figure>
-<h3 id="k8s使用neutron-lb功能"><a href="#k8s使用neutron-lb功能" class="headerlink" title="k8s使用neutron lb功能"></a>k8s使用neutron lb功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">## 启动一个test-nginx-pod</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# cat test-pod.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Pod</div><div class="line">metadata:</div><div class="line">  name: nginx</div><div class="line">  labels:</div><div class="line">   app: nginx</div><div class="line">spec:</div><div class="line">  containers:</div><div class="line">  - name: nginx</div><div class="line">    image: 172.16.130.151:4000/nginx</div><div class="line">    ports:</div><div class="line">    - containerPort: 80</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# kubectl create -f test-pod.yaml</div><div class="line">pod &quot;nginx&quot; created</div><div class="line"></div><div class="line">## 启动test-service</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# cat test-service.yaml</div><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: nginxservice</div><div class="line">  labels:</div><div class="line">    app: nginx</div><div class="line">spec:</div><div class="line">  ports:</div><div class="line">  - port: 80</div><div class="line">    targetPort: 80</div><div class="line">    protocol: TCP</div><div class="line">  selector:</div><div class="line">    app: nginx</div><div class="line">  type: LoadBalancer</div><div class="line"></div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# kubectl create -f test-service.yaml</div><div class="line">service &quot;nginxservice&quot; created</div><div class="line"></div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# kubectl get svc</div><div class="line">NAME           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE</div><div class="line">kubernetes     10.254.0.1      &lt;none&gt;        443/TCP        4h</div><div class="line">nginxservice   10.254.84.116   10.0.0.15     80:30443/TCP   2m</div><div class="line"></div><div class="line">## 使用EXTERNAL-IP 访问服务</div><div class="line">[root@te-lgs3rgroc5-0-dvcxdlqunz3h-kube-master-sespgox2v33f examples]# curl 10.0.0.15</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;title&gt;Welcome to nginx!&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">        width: 35em;</div><div class="line">        margin: 0 auto;</div><div class="line">        font-family: Tahoma, Verdana, Arial, sans-serif;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;</div><div class="line">&lt;p&gt;If you see this page, the nginx web server is successfully installed and</div><div class="line">working. Further configuration is required.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;For online documentation and support please refer to</div><div class="line">&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;</div><div class="line">Commercial support is available at</div><div class="line">&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html</div></pre></td></tr></table></figure>
-<p>这时候我们可以去界面（horizon）上查看下lb创建情况</p>
-<img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb.png">
-<p>创建成功我们给他分配一个浮动ip<br><img title="horizon-lb" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-lb-2.png"><br>通过浮动ip访问应用<br><img title="nginx-app" alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/magnum/magnum-app.png"></p>
-
+            <img alt="注释" src="http://owmc1r5wc.bkt.clouddn.com/static/images/openstack/openstack-publick.jpg">
+<h3 id="API-前端服务"><a href="#API-前端服务" class="headerlink" title="API 前端服务"></a>API 前端服务</h3><p>每个 OpenStack 组件可能包含若干子服务，其中必定有一个 API 服务负责接收客户请求。</p>
+<p>以 Nova 为例，nova-api 作为 Nova 组件对外的唯一窗口，向客户暴露 Nova 能够提供的功能。 当客户需要执行虚机相关的操作，能且只能向 nova-api 发送 REST 请求。 这里的客户包括终端用户、命令行和 OpenStack 其他组件。</p>
+<p>设计 API 前端服务的好处在于：</p>
+<ol>
+<li>对外提供统一接口，隐藏实现细节</li>
+<li>API 提供 REST 标准调用服务</li>
+</ol>
+<h4 id="magnum-api-服务分析"><a href="#magnum-api-服务分析" class="headerlink" title="magnum-api 服务分析"></a>magnum-api 服务分析</h4>
           
         
       
