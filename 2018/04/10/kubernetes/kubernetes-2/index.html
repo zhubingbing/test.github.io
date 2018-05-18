@@ -2,10 +2,8 @@
 
 
 
-  
 
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -120,7 +118,7 @@
 <meta property="og:url" content="http://yoursite.com/child/2018/04/10/kubernetes/kubernetes-2/index.html">
 <meta property="og:site_name" content="Zhubingbing">
 <meta property="og:description" content="kubernetes安装以下为基于Ubuntu 16.04/CentOS 7.4 快速体验k8s集群的测试、开发环境–AllinOne部署，觉得比官方的minikube方便、简单很多。 1. 基础系统配置 推荐内存2G/硬盘20G以上 最小化安装Ubuntu 16.04 server或者CentOS 7 Minimal 配置基础网络、更新源、SSH登陆等  2. 安装依赖工具2.1 ubuntu">
-<meta property="og:updated_time" content="2018-04-10T11:25:56.000Z">
+<meta property="og:updated_time" content="2018-04-10T11:30:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kubernetes 1.9 快速部署(开发环境)">
 <meta name="twitter:description" content="kubernetes安装以下为基于Ubuntu 16.04/CentOS 7.4 快速体验k8s集群的测试、开发环境–AllinOne部署，觉得比官方的minikube方便、简单很多。 1. 基础系统配置 推荐内存2G/硬盘20G以上 最小化安装Ubuntu 16.04 server或者CentOS 7 Minimal 配置基础网络、更新源、SSH登陆等  2. 安装依赖工具2.1 ubuntu">
@@ -134,7 +132,7 @@
     scheme: 'Mist',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
-    motion: true,
+    motion: false,
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -440,22 +438,10 @@
 <p>Helm chart是用来封装kubernetes原生应用程序的yaml文件，可以在你部署应用的时候自定义应用程序的一些metadata，便与应用程序的分发。</p>
 <p>Helm和charts的主要作用：</p>
 <ul>
-<li><ol>
 <li>应用程序封装</li>
-</ol>
-</li>
-<li><ol>
 <li>版本管理</li>
-</ol>
-</li>
-<li><ol>
 <li>依赖检查</li>
-</ol>
-</li>
-<li><ol>
 <li>便于应用程序分发</li>
-</ol>
-</li>
 </ul>
 <h3 id="下载helm安装脚本"><a href="#下载helm安装脚本" class="headerlink" title="下载helm安装脚本"></a>下载helm安装脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get &gt; get_helm.sh</div><div class="line">chmod 700 get_helm.sh</div><div class="line">./get_helm.sh</div></pre></td></tr></table></figure>
 <p>创建tiller的serviceaccount和clusterrolebinding<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">kubectl create serviceaccount --namespace kube-system tiller</div><div class="line">kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller</div></pre></td></tr></table></figure></p>
