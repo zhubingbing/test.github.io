@@ -152,9 +152,29 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
+      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
       <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
-      <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+  </entry>
+  
+  <entry>
+    <title>open</title>
+    <link href="http://yoursite.com/child/2017/09/25/study/study-plan/"/>
+    <id>http://yoursite.com/child/2017/09/25/study/study-plan/</id>
+    <published>2017-09-25T08:30:00.000Z</published>
+    <updated>2017-11-01T08:46:31.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/categories/kubernetes/"/>
+    
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
+    
+      <category term="kubernetes" scheme="http://yoursite.com/child/tags/kubernetes/"/>
     
   </entry>
   
@@ -170,26 +190,6 @@
       &lt;h2 id=&quot;k8s功能点&quot;&gt;&lt;a href=&quot;#k8s功能点&quot; class=&quot;headerlink&quot; title=&quot;k8s功能点&quot;&gt;&lt;/a&gt;k8s功能点&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;容器调度策略管理, 能够指定app部署在指定目标服务器。&lt;/li&gt;
 &lt;li&gt;容器节点的创建或销毁
-    
-    </summary>
-    
-      <category term="kubernetes" scheme="http://yoursite.com/child/categories/kubernetes/"/>
-    
-    
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
-      <category term="kubernetes" scheme="http://yoursite.com/child/tags/kubernetes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>open</title>
-    <link href="http://yoursite.com/child/2017/09/25/study/study-plan/"/>
-    <id>http://yoursite.com/child/2017/09/25/study/study-plan/</id>
-    <published>2017-09-25T08:30:00.000Z</published>
-    <updated>2017-11-01T08:46:31.000Z</updated>
-    
-    <summary type="html">
     
     </summary>
     
@@ -307,9 +307,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -352,9 +352,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -396,9 +396,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
@@ -439,9 +439,9 @@
       <category term="openshift" scheme="http://yoursite.com/child/categories/openshift/"/>
     
     
-      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
-    
       <category term="openshift" scheme="http://yoursite.com/child/tags/openshift/"/>
+    
+      <category term="pass" scheme="http://yoursite.com/child/tags/pass/"/>
     
   </entry>
   
